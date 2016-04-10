@@ -1,0 +1,239 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background: black;
+    padding-top: 50px; /* because of the navbar */
+    font-family: 'Consolas', sans-serif;
+}
+
+.container {
+    padding: 0;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Selection */
+/* draw any selected text green on black background */
+::-moz-selection {
+    color: #73de73;
+    background: rgba(11, 0, 1, 1);
+}
+
+::selection {
+    color: #73de73;
+    background: rgba(11, 0, 1, 1);
+}
+
+/* Navigation */
+.navbar {
+    background-color: rgba(11, 0, 1, 1);
+}
+
+.navbar a {
+    color: #73de73;
+}
+
+.navbar a:hover {
+    color: #cccccc;
+}
+
+.navbar-brand {
+    font-size: 150%;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus,
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus,
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    background-color: rgb(30, 30, 30);
+    color: #cccccc;
+    position: static;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: #73de73;
+}
+
+@media only screen and (max-width: 768px) {
+    .dropdown-menu > li > a {
+        color: #cccccc;
+    }
+
+    .navbar {
+        padding: 0px 10px 0px 20px;
+    }
+}
+
+/* Board */
+.board-lists {
+
+}
+
+.board-list {
+    color: rgb(30, 30, 30);
+    background: rgb(30, 30, 30);
+    min-height: 770px;
+}
+
+.panel {
+    margin-bottom: 1px;
+    border: 1px solid black;
+    border-radius: 7px;
+    padding: 0;
+}
+
+.panel-body {
+    padding: 5px 10px 10px 10px;
+
+}
+
+.panel-heading {
+    padding: 10px 0px 0px 0px;
+    border: #73de73;
+    color: #73de73;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.panel-title {
+    font-size: 120%;
+}
+
+.panel-list-todo-btn {
+    padding: 0px 5px 0px 0px;
+    margin: 0;
+    color: #73de73;
+    background: rgb(30, 30, 30);
+    border: none;
+    font-size: medium;
+}
+
+.panel-list-todo-btn .glyphicon {
+    position: static;
+}
+
+.list-group-item {
+    padding: 5px 5px;
+    font-size: small;
+    border-radius: 7px;
+    margin: 10px 0px 10px 0px;
+    color: #dddddd;
+    border-color: #333;
+    background: #333;
+}
+
+.list-group-item-text {
+    padding-bottom: 10px;
+    padding-left: 20px;
+}
+
+.list-group-item:first-child {
+    border-radius: 7px;
+}
+
+.list-group-item:last-child {
+    border-radius: 7px;
+}
+
+.list-group-item:nth-child(2n) {
+    color: #111;
+    background: #dddddd;
+}
+
+button {
+    outline: none;
+}
+
+.panel-list-todo-btn
+.btn:active,
+.btn.active,
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.hover-btn {
+    padding: 0;
+    position: absolute;
+}
+
+.list-group-item:hover .hover-btn {
+    display: block;
+    background: #333;
+    color: #dddddd;
+}
+
+.list-group-item .hover-btn {
+    background: #333;
+    color: #333;
+}
+
+.list-group-item:nth-child(2n) .hover-btn {
+
+    background: #dddddd;
+    color: #dddddd;
+}
+
+.list-group-item:nth-child(2n):hover .hover-btn {
+    color: #333;
+}
+
+.list-group-item-dummy {
+    width: 3px;
+    height: 3px;
+    background-color: rgb(30, 30, 30);
+    position: static;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.btn .glyphicon {
+    padding: 0;
+    margin: 0;
+    font-size: large;
+    vertical-align: middle;
+}
+
+.glyphicon-move {
+    cursor: move;
+}
+
+.sortable-ghost,
+.sortable-ghost .hover-btn {
+    opacity: .75;
+    background: #73de73 !important;
+    color: #73de73 !important;
+}
+
+/* Modal */
+.btn-primary,
+.btn-primary:active {
+    background: rgb(30, 30, 30) !important;
+    color: #73de73 !important;
+    border: #73de73 !important;
+}
+
+.btn-primary:hover,
+.btn-primary:visited,
+.btn-primary:focus {
+    background: rgb(30, 30, 30) !important;
+    color: #cccccc !important;
+    border: #73de73 !important;
+}
