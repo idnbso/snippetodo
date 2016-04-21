@@ -103,7 +103,7 @@
             <div class="panel-body">
                 <ul id="listTodo" class="list-group">
                     <!-- dummy must be set inorder for Sortable to add an item to an empty list -->
-                    <li class="list-group-item-dummy" data-id="list-todo-0"></li>
+                    <li class="list-group-item-dummy" data-id="listTodoItem0"></li>
                     <li class="list-group-item" data-id="list-todo-1">
                         <div class="row nopadding">
                             <div class="col-xs-11 nopadding">

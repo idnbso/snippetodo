@@ -60,14 +60,23 @@
              * @returns {Array}
              */
             get: function(sortable) {
-                $.get("initlisttodo", function(responseJson) {
-                    $.each(responseJson, function(index, item) {
-                        $("#listTodo").append(generateItemElement(item));
-                    });
-                });
-
-                // relevant only to localstorage, replace with dataId values of each item
+                // get the current order from the localStorage
                 var order = localStorage.getItem('listTodo');
+                $.get("orderoflisttodo", function(orderOfDatabase) {
+                    // check if the order of the list has changed since the last time
+                    if (order.localeCompare(orderOfDatabase)) { // order changed
+                        $.get("initlisttodo", function(responseJson) {
+                            /*
+                            var list_new = $('#list_new').html();
+                             $('#list').empty().append(list_new);
+                            * */
+                            $("#listTodo").empty();
+                            $.each(responseJson, function(index, item) {
+                                $("#listTodo").append(generateItemElement(item));
+                            });
+                        });
+                    }
+                });
 
                 // order = "item1|item2|..."
                 //var order = // TODO: create they array according to the order from the DB
@@ -83,9 +92,9 @@
                 var order = sortable.toArray();
                 console.log(order.join('|'));
                 localStorage.setItem('listTodo', order.join('|'));
-            },
+            }
         },
-
+        // Element is dropped into the list from another list
         onAdd: function(evt) {
             console.log('onAdd.listTodo:', evt.item);
             console.log(evt.item.parentElement);
@@ -93,15 +102,19 @@
             var order = listTodo.toArray();
             order[evt.newIndex] = evt.item.getAttribute('data-id');
         },
+        // Changed sorting within list
         onUpdate: function(evt) {
             console.log('onUpdate.listTodo:', evt.item);
         },
+        // Element is removed from the list into another list
         onRemove: function(evt) {
             console.log('onRemove.listTodo:', evt.item);
         },
+        // Element dragging started
         onStart: function(evt) {
             console.log('onStart.listTodo:', evt.item);
         },
+        // Element dragging ended
         onEnd: function(evt) {
             console.log('onEnd.listTodo:', evt.item);
         }
@@ -132,7 +145,7 @@
                 var order = sortable.toArray();
                 console.log(order.join('|'));
                 localStorage.setItem('listToday', order.join('|'));
-            },
+            }
         },
 
         onAdd: function(evt) {
@@ -187,3 +200,24 @@
         return item;
     }
 })();
+
+$(document).ready(function(){
+    $(window).load(function(){
+        var oldSSB = $.fn.modal.Constructor.prototype.setScrollbar;
+        $.fn.modal.Constructor.prototype.setScrollbar = function ()
+        {
+            oldSSB.apply(this);
+            if(this.bodyIsOverflowing && this.scrollbarWidth)
+            {
+                $('.navbar-fixed-top, .navbar-fixed-bottom').css('padding-right', this.scrollbarWidth);
+            }
+        };
+
+        var oldRSB = $.fn.modal.Constructor.prototype.resetScrollbar;
+        $.fn.modal.Constructor.prototype.resetScrollbar = function ()
+        {
+            oldRSB.apply(this);
+            $('.navbar-fixed-top, .navbar-fixed-bottom').css('padding-right', '');
+        }
+    });
+});
