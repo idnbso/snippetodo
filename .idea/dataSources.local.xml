@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="hibernate.cfg.xml/Hibernate" uuid="1e69d359-2044-4c09-b8c4-303f2b5efc08">
+      <user-name>idan</user-name>
+      <user-password>dfc6dfc5dfc6dfc5dfccdfdedfdd</user-password>
+      <schema-pattern>snippetodo.*</schema-pattern>
+      <default-schemas>snippetodo.*</default-schemas>
+    </data-source>
+  </component>
+</project>

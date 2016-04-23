@@ -75,12 +75,12 @@ public class HibernateSnippeToDoDAOTest
             userList.add(new User(1, "Idan"));
             userList.add(new User(2, "Shani"));
             userList.add(new User(3, "Eli"));
-            itemList.add(new Item(1, 1, "TestItem1"));
-            itemList.add(new Item(2, 1, "TestItem2"));
-            itemList.add(new Item(3, 2, "TestItem3"));
-            itemList.add(new Item(4, 2, "TestItem4"));
-            itemList.add(new Item(5, 3, "TestItem5"));
-            itemList.add(new Item(6, 3, "TestItem6"));
+//            itemList.add(new Item(1, 1, "TestItem1"));
+//            itemList.add(new Item(2, 1, "TestItem2"));
+//            itemList.add(new Item(3, 2, "TestItem3"));
+//            itemList.add(new Item(4, 2, "TestItem4"));
+//            itemList.add(new Item(5, 3, "TestItem5"));
+//            itemList.add(new Item(6, 3, "TestItem6"));
 
             // The database tables users and items must be empty
             session = sessionFactory.openSession();

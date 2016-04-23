@@ -7,6 +7,7 @@ import com.github.idnbso.snippetodo.model.data.item.SnippeToDoItemDAO;
 import com.github.idnbso.snippetodo.model.data.user.SnippeToDoUserDAO;
 import com.github.idnbso.snippetodo.model.data.user.User;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,14 +132,18 @@ public class SnippeToDoController extends HttpServlet
             throws SnippeToDoPlatformException, IOException
     {
         // data from the request (view)
-        String title = request.getParameter("item-title");
 
-        // data for the response (view)
-        Item newItem = new Item(1, currentUserId, title);
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = request.getReader();
+
+        Gson gson = new Gson();
+        Item newItem = gson.fromJson(reader, Item.class);
 
         // data for the database (model)
         snippeToDoItemDB.create(newItem);
         String jsonResponse = new Gson().toJson(newItem);
         writeJsonResponse(response, jsonResponse);
     }
+
+
 }

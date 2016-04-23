@@ -228,7 +228,7 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
      * Get a specific entity reference from the database.
      * 
      * @param id The id number of the entity to be retrieved from the database
-     * @see ISnippeToDoDAO#get()
+     * @see ISnippeToDoDAO#get(int)
      * @throws SnippeToDoPlatformException
      * @return the specific entity reference from the database
      */

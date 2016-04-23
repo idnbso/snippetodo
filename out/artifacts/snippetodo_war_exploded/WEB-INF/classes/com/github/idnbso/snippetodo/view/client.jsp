@@ -71,6 +71,11 @@
                             <input type="text" class="form-control" id="item-title"
                                    name="item-title"/>
                         </div>
+                        <label for="item-body">Your snippet text body</label>
+                        <div class="input-group">
+                            <textarea class="form-control" rows="5" id="item-body"
+                                      name="item-body"></textarea>
+                        </div>
                     </div>
                 </form>
                 <div class="modal-footer">

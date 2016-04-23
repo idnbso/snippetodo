@@ -46,6 +46,15 @@
         };
     }
 
+    function Item(id, userId, listId, title, body, positionIndex) {
+        this.id = id;
+        this.userId = userId;
+        this.listId = listId;
+        this.title = title;
+        this.body = body;
+        this.positionIndex = positionIndex;
+    }
+
     // Lists with handle
     var listTodo = Sortable.create(byId('listTodo'), {
         group: 'board-lists',
@@ -67,10 +76,12 @@
                     if (order.localeCompare(orderOfDatabase)) { // order changed
                         $.get("initlisttodo", function(responseJson) {
                             /*
-                            var list_new = $('#list_new').html();
+                             var list_new = $('#list_new').html();
                              $('#list').empty().append(list_new);
-                            * */
-                            $("#listTodo").empty();
+                             * */
+                            var dummyItem =
+                                '<li class="list-group-item-dummy" data-id="listTodoItem0"></li>';
+                            $("#listTodo").empty().append(dummyItem);
                             $.each(responseJson, function(index, item) {
                                 $("#listTodo").append(generateItemElement(item));
                             });
@@ -79,7 +90,7 @@
                 });
 
                 // order = "item1|item2|..."
-                //var order = // TODO: create they array according to the order from the DB
+                //var order = // TODO: create the array according to the order from the DB
                 //console.log(order);
                 return order ? order.split('|') : [];
             },
@@ -143,7 +154,7 @@
              */
             set: function(sortable) {
                 var order = sortable.toArray();
-                console.log(order.join('|'));
+                console.log(order);
                 localStorage.setItem('listToday', order.join('|'));
             }
         },
@@ -164,25 +175,39 @@
             console.log('onEnd.listToday:', evt.item);
         }
     });
-
+    
+    // create new item
     $(document).on("click", "#saveButton", function() {
-        var $form = $('#new-item-form');
-
-        $.post("newitem", $form.serialize(), function(responseJsonItem) {
-            $("#listTodo").append(generateItemElement(responseJsonItem));
+        var title = $("#item-title").val();
+        var body = $("#item-body").val();
+        var order = localStorage.getItem('listTodo').split('|');
+        var positionIndex = order.length;
+        var newItem = new Item(1, 1, 1, title, body, positionIndex);
+        
+        // TODO: add the item to the localstorage, both to the order array and objects
+        /*
+        $.ajax({
+            dataType: 'json',
+            url
+        });
+        */
+        $.post("newitem", JSON.stringify(newItem), function(responseJsonItem) {
+            // compare for success/failure: JSON.stringify(newItem) === JSON.stringify(responseJsonItem)
         });
 
-        event.preventDefault(); // Important! Prevents submitting the form.
+        $("#listTodo").append(generateItemElement(newItem));
+
+        event.preventDefault(); // Prevents submitting the form.
     });
 
-    function generateItemElement(responseJsonItem) {
-        var item = '<li class="list-group-item" data-id="listItem' + responseJsonItem.id + '">' +
+    function generateItemElement(newItem) {
+        var item = '<li class="list-group-item" data-id="listItem' + newItem.id + '">' +
             '<div class="row nopadding">' +
             '<div class="col-xs-11 nopadding">' +
             '<span class="glyphicon glyphicon-move hover-btn"' +
             ' aria-hidden="true"></span>' +
             '<div class="list-group-item-text">' +
-            responseJsonItem.description + // The title text to be injected
+            newItem.title + // The title text to be injected
             '</div></div>' +
             '<div class="input-group-btn col-xs-1 nopadding">' +
             '<button type="button" class="btn hover-btn dropdown-toggle"' +
@@ -201,21 +226,20 @@
     }
 })();
 
-$(document).ready(function(){
-    $(window).load(function(){
+// fixes Bootstrap 3.x bug of navbar when modal is open
+$(document).ready(function() {
+    $(window).load(function() {
         var oldSSB = $.fn.modal.Constructor.prototype.setScrollbar;
-        $.fn.modal.Constructor.prototype.setScrollbar = function ()
-        {
+        $.fn.modal.Constructor.prototype.setScrollbar = function() {
             oldSSB.apply(this);
-            if(this.bodyIsOverflowing && this.scrollbarWidth)
-            {
-                $('.navbar-fixed-top, .navbar-fixed-bottom').css('padding-right', this.scrollbarWidth);
+            if (this.bodyIsOverflowing && this.scrollbarWidth) {
+                $('.navbar-fixed-top, .navbar-fixed-bottom')
+                    .css('padding-right', this.scrollbarWidth);
             }
         };
 
         var oldRSB = $.fn.modal.Constructor.prototype.resetScrollbar;
-        $.fn.modal.Constructor.prototype.resetScrollbar = function ()
-        {
+        $.fn.modal.Constructor.prototype.resetScrollbar = function() {
             oldRSB.apply(this);
             $('.navbar-fixed-top, .navbar-fixed-bottom').css('padding-right', '');
         }
