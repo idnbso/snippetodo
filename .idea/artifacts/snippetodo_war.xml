@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="snippetodo:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/snippetodo_war</output-path>
+    <root id="archive" name="snippetodo_war.war">
+      <element id="artifact" artifact-name="snippetodo:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<html lang="en">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SnippeToDo Homepage</title>
@@ -32,17 +32,27 @@
                 </button>
             </div>
             <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
-                <li><a href='#'><i class="glyphicon glyphicon-user"
-                                   aria-hidden="true"></i>Signup</a></li>
-                <li><a href='#'><i class="glyphicon glyphicon-log-in"
-                                   aria-hidden="true"></i>Login</a></li>
-                <li><a href='about.html' data-raget="#" data-toggle="dropdown">About<span
+                <li>
+                    <button class="btn homepage-btn" data-toggle="modal"
+                            data-target="#signupModal">
+                        <i class="glyphicon glyphicon-user"
+                           aria-hidden="true"></i>Signup
+                    </button>
+                </li>
+                <li>
+                    <button class="btn homepage-btn" data-toggle="modal"
+                            data-target="#loginModal">
+                        <i class="glyphicon glyphicon-log-in"
+                           aria-hidden="true"></i>Login
+                    </button>
+                </li>
+                <li><a href='about.html' data-target="#" data-toggle="dropdown">About<span
                         class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href='story.html'>Our Story</a></li>
-                        <li><a href='contact.html'>Contact Us</a></li>
+                        <li><a href='#'>Our Story</a></li>
+                        <li><a href='#'>Contact Us</a></li>
                         <li class="divider"></li>
-                        <li><a href='blog.html'>Blog</a></li>
+                        <li><a href='#'>Blog</a></li>
                         <li class="divider"></li>
                         <li><a href='http://twitter.com'>Twitter</a></li>
                         <li><a href='http://facebook.com'>Facebook</a></li>
@@ -54,6 +64,122 @@
 </div>
 <!-- /Navigation Bar -->
 
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
+     aria-labelledby="loginModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myLoginModalLabel">
+                    Login to SnippeToDo Client
+                </h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form id="login-form" role="form" method="post">
+                    <div class="form-group">
+                        <label for="loginInputEmail">Email address</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control"
+                                   id="loginInputEmail" name="loginInputEmail"
+                                   placeholder="Enter email"/>
+                        </div>
+                        <label for="loginInputPassword">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control"
+                                   id="loginInputPassword" name="loginInputPassword"
+                                   placeholder="Password"/>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"/> Remember Me
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Close
+                </button>
+                <button id="loginButton" type="button" class="btn btn-primary">
+                    Login
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Login Modal -->
+
+<!-- Signup Modal -->
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog"
+     aria-labelledby="signupModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="mySignupModalLabel">
+                    Signup to use SnippeToDo
+                </h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form id="new-user-form" role="form" method="post">
+                    <div class="form-group">
+                        <label for="signupEmail">Email address</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control"
+                                   id="signupEmail" name="signupEmail" placeholder="Email"/>
+                        </div>
+                        <label for="signupFirstName">First name</label>
+                        <div class="input-group">
+                            <input class="form-control"
+                                   id="signupFirstName" name="signupFirstName"
+                                   placeholder="Enter your first name"/>
+                        </div>
+                        <label for="signupLastName">Last name</label>
+                        <div class="input-group">
+                            <input class="form-control"
+                                   id="signupLastName" name="signupLastName"
+                                   placeholder="LEnter your last name"/>
+                        </div>
+                        <label for="signupPassword">Password</label>
+                        <div class="input-group">
+                            <input class="form-control"
+                                   id="signupPassword" name="signupPassword"
+                                   placeholder="Enter your password"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Close
+                </button>
+                <button id="registerButton" type="button" class="btn btn-primary">
+                    Register me
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Signup Modal -->
+
 <!-- Middle Section -->
 <div class="container">
     <div class="row">
@@ -62,9 +188,9 @@
                 <h1 class="main-header">SNIPPEToDo</h1>
                 <h4>simple, organised, and visual way to be productive for developers.</h4>
                 <hr>
-                <button class="btn btn-default btn-lg">
-                    <i class="glyphicon glyphicon-flash"
-                       aria-hidden="true"></i>Get Started!
+                <button class="btn btn-default btn-lg" data-toggle="modal"
+                        data-target="#signupModal">
+                    Get Started!
                 </button>
             </div>
         </div>
@@ -124,7 +250,7 @@
         integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk="
         crossorigin="anonymous"></script>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/js/snippetodo.js"></script>
+        src="${pageContext.request.contextPath}/js/index.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </body>

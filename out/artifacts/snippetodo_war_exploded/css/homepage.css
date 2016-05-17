@@ -1,22 +1,10 @@
-/*html {*/
-    /*height: 100%;*/
-/*}*/
-
 body {
-    background: url(/img/hackbg.jpg);
+    background: url(../img/hackbg.jpg);
     background-size: cover;
 }
 
 hr {
     width: 90%;
-}
-
-.container {
-    max-width: 960px;
-}
-
-.row {
-    margin-bottom: 20px;
 }
 
 .main-header {
@@ -32,26 +20,30 @@ hr {
     border-color: #73de73;
 }
 
-.glyphicon {
-    margin-bottom: 4px !important;
-    margin-right: 5px !important;
-}
-
 .footer {
     padding: 20px 0;
+}
+
+
+.modal-body .form-horizontal .col-sm-2,
+.modal-body .form-horizontal .col-sm-10 {
+    width: 100%
+}
+
+.modal-body .form-horizontal .control-label {
+    text-align: left;
+}
+.modal-body .form-horizontal .col-sm-offset-2 {
+    margin-left: 15px;
 }
 
 #content {
     text-align: center;
     padding-top: 20%;
+    padding-bottom: 50%;
 }
-
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
-    position: relative;
-    min-height: 100%;
-}
 
 body {
     /* Margin bottom by footer height */
@@ -81,6 +73,7 @@ body {
     }
 
     .footer {
+        padding-left: 50px;
         height: 400px;
     }
 }

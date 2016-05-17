@@ -23,7 +23,6 @@
                 <a href="/" class="navbar-brand">
                     SNIPPEToDo
                 </a>
-
                 <button type="button" class="navbar-toggle"
                         data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -33,8 +32,12 @@
                 </button>
             </div>
             <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
-                <li><a href='#'>Settings</a></li>
-                <li><a href='#'>Help</a></li>
+                <li>
+                    <button id="logoutButton" class="btn homepage-btn">
+                        Logout <i class="glyphicon glyphicon-log-out"
+                                  aria-hidden="true"></i>
+                    </button>
+                </li>
                 <li><a href='about.html' data-raget="#" data-toggle="dropdown">About<span
                         class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -81,7 +84,44 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close
                     </button>
-                    <button id="saveButton" type="button" class="btn btn-primary">Save changes
+                    <button id="saveButton" type="button" class="btn btn-primary">Save
+                    </button>
+                </div>
+            </div><!-- /.modal-body -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Edit an existing item modal -->
+<div class="modal fade" id="editItemModal" tabindex="-1" role="dialog"
+     aria-labelledby="editItemModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit an existing item</h4>
+            </div>
+            <div class="modal-body">
+                <form id="edit-item-form" role="form" method="post">
+                    <div class="form-group">
+                        <label for="edit-item-title">Your snippet text title</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="edit-item-title"
+                                   name="edit-item-title"/>
+                        </div>
+                        <label for="edit-item-body">Your snippet text body</label>
+                        <div class="input-group">
+                            <textarea class="form-control" rows="5" id="edit-item-body"
+                                      name="edit-item-body"></textarea>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button id="cancelEditButton" type="button" class="btn btn-default"
+                            data-dismiss="modal">Cancel
+                    </button>
+                    <button id="editFormButton" type="button" class="btn btn-primary">Save changes
                     </button>
                 </div>
             </div><!-- /.modal-body -->
@@ -92,77 +132,21 @@
 <!-- Board -->
 <div class="container-fluid">
     <div class="row board-lists">
-        <!-- snippets list -->
+        <!-- to-do list -->
         <div class="board-list board-list-todo panel col-md-3 col-sm-6 col-xs-12">
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <button type="button" class="panel-list-todo-btn" data-toggle="modal"
                             data-target="#newItemModal">
-                    <span aria-hidden="true"
+                    <span id="addButton" aria-hidden="true" title="Add new item"
                           class="glyphicon glyphicon-plus-sign"></span>
                     </button>todo
                 </h3>
             </div>
-
             <!-- List group -->
             <div class="panel-body">
                 <ul id="listTodo" class="list-group">
-                    <!-- dummy must be set inorder for Sortable to add an item to an empty list -->
-                    <li class="list-group-item-dummy" data-id="listTodoItem0"></li>
-                    <li class="list-group-item" data-id="list-todo-1">
-                        <div class="row nopadding">
-                            <div class="col-xs-11 nopadding">
-                                <span class="glyphicon glyphicon-move hover-btn"
-                                      aria-hidden="true"></span>
-                                <div class="list-group-item-text">
-                                    Te3232stTest Te3232stTest Te3232stTestTest
-                                    Te3232stTestTest Te3232stTest Te3232stTestTest
-                                    Te3232stTestTest Te3232stTest
-                                </div>
-                            </div>
-                            <div class="input-group-btn col-xs-1 nopadding">
-                                <button type="button" class="btn hover-btn dropdown-toggle"
-                                        data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                    <i aria-hidden="true"
-                                       class="glyphicon glyphicon-console"></i>
-                                    <span class="sr-only">Actions</span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div><!-- /btn-group -->
-                        </div>
-                    </li>
-                    <li class="list-group-item" data-id="list-todo-2">
-                        <div class="row nopadding">
-                            <div class="col-xs-11 nopadding">
-                                <span class="glyphicon glyphicon-move hover-btn"
-                                      aria-hidden="true"></span>
-                                <div class="list-group-item-text">Test Test TestTest</div>
-                            </div>
-                            <div class="input-group-btn col-xs-1 nopadding">
-                                <button type="button" class="btn hover-btn dropdown-toggle"
-                                        data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                    <i aria-hidden="true"
-                                       class="glyphicon glyphicon-console"></i>
-                                    <span class="sr-only">Actions</span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div><!-- /btn-group -->
-                        </div>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -173,61 +157,9 @@
             <div class="panel-heading"><h3 class="panel-title">today</h3></div>
             <!-- List group -->
             <div class="panel-body">
-                <div id="listToday" class="list-group">
-                    <!-- dummy must be set inorder for Sortable to add an item to an empty list -->
-                    <div class="list-group-item list-group-item-dummy"
-                         data-id="list-today-0"></div>
-                    <div class="list-group-item" data-id="list-today-1">
-                        <div class="row nopadding">
-                            <div class="col-xs-11 nopadding">
-                                <span class="glyphicon glyphicon-move hover-btn"
-                                      aria-hidden="true"></span>
-                                <div class="list-group-item-text">Test Te3232stTest</div>
-                            </div>
-                            <div class="input-group-btn col-xs-1 nopadding">
-                                <button type="button" class="btn hover-btn dropdown-toggle"
-                                        data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                    <i aria-hidden="true"
-                                       class="glyphicon glyphicon-console"></i>
-                                    <span class="sr-only">Actions</span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div><!-- /btn-group -->
-                        </div>
-                    </div>
-                    <div class="list-group-item" data-id="list-today-2">
-                        <div class="row nopadding">
-                            <div class="col-xs-11 nopadding">
-                                <span class="glyphicon glyphicon-move hover-btn"
-                                      aria-hidden="true"></span>
-                                <div class="list-group-item-text">Test Test TestTest</div>
-                            </div>
-                            <div class="input-group-btn col-xs-1 nopadding">
-                                <button type="button" class="btn hover-btn dropdown-toggle"
-                                        data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                    <i aria-hidden="true"
-                                       class="glyphicon glyphicon-console"></i>
-                                    <span class="sr-only">Actions</span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div><!-- /btn-group -->
-                        </div>
-                    </div>
-                </div>
+                <ul id="listToday" class="list-group">
+
+                </ul>
             </div>
         </div>
 
@@ -237,45 +169,32 @@
             <div class="panel-heading"><h3 class="panel-title">doing</h3></div>
             <!-- List group -->
             <div class="panel-body">
-                <ul class="list-group">
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus orbi leo risusorbi leo risus
-                    </li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
+                <ul id="listDoing" class="list-group">
+
                 </ul>
             </div>
         </div>
 
+        <!-- check list -->
         <div class="board-list panel col-md-3 col-sm-6 col-xs-12">
             <!-- Default panel contents -->
             <div class="panel-heading"><h3 class="panel-title">check</h3></div>
             <!-- List group -->
             <div class="panel-body">
-                <ul class="list-group">
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus orbi leo risusorbi leo risus
-                    </li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
+                <ul id="listCheck" class="list-group">
+
                 </ul>
             </div>
         </div>
 
+        <!-- done list -->
         <div class="board-list panel col-xs-12">
             <!-- Default panel contents -->
             <div class="panel-heading"><h3 class="panel-title">done</h3></div>
             <!-- List group -->
             <div class="panel-body">
-                <ul class="list-group">
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus orbi leo risusorbi leo risus
-                    </li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
+                <ul id="listDone" class="list-group">
+
                 </ul>
             </div>
         </div>

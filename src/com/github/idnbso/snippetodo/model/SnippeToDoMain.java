@@ -31,7 +31,7 @@ public class SnippeToDoMain
             ISnippeToDoDAO<Item> snippeToDoItemDB = SnippeToDoItemDAO.getInstance();
 
             // initialize database objects to be tested
-            User idan = new User(1, "Idan");
+//            User idan = new User(1, "Idan");
 //            Item itemFirst = new Item(1, 1, "test1");
 //            Item itemSecond = new Item(2, 1, "test2");
 //

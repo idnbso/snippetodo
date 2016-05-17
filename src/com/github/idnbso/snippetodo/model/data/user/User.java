@@ -3,8 +3,6 @@
  */
 package com.github.idnbso.snippetodo.model.data.user;
 
-import java.io.Serializable;
-
 import javax.persistence.*;
 
 /**
@@ -28,10 +26,28 @@ public class User
     private int id;
 
     /**
-     * The name of the user
+     * The email address of the user
      */
     @Column(nullable = false)
-    private String name;
+    private String email;
+
+    /**
+     * The first name of the user
+     */
+    @Column(nullable = false)
+    private String firstName;
+
+    /**
+     * The last name of the user
+     */
+    @Column(nullable = false)
+    private String lastName;
+
+    /**
+     * The password of the user
+     */
+    @Column(nullable = false)
+    private String password;
 
     /**
      * User class default constructor.
@@ -46,13 +62,55 @@ public class User
      * in the database.
      * 
      * @param id The id of the user in database items table
-     * @param name The name of the user
+     * TODO
      */
-    public User(int id, String name)
+    public User(int id, String email, String firstName, String lastName, String password)
     {
-        super();
-        this.setId(id);
-        this.setName(name);
+        setId(id);
+        setEmail(email);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setPassword(password);
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
     }
 
     /**
@@ -66,16 +124,6 @@ public class User
     }
 
     /**
-     * Get the user name.
-     * 
-     * @return the name of the user
-     */
-    public String getName()
-    {
-        return name;
-    }
-
-    /**
      * Set the user's id.
      * 
      * @param id the id of the user to set
@@ -85,82 +133,139 @@ public class User
         this.id = id;
     }
 
-    /**
-     * Set the user name.
-     * 
-     * @param name the name to set for the user
-     */
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    /**
-     * hashCode method for User object.
-     * 
-     * @see java.lang.Object#hashCode()
-     */
     @Override
-    public int hashCode()
+    public boolean equals(Object o)
     {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
-
-    /**
-     * The equals method for user object.
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
+        if (this == o)
         {
             return true;
         }
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
-        if (!(obj instanceof User))
+
+        User user = (User) o;
+
+        if (getId() != user.getId())
         {
             return false;
         }
-        User other = (User) obj;
-        if (id != other.id)
+        if (!getEmail().equals(user.getEmail()))
         {
             return false;
         }
-        if (name == null)
-        {
-            if (other.name != null)
-            {
-                return false;
-            }
-        }
-        else if (!name.equals(other.name))
+        if (!getFirstName().equals(user.getFirstName()))
         {
             return false;
         }
-        return true;
+        if (!getLastName().equals(user.getLastName()))
+        {
+            return false;
+        }
+        return getPassword().equals(user.getPassword());
+
     }
 
-    /**
-     * toString method for the User object which consists of all of its
-     * properties: id and name.
-     * 
-     * @see java.lang.Object#toString()
-     */
+    @Override
+    public int hashCode()
+    {
+        int result = getId();
+        result = 31 * result + getEmail().hashCode();
+        result = 31 * result + getFirstName().hashCode();
+        result = 31 * result + getLastName().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        return result;
+    }
+
     @Override
     public String toString()
     {
-        StringBuilder builder = new StringBuilder();
-        builder.append("User [id=").append(id).append(", name=").append(name).append("]");
-        return builder.toString();
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("id=").append(id);
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
+//    /**
+//     * Set the user name.
+//     *
+//     * @param name the name to set for the user
+//     */
+//    public void setName(String name)
+//    {
+//        this.name = name;
+//    }
+//
+//    /**
+//     * hashCode method for User object.
+//     *
+//     * @see java.lang.Object#hashCode()
+//     */
+//    @Override
+//    public int hashCode()
+//    {
+//        final int prime = 31;
+//        int result = 1;
+//        result = prime * result + id;
+//        result = prime * result + ((name == null) ? 0 : name.hashCode());
+//        return result;
+//    }
+//
+//    /**
+//     * The equals method for user object.
+//     *
+//     * @see java.lang.Object#equals(java.lang.Object)
+//     */
+//    @Override
+//    public boolean equals(Object obj)
+//    {
+//        if (this == obj)
+//        {
+//            return true;
+//        }
+//        if (obj == null)
+//        {
+//            return false;
+//        }
+//        if (!(obj instanceof User))
+//        {
+//            return false;
+//        }
+//        User other = (User) obj;
+//        if (id != other.id)
+//        {
+//            return false;
+//        }
+//        if (name == null)
+//        {
+//            if (other.name != null)
+//            {
+//                return false;
+//            }
+//        }
+//        else if (!name.equals(other.name))
+//        {
+//            return false;
+//        }
+//        return true;
+//    }
+//
+//    /**
+//     * toString method for the User object which consists of all of its
+//     * properties: id and name.
+//     *
+//     * @see java.lang.Object#toString()
+//     */
+//    @Override
+//    public String toString()
+//    {
+//        StringBuilder builder = new StringBuilder();
+//        builder.append("User [id=").append(id).append(", name=").append(name).append("]");
+//        return builder.toString();
+//    }
 
 }
