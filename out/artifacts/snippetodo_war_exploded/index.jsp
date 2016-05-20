@@ -1,12 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"
+         import="javax.servlet.http.*" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SnippeToDo Homepage</title>
     <link rel="stylesheet" type="text/css" media="all"
           href="${pageContext.request.contextPath}/css/bootstrap.css">
-    <link rel="stylesheet" media="all" href="${pageContext.request.contextPath}/css/snippetodo.css">
-    <link rel="stylesheet" media="all" href="${pageContext.request.contextPath}/css/homepage.css">
+    <link rel="stylesheet" media="all" href="${pageContext.request.contextPath}/css/client.css">
+    <link rel="stylesheet" media="all" href="${pageContext.request.contextPath}/css/index.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700'
           rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet'
@@ -22,7 +23,6 @@
                 <a href="/" class="navbar-brand">
                     SNIPPEToDo
                 </a>
-
                 <button type="button" class="navbar-toggle"
                         data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -96,11 +96,6 @@
                                    id="loginInputPassword" name="loginInputPassword"
                                    placeholder="Password"/>
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"/> Remember Me
-                            </label>
-                        </div>
                     </div>
                 </form>
             </div>
@@ -110,7 +105,9 @@
                         data-dismiss="modal">
                     Close
                 </button>
-                <button id="loginButton" type="button" class="btn btn-primary">
+                <button id="loginButton" type="button" class="btn btn-primary"
+                        data-loading-text="<span class='glyphicon glyphicon-refresh
+                        glyphicon-refresh-animate'></span> Logging in">
                     Login
                 </button>
             </div>
@@ -171,7 +168,9 @@
                         data-dismiss="modal">
                     Close
                 </button>
-                <button id="registerButton" type="button" class="btn btn-primary">
+                <button id="registerButton" type="button" class="btn btn-primary"
+                        data-loading-text="<span class='glyphicon glyphicon-refresh
+                        glyphicon-refresh-animate'></span> Processing">
                     Register me
                 </button>
             </div>
@@ -186,7 +185,7 @@
         <div id="content" class="col-xs-12 col-md-8 col-md-offset-2">
             <div class="well main-well">
                 <h1 class="main-header">SNIPPEToDo</h1>
-                <h4>simple, organised, and visual way to be productive for developers.</h4>
+                <h4>A simple, organised, and visual way to be productive for developers.</h4>
                 <hr>
                 <button class="btn btn-default btn-lg" data-toggle="modal"
                         data-target="#signupModal">

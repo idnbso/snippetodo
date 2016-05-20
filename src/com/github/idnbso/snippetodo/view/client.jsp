@@ -5,7 +5,7 @@
     <title>SnippeToDo Client</title>
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/css/bootstrap.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/snippetodo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/client.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700'
           rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet'
@@ -20,27 +20,52 @@
     <div class="container">
         <div class="row">
             <div class="navbar-header">
-                <a href="/" class="navbar-brand">
+                <a href="${pageContext.request.contextPath}/" class="navbar-brand">
                     SNIPPEToDo
                 </a>
+
                 <button type="button" class="navbar-toggle"
                         data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <i class="glyphicon glyphicon-option-vertical" aria-hidden="true"></i>
+                </button>
+
+                <button type="button" class="navbar-toggle visible-xs visible-sm hidden"
+                        data-toggle="collapse" data-target=".navbar-links-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></i>
                 </button>
             </div>
+
+            <ul class="nav navbar-nav navbar-right collapse navbar-links-collapse">
+                <li><a href='#listTodoHeading' data-toggle="collapse"
+                       data-target=".navbar-links-collapse.in">To Do</a></li>
+                <li><a href='#listTodayHeading' data-toggle="collapse"
+                       data-target=".navbar-links-collapse.in">Today</a></li>
+                <li class="divider"></li>
+                <li><a href='#listDoingHeading' data-toggle="collapse"
+                       data-target=".navbar-links-collapse.in">Doing</a></li>
+                <li><a href='#listCheckHeading' data-toggle="collapse"
+                       data-target=".navbar-links-collapse.in">Check</a></li>
+                <li class="divider"></li>
+                <li><a href='#listDoneHeading' data-toggle="collapse"
+                       data-target=".navbar-links-collapse.in">Done</a></li>
+            </ul>
+
             <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
                 <li>
-                    <button id="logoutButton" class="btn homepage-btn">
-                        Logout <i class="glyphicon glyphicon-log-out"
-                                  aria-hidden="true"></i>
+                    <button id="logoutButton" class="btn homepage-btn"
+                            data-loading-text="<span class='glyphicon glyphicon-refresh
+                            glyphicon-refresh-animate'></span> Logging out
+                            <i class='glyphicon glyphicon-log-out' aria-hidden='true'>">
+                        Logout <i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>
                     </button>
                 </li>
-                <li><a href='about.html' data-raget="#" data-toggle="dropdown">About<span
-                        class="caret"></span></a>
-                    <ul class="dropdown-menu">
+                <li>
+                    <button class="btn homepage-btn" data-target="#" data-toggle="dropdown">
+                        About<span
+                            class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-about-menu">
                         <li><a href='story.html'>Our Story</a></li>
                         <li><a href='contact.html'>Contact Us</a></li>
                         <li class="divider"></li>
@@ -64,7 +89,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Add new item</h4>
+                <h4 class="modal-title">Add a new todo item</h4>
             </div>
             <div class="modal-body">
                 <form id="new-item-form" role="form" method="post">
@@ -84,7 +109,9 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close
                     </button>
-                    <button id="saveButton" type="button" class="btn btn-primary">Save
+                    <button id="saveButton" type="button" class="btn btn-primary"
+                            data-loading-text="<span class='glyphicon glyphicon-refresh
+                        glyphicon-refresh-animate'></span> Saving">Save
                     </button>
                 </div>
             </div><!-- /.modal-body -->
@@ -121,7 +148,9 @@
                     <button id="cancelEditButton" type="button" class="btn btn-default"
                             data-dismiss="modal">Cancel
                     </button>
-                    <button id="editFormButton" type="button" class="btn btn-primary">Save changes
+                    <button id="editFormButton" type="button" class="btn btn-primary"
+                            data-loading-text="<span class='glyphicon glyphicon-refresh
+                        glyphicon-refresh-animate'></span> Saving">Save changes
                     </button>
                 </div>
             </div><!-- /.modal-body -->
@@ -134,13 +163,12 @@
     <div class="row board-lists">
         <!-- to-do list -->
         <div class="board-list board-list-todo panel col-md-3 col-sm-6 col-xs-12">
-            <div class="panel-heading">
-                <h3 class="panel-title">
+            <div class="panel-heading"><span id="listTodoHeading"></span>
+                <h3 class="panel-title">todo
                     <button type="button" class="panel-list-todo-btn" data-toggle="modal"
                             data-target="#newItemModal">
                     <span id="addButton" aria-hidden="true" title="Add new item"
-                          class="glyphicon glyphicon-plus-sign"></span>
-                    </button>todo
+                          class="glyphicon glyphicon-plus-sign"></span></button>
                 </h3>
             </div>
             <!-- List group -->
@@ -154,7 +182,8 @@
         <!-- today list -->
         <div class="board-list panel col-md-3 col-sm-6 col-xs-12">
             <!-- Default panel contents -->
-            <div class="panel-heading"><h3 class="panel-title">today</h3></div>
+            <div class="panel-heading"><span id="listTodayHeading"></span>
+                <h3 class="panel-title">today</h3></div>
             <!-- List group -->
             <div class="panel-body">
                 <ul id="listToday" class="list-group">
@@ -166,7 +195,8 @@
         <!-- doing list -->
         <div class="board-list panel col-md-3 col-sm-6 col-xs-12">
             <!-- Default panel contents -->
-            <div class="panel-heading"><h3 class="panel-title">doing</h3></div>
+            <div class="panel-heading"><span id="listDoingHeading"></span>
+                <h3 class="panel-title">doing</h3></div>
             <!-- List group -->
             <div class="panel-body">
                 <ul id="listDoing" class="list-group">
@@ -178,7 +208,8 @@
         <!-- check list -->
         <div class="board-list panel col-md-3 col-sm-6 col-xs-12">
             <!-- Default panel contents -->
-            <div class="panel-heading"><h3 class="panel-title">check</h3></div>
+            <div class="panel-heading"><span id="listCheckHeading"></span>
+                <h3 class="panel-title">check</h3></div>
             <!-- List group -->
             <div class="panel-body">
                 <ul id="listCheck" class="list-group">
@@ -190,7 +221,8 @@
         <!-- done list -->
         <div class="board-list panel col-xs-12">
             <!-- Default panel contents -->
-            <div class="panel-heading"><h3 class="panel-title">done</h3></div>
+            <div class="panel-heading"><span id="listDoneHeading"></span>
+                <h3 class="panel-title">done</h3></div>
             <!-- List group -->
             <div class="panel-body">
                 <ul id="listDone" class="list-group">
@@ -206,7 +238,7 @@
         integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk="
         crossorigin="anonymous"></script>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/js/snippetodo.js"></script>
+        src="${pageContext.request.contextPath}/js/client.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 

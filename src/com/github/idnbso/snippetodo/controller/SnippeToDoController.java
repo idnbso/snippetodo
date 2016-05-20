@@ -11,10 +11,7 @@ import com.google.gson.Gson;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
 import java.lang.reflect.Type;
@@ -29,11 +26,8 @@ public class SnippeToDoController extends HttpServlet
 {
     private ISnippeToDoDAO<User> snippeToDoUsersDB;
     private ISnippeToDoDAO<Item> snippeToDoItemsDB;
-
-    private int currentLastItemId = 0; // make a session attribute
     private ArrayList<String> lists = new ArrayList<>();
-
-    static final Comparator<Item> POSITION_INDEX_ORDER =
+    private static final Comparator<Item> POSITION_INDEX_ORDER =
             (t1, t2) -> t1.getPositionIndex() - t2.getPositionIndex(); // ascending order
 
     @Override
@@ -54,7 +48,6 @@ public class SnippeToDoController extends HttpServlet
         {
             System.out.println(e.getMessage());
         }
-
     }
 
     @Override
@@ -64,6 +57,7 @@ public class SnippeToDoController extends HttpServlet
         doGet(request, response);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException
@@ -162,11 +156,30 @@ public class SnippeToDoController extends HttpServlet
                     createNewUser(request, response);
                     break;
                 }
+                case "/initlogin":
+                {
+                    // get the current user's email from a saved cookie
+                    Cookie[] cookies = request.getCookies();
+                    String userEmail = "";
+                    if (cookies != null)
+                    {
+                        for (Cookie cookie : cookies)
+                        {
+                            String cookieValue = cookie.getValue();
+                            if (cookie.getName().equals("userEmail") &&
+                                    cookieValue.length() > 0)
+                            {
+                                userEmail = cookieValue;
+                            }
+                        }
+                    }
+
+                    writeTextResponse(response, userEmail);
+                    break;
+                }
                 case "/login":
                 {
                     loginUser(request, response);
-                    response.sendRedirect("/client/");
-
                     break;
                 }
                 case "/logout":
@@ -203,6 +216,7 @@ public class SnippeToDoController extends HttpServlet
                 // get all of the items from database and organize them according to lists
                 List<Item> items = snippeToDoItemsDB.getAll();
                 List<ArrayList<Item>> currentUserItemsLists = new ArrayList<>();
+                int currentLastItemId = 0;
 
                 for (int index = 0; index < lists.size(); index++)
                 {
@@ -213,7 +227,11 @@ public class SnippeToDoController extends HttpServlet
                 for (Item item : items)
                 {
                     int id = item.getId();
-                    currentLastItemId = currentLastItemId < id ? id : currentLastItemId;
+                    if (currentLastItemId < id)
+                    {
+                        currentLastItemId = id;
+                        request.getSession().setAttribute("currentLastItemId", currentLastItemId);
+                    }
 
                     if (item.getUserId() == user.getId())
                     {
@@ -230,7 +248,6 @@ public class SnippeToDoController extends HttpServlet
                     request.getSession().setAttribute(lists.get(index), list);
                 }
             }
-
         }
         catch (SnippeToDoPlatformException e)
         {
@@ -261,7 +278,9 @@ public class SnippeToDoController extends HttpServlet
         String title = request.getParameter("item-title");
         String body = request.getParameter("item-body");
         int positionIndex = Integer.parseInt(request.getParameter("positionIndex"));
-        currentLastItemId++;
+        int currentLastItemId = Integer.parseInt(
+                request.getSession().getAttribute("currentLastItemId").toString()) + 1;
+        request.getSession().setAttribute("currentLastItemId", currentLastItemId);
         User currentUser = (User) request.getSession().getAttribute("user");
 
         // data for the response (view)
@@ -373,15 +392,24 @@ public class SnippeToDoController extends HttpServlet
     {
         String email = request.getParameter("loginInputEmail");
         String password = request.getParameter("loginInputPassword");
-        User user = getUserByEmail(email);
-        boolean isUserAuthenticated = authenticateUser(user, password);
-        if (isUserAuthenticated)
+        if (email != null && password != null)
         {
-            request.getSession().setAttribute("user", user);
-        }
-        else
-        {
-            // TODO: throw new exception with error message for the view with the response
+            email = email.trim();
+            password = password.trim();
+            User user = getUserByEmail(email);
+            boolean isUserAuthenticated = authenticateUser(user, password);
+            if (isUserAuthenticated)
+            {
+                Cookie cookieUserEmail = new Cookie("userEmail", email);
+                final int maxAgeOneDay = 86400;
+                cookieUserEmail.setMaxAge(maxAgeOneDay);
+                response.addCookie(cookieUserEmail);
+                request.getSession().setAttribute("user", user);
+            }
+            else
+            {
+                // TODO: throw new exception with error message for the view with the response
+            }
         }
     }
 

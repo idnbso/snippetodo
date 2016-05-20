@@ -10,10 +10,11 @@ hr {
 .main-header {
     font-family: 'Press Start 2P', cursive;
     font-weight: 700;
-    font-size: 3em;
+    font-size: 2em;
 }
 
 .main-well {
+    margin-left: 15px;
     background: rgb(30, 30, 30);
     color: #dddddd;
     font-family: 'Consolas', sans-serif;
@@ -42,6 +43,12 @@ hr {
     padding-top: 20%;
     padding-bottom: 50%;
 }
+
+.row {
+    padding-right: 0px;
+    margin-right: 0px;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 
@@ -73,7 +80,7 @@ body {
     }
 
     .footer {
-        padding-left: 50px;
+        padding-left: 20px;
         height: 400px;
     }
 }

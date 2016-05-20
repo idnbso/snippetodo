@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="hibernate-c3p0-3.6.10.Final">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/hibernate-c3p0-3.6.10.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -8,14 +8,16 @@
             com.mysql.jdbc.Driver
         </property>
 
+        <!-- Microsoft Azure's MySQL server Configuration -->
         <!--<property name="hibernate.connection.url">-->
-            <!--jdbc:mysql://eu-cdbr-azure-west-d.cloudapp.net:3306/snippetodo-->
+        <!--jdbc:mysql://us-cdbr-azure-central-a.cloudapp.net:3306/snippetodo-->
         <!--</property>-->
-        <!--<property name="hibernate.connection.username">b337c97dcddfc5</property>-->
-        <!--<property name="hibernate.connection.password">808c4de6</property>-->
+        <!--<property name="hibernate.connection.username">b2a9c3520dd182</property>-->
+        <!--<property name="hibernate.connection.password">d42b3d59</property>-->
 
+        <!-- Local MySQL Configuration -->
         <property name="hibernate.connection.url">
-        jdbc:mysql://localhost:3306/snippetodo
+            jdbc:mysql://localhost:3306/snippetodo
         </property>
         <property name="hibernate.connection.username">idan</property>
         <property name="hibernate.connection.password">loloftw</property>
@@ -23,6 +25,17 @@
         <property name="show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- c3p0 configuration -->
+        <property name="hibernate.c3p0.min_size">4</property>
+        <property name="hibernate.c3p0.max_size">4</property>
+        <property name="hibernate.c3p0.acquire_increment">1</property>
+        <property name="hibernate.c3p0.idle_test_period">250</property>
+        <property name="hibernate.c3p0.max_statements">50</property>
+        <property name="hibernate.c3p0.timeout">250</property>
+        <property name="hibernate.connection.provider_class">
+            org.hibernate.connection.C3P0ConnectionProvider
+        </property>
 
         <mapping class="com.github.idnbso.snippetodo.model.data.user.User"/>
         <mapping class="com.github.idnbso.snippetodo.model.data.item.Item"/>
