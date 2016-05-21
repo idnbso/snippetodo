@@ -1,5 +1,7 @@
 package com.github.idnbso.snippetodo.controller;
 
+import com.github.idnbso.snippetodo.controller.facebook.FBConnection;
+import com.github.idnbso.snippetodo.controller.facebook.FBGraph;
 import com.github.idnbso.snippetodo.model.ISnippeToDoDAO;
 import com.github.idnbso.snippetodo.model.SnippeToDoPlatformException;
 import com.github.idnbso.snippetodo.model.data.item.Item;
@@ -13,6 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.*;
 import java.lang.reflect.Type;
 
@@ -66,130 +70,175 @@ public class SnippeToDoController extends HttpServlet
         {
             String path = request.getPathInfo();
             RequestDispatcher dispatcher = null;
-
-            switch (path)
+            if (path != null)
             {
-                case "/":
+                switch (path)
                 {
-                    User user = (User) request.getSession().getAttribute("user");
-                    if (user != null)
+                    case "/":
                     {
-                        initLists(request, user);
-                        dispatcher = getServletContext().getRequestDispatcher("/client.jsp");
-                        dispatcher.forward(request, response);
-                    }
-
-                    break;
-                }
-                case "/initlisttodo":
-                {
-                    ArrayList<Item> listTodo =
-                            (ArrayList<Item>) request.getSession().getAttribute("listTodo");
-                    String jsonResponse = new Gson().toJson(listTodo);
-                    writeJsonResponse(response, jsonResponse);
-                    break;
-                }
-                case "/initlisttoday":
-                {
-                    ArrayList<Item> listToday =
-                            (ArrayList<Item>) request.getSession().getAttribute("listToday");
-                    String jsonResponse = new Gson().toJson(listToday);
-                    writeJsonResponse(response, jsonResponse);
-                    break;
-                }
-                case "/initlistdoing":
-                {
-                    ArrayList<Item> listDoing =
-                            (ArrayList<Item>) request.getSession().getAttribute("listDoing");
-                    String jsonResponse = new Gson().toJson(listDoing);
-                    writeJsonResponse(response, jsonResponse);
-                    break;
-                }
-                case "/initlistcheck":
-                {
-                    ArrayList<Item> listCheck =
-                            (ArrayList<Item>) request.getSession().getAttribute("listCheck");
-                    String jsonResponse = new Gson().toJson(listCheck);
-                    writeJsonResponse(response, jsonResponse);
-                    break;
-                }
-                case "/initlistdone":
-                {
-                    ArrayList<Item> listDone =
-                            (ArrayList<Item>) request.getSession().getAttribute("listDone");
-                    String jsonResponse = new Gson().toJson(listDone);
-                    writeJsonResponse(response, jsonResponse);
-                    break;
-                }
-                case "/newitem":
-                {
-                    createNewItem(request, response);
-                    break;
-                }
-                case "/getitem":
-                {
-                    getItem(request, response);
-                    break;
-                }
-                case "/deleteitem":
-                {
-                    deleteItem(request, response);
-                    break;
-                }
-                case "/updateitem":
-                {
-                    updateItem(request, response);
-                    break;
-                }
-                case "/updateitemposition":
-                {
-                    updateItemPosition(request, response);
-                    break;
-                }
-                case "/updatelist":
-                {
-                    updateList(request, response);
-                    break;
-                }
-                case "/newuser":
-                {
-                    createNewUser(request, response);
-                    break;
-                }
-                case "/initlogin":
-                {
-                    // get the current user's email from a saved cookie
-                    Cookie[] cookies = request.getCookies();
-                    String userEmail = "";
-                    if (cookies != null)
-                    {
-                        for (Cookie cookie : cookies)
+                        User user = (User) request.getSession().getAttribute("user");
+                        if (user != null)
                         {
-                            String cookieValue = cookie.getValue();
-                            if (cookie.getName().equals("userEmail") &&
-                                    cookieValue.length() > 0)
+                            initLists(request, user);
+                            dispatcher = getServletContext().getRequestDispatcher("/client.jsp");
+                            dispatcher.forward(request, response);
+                        }
+
+                        break;
+                    }
+                    case "/initlisttodo":
+                    {
+                        ArrayList<Item> listTodo =
+                                (ArrayList<Item>) request.getSession().getAttribute("listTodo");
+                        String jsonResponse = new Gson().toJson(listTodo);
+                        writeJsonResponse(response, jsonResponse);
+                        break;
+                    }
+                    case "/initlisttoday":
+                    {
+                        ArrayList<Item> listToday =
+                                (ArrayList<Item>) request.getSession().getAttribute("listToday");
+                        String jsonResponse = new Gson().toJson(listToday);
+                        writeJsonResponse(response, jsonResponse);
+                        break;
+                    }
+                    case "/initlistdoing":
+                    {
+                        ArrayList<Item> listDoing =
+                                (ArrayList<Item>) request.getSession().getAttribute("listDoing");
+                        String jsonResponse = new Gson().toJson(listDoing);
+                        writeJsonResponse(response, jsonResponse);
+                        break;
+                    }
+                    case "/initlistcheck":
+                    {
+                        ArrayList<Item> listCheck =
+                                (ArrayList<Item>) request.getSession().getAttribute("listCheck");
+                        String jsonResponse = new Gson().toJson(listCheck);
+                        writeJsonResponse(response, jsonResponse);
+                        break;
+                    }
+                    case "/initlistdone":
+                    {
+                        ArrayList<Item> listDone =
+                                (ArrayList<Item>) request.getSession().getAttribute("listDone");
+                        String jsonResponse = new Gson().toJson(listDone);
+                        writeJsonResponse(response, jsonResponse);
+                        break;
+                    }
+                    case "/newitem":
+                    {
+                        createNewItem(request, response);
+                        break;
+                    }
+                    case "/getitem":
+                    {
+                        getItem(request, response);
+                        break;
+                    }
+                    case "/deleteitem":
+                    {
+                        deleteItem(request, response);
+                        break;
+                    }
+                    case "/updateitem":
+                    {
+                        updateItem(request, response);
+                        break;
+                    }
+                    case "/updateitemposition":
+                    {
+                        updateItemPosition(request, response);
+                        break;
+                    }
+                    case "/updatelist":
+                    {
+                        updateList(request, response);
+                        break;
+                    }
+                    case "/newuser":
+                    {
+                        // data from the request (view)
+                        String email = request.getParameter("signupEmail");
+                        String firstName = request.getParameter("signupFirstName");
+                        String lastName = request.getParameter("signupLastName");
+                        String password = request.getParameter("signupPassword");
+
+                        createNewUser(email, firstName, lastName, password);
+                        break;
+                    }
+                    case "/initlogin":
+                    {
+                        // get the current user's email from a saved cookie
+                        Cookie[] cookies = request.getCookies();
+                        String userEmail = "";
+                        if (cookies != null)
+                        {
+                            for (Cookie cookie : cookies)
                             {
-                                userEmail = cookieValue;
+                                String cookieValue = cookie.getValue();
+                                if (cookie.getName().equals("userEmail") &&
+                                        cookieValue.length() > 0)
+                                {
+                                    userEmail = cookieValue;
+                                }
                             }
                         }
-                    }
 
-                    writeTextResponse(response, userEmail);
-                    break;
+                        writeTextResponse(response, userEmail);
+                        break;
+                    }
+                    case "/login":
+                    {
+                        loginUser(request, response);
+                        break;
+                    }
+                    case "/facebooklogin":
+                    {
+                        String code = request.getParameter("code");
+                        if (code == null || code.equals(""))
+                        {
+                            throw new RuntimeException(
+                                    "ERROR: Didn't get code parameter in callback.");
+                        }
+                        FBConnection fbConnection = new FBConnection();
+                        String accessToken = fbConnection.getAccessToken(code);
+
+                        FBGraph fbGraph = new FBGraph(accessToken);
+                        String graph = fbGraph.getFBGraph();
+                        Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
+                        String strUserId = fbProfileData.get("id");
+
+                        int userId = 0;
+
+                        if (strUserId != null)
+                        {
+                            strUserId = strUserId.substring(0, 9);
+                            // add try and catch for NumberFormatException
+                            userId = Integer.parseInt(strUserId);
+                        }
+
+                        User user = snippeToDoUsersDB.get(userId);
+                        if (user == null)
+                        {
+                            String firstName = fbProfileData.get("firstName");
+                            String lastName = fbProfileData.get("lastName");
+                            user = new User(userId, null, firstName, lastName, null);
+                            snippeToDoUsersDB.create(user);
+                        }
+                        request.getSession().setAttribute("user", user);
+                        response.sendRedirect("/client/");
+                        break;
+                    }
+                    case "/logout":
+                    {
+                        HttpSession session = request.getSession();
+                        session.removeAttribute("user");
+                        session.invalidate();
+                        break;
+                    }
+                    default:
                 }
-                case "/login":
-                {
-                    loginUser(request, response);
-                    break;
-                }
-                case "/logout":
-                {
-                    HttpSession session = request.getSession();
-                    session.removeAttribute("user");
-                    session.invalidate();
-                    break;
-                }
-                default:
             }
         }
         catch (IOException | SnippeToDoPlatformException e)
@@ -365,15 +414,9 @@ public class SnippeToDoController extends HttpServlet
         writeJsonResponse(response, jsonResponse);
     }
 
-    private void createNewUser(HttpServletRequest request, HttpServletResponse response)
+    private void createNewUser(String email, String firstName, String lastName, String password)
             throws SnippeToDoPlatformException, IOException
     {
-        // data from the request (view)
-        String email = request.getParameter("signupEmail");
-        String firstName = request.getParameter("signupFirstName");
-        String lastName = request.getParameter("signupLastName");
-        String password = request.getParameter("signupPassword");
-
         // validate user data is not already exist
         boolean isUserExist = getUserByEmail(email) != null;
 

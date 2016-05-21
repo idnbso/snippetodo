@@ -608,12 +608,22 @@
         $this.button('loading');
 
         $.get("logout", function(responseJson) {
+            //fbLogoutUser();
             window.open("http://localhost:8080/", "_self");
             //window.open("http://snippetodo.azurewebsites.net/", "_self");
         });
 
         event.preventDefault(); // Important! Prevents submitting the form.
     });
+
+    function fbLogoutUser() {
+        FB.getLoginStatus(function(response) {
+            if (response && response.status === 'connected') {
+                FB.logout(function(response) {
+                });
+            }
+        });
+    }
 
     // update the list in the database according to its current order in the Local Storage.
     function updateList(order) {
@@ -653,6 +663,30 @@
             '<li><a class="deleteButton" href="#">Delete</a></li>' +
             '</ul></div></div></li>';
     }
+
+    /**
+     * Facebook SDK setup for logout
+     */
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '{your-app-id}',
+            cookie: true,  // enable cookies to allow the server to access the session
+            xfbml: true,  // parse social plugins on this page
+            version: 'v2.6' // use graph api version 2.5
+        });
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=955639281222919";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
     // fixes Bootstrap 3.x bug of navbar when modal is open
     $(document).ready(function() {

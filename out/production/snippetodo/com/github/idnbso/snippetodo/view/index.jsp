@@ -1,5 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"
-         import="javax.servlet.http.*" %>
+         import="com.github.idnbso.snippetodo.controller.facebook.*" %>
+<%
+    FBConnection fbConnection = new FBConnection();
+%>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,6 +86,9 @@
             </div>
             <!-- Modal Body -->
             <div class="modal-body">
+                <a id="fbLoginButton" href="<%=fbConnection.getFBAuthUrl()%>">
+                    <img  src="./img/facebookloginbutton.png"/>
+                </a>
                 <form id="login-form" role="form" method="post">
                     <div class="form-group">
                         <label for="loginInputEmail">Email address</label>
@@ -105,6 +112,11 @@
                         data-dismiss="modal">
                     Close
                 </button>
+                <%--<button id="facebookLoginButton" type="button" class="btn btn-primary"--%>
+                <%--data-loading-text="<span class='glyphicon glyphicon-refresh--%>
+                <%--glyphicon-refresh-animate'></span> Logging in">--%>
+                <%--Facebook Login--%>
+                <%--</button>--%>
                 <button id="loginButton" type="button" class="btn btn-primary"
                         data-loading-text="<span class='glyphicon glyphicon-refresh
                         glyphicon-refresh-animate'></span> Logging in">

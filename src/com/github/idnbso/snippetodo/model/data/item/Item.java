@@ -25,13 +25,11 @@ public class Item implements Serializable
     /**
      * The Item's user id number which is equivalent to the user created the item.
      */
-    @Column(nullable = false)
     private int userId;
 
     /**
      * The Item's list id number which the item resides in the client.
      */
-    @Column(nullable = false)
     private int listId;
 
     /**

@@ -22,31 +22,26 @@ public class User
      * duplicates.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /**
      * The email address of the user
      */
-    @Column(nullable = false)
     private String email;
 
     /**
      * The first name of the user
      */
-    @Column(nullable = false)
     private String firstName;
 
     /**
      * The last name of the user
      */
-    @Column(nullable = false)
     private String lastName;
 
     /**
      * The password of the user
      */
-    @Column(nullable = false)
     private String password;
 
     /**
