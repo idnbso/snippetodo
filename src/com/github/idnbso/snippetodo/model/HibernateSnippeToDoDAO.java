@@ -16,10 +16,9 @@ import com.github.idnbso.snippetodo.model.data.item.Item;
 import com.github.idnbso.snippetodo.model.data.user.User;
 
 /**
- * The HibernateSnippeToDoDAO class implements the Data Access Object design
- * pattern, using Hibernate 3 with the MySQL database, for the use of CRUD
- * operations regarding ToDo items and registered users of the SnippeToDo
- * application.
+ * The HibernateSnippeToDoDAO class implements the Data Access Object design pattern, using
+ * Hibernate 3 with the MySQL database, for the use of CRUD operations regarding ToDo items and
+ * registered users of the SnippeToDo application.
  *
  * @author Idan Busso
  * @author Shani Kahila
@@ -33,8 +32,8 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
     private SessionFactory sessionFactory;
 
     /**
-     * HibernateSnippeToDoDAO protected constructor for inheriting classes to
-     * initialize the session factory.
+     * HibernateSnippeToDoDAO protected constructor for inheriting classes to initialize the session
+     * factory.
      *
      * @throws SnippeToDoPlatformException
      */
@@ -55,8 +54,8 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
      * Create a new entity to be added to the database.
      *
      * @param entity The entity to be added to the database
-     * @see ISnippeToDoDAO#create(T)
      * @throws SnippeToDoPlatformException
+     * @see ISnippeToDoDAO#create(T)
      */
     public void create(final T entity) throws SnippeToDoPlatformException
     {
@@ -96,8 +95,8 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
      * Delete an existing entity from the database by its id number.
      *
      * @param id The id number of the entity to be deleted from the database
-     * @see ISnippeToDoDAO#deleteById(int)
      * @throws SnippeToDoPlatformException
+     * @see ISnippeToDoDAO#deleteById(int)
      */
     public void deleteById(final int id) throws SnippeToDoPlatformException
     {
@@ -140,8 +139,8 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
      * Delete an existing entity from the database.
      *
      * @param entity The entity to be deleted from the database
-     * @see ISnippeToDoDAO#delete(T)
      * @throws SnippeToDoPlatformException
+     * @see ISnippeToDoDAO#delete(T)
      */
     public void delete(final T entity) throws SnippeToDoPlatformException
     {
@@ -180,9 +179,9 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
     /**
      * Get an array of all of the entities from the database.
      *
-     * @see ISnippeToDoDAO#getAll()
-     * @throws SnippeToDoPlatformException
      * @return the array of all of the entities from the database
+     * @throws SnippeToDoPlatformException
+     * @see ISnippeToDoDAO#getAll()
      */
     @SuppressWarnings("unchecked")
     public List<T> getAll() throws SnippeToDoPlatformException
@@ -225,9 +224,9 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
      * Get a specific entity reference from the database.
      *
      * @param id The id number of the entity to be retrieved from the database
-     * @see ISnippeToDoDAO#get(int)
-     * @throws SnippeToDoPlatformException
      * @return the specific entity reference from the database
+     * @throws SnippeToDoPlatformException
+     * @see ISnippeToDoDAO#get(int)
      */
     @SuppressWarnings("unchecked")
     public T get(final int id) throws SnippeToDoPlatformException
@@ -271,9 +270,9 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
      * Update an existing entity from the database.
      *
      * @param entity The entity to be updated in the database
-     * @see ISnippeToDoDAO#update(T)
-     * @throws SnippeToDoPlatformException
      * @return the updated entity reference from the database
+     * @throws SnippeToDoPlatformException
+     * @see ISnippeToDoDAO#update(T)
      */
     @SuppressWarnings("unchecked")
     public T update(final T entity) throws SnippeToDoPlatformException
@@ -314,8 +313,8 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
     }
 
     /**
-     * Set the database class to be used when constructing this generic abstract
-     * class, for the particular storing of the specified  class.
+     * Set the database class to be used when constructing this generic abstract class, for the
+     * particular storing of the specified  class.
      *
      * @param databaseClass the database class to be used by hibernate
      */

@@ -13,7 +13,10 @@ public class FBConnection
 {
     private static final String FB_APP_ID = "955639281222919";
     private static final String FB_APP_SECRET = "02040901b549c57fd003fc2f082257be";
-    private static final String REDIRECT_URI = "http://localhost:8080/client/facebooklogin";
+//    private static final String REDIRECT_URI =
+//            "http://localhost:8080/client/facebooklogin";
+    private static final String REDIRECT_URI =
+            "http://snippetodo.azurewebsites.net/client/facebooklogin";
 
     private static String accessToken = "";
 

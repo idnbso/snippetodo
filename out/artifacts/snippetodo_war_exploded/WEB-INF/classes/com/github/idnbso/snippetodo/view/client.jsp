@@ -1,17 +1,17 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page pageEncoding="UTF-8" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SnippeToDo Client</title>
     <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/css/bootstrap.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/client.css">
+          href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/client.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700'
           rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet'
           type='text/css'>
     <script type="text/javascript"
-            src="${pageContext.request.contextPath}/js/Sortable.min.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/Sortable.min.js"></script>
 </head>
 <body>
 
@@ -38,17 +38,17 @@
             </div>
 
             <ul class="nav navbar-nav navbar-right collapse navbar-links-collapse">
-                <li><a href='#listTodoHeading' data-toggle="collapse"
+                <li><a class="listLink" href='#listTodoHeading' data-toggle="collapse"
                        data-target=".navbar-links-collapse.in">To Do</a></li>
-                <li><a href='#listTodayHeading' data-toggle="collapse"
+                <li><a class="listLink" href='#listTodayHeading' data-toggle="collapse"
                        data-target=".navbar-links-collapse.in">Today</a></li>
                 <li class="divider"></li>
-                <li><a href='#listDoingHeading' data-toggle="collapse"
+                <li><a class="listLink" href='#listDoingHeading' data-toggle="collapse"
                        data-target=".navbar-links-collapse.in">Doing</a></li>
-                <li><a href='#listCheckHeading' data-toggle="collapse"
+                <li><a class="listLink" href='#listCheckHeading' data-toggle="collapse"
                        data-target=".navbar-links-collapse.in">Check</a></li>
                 <li class="divider"></li>
-                <li><a href='#listDoneHeading' data-toggle="collapse"
+                <li><a class="listLink" href='#listDoneHeading' data-toggle="collapse"
                        data-target=".navbar-links-collapse.in">Done</a></li>
             </ul>
 
@@ -238,9 +238,9 @@
         integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk="
         crossorigin="anonymous"></script>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/js/client.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/client.js"></script>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 
 </body>
 </html>

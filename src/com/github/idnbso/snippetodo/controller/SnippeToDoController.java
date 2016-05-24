@@ -15,8 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.*;
 import java.lang.reflect.Type;
 
@@ -69,7 +67,7 @@ public class SnippeToDoController extends HttpServlet
         try
         {
             String path = request.getPathInfo();
-            RequestDispatcher dispatcher = null;
+            RequestDispatcher dispatcher;
             if (path != null)
             {
                 switch (path)
@@ -244,7 +242,8 @@ public class SnippeToDoController extends HttpServlet
         catch (IOException | SnippeToDoPlatformException e)
         {
             // TODO: replace with message for an alert in the view
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+//            throw new RuntimeException("ERROR: run time errors", e.getCause());
         }
     }
 
@@ -279,7 +278,6 @@ public class SnippeToDoController extends HttpServlet
                     if (currentLastItemId < id)
                     {
                         currentLastItemId = id;
-                        request.getSession().setAttribute("currentLastItemId", currentLastItemId);
                     }
 
                     if (item.getUserId() == user.getId())
@@ -296,6 +294,8 @@ public class SnippeToDoController extends HttpServlet
                     Collections.sort(list, POSITION_INDEX_ORDER);
                     request.getSession().setAttribute(lists.get(index), list);
                 }
+
+                request.getSession().setAttribute("currentLastItemId", currentLastItemId);
             }
         }
         catch (SnippeToDoPlatformException e)
@@ -321,8 +321,9 @@ public class SnippeToDoController extends HttpServlet
     }
 
     private void createNewItem(HttpServletRequest request, HttpServletResponse response)
-            throws SnippeToDoPlatformException, IOException
+            throws SnippeToDoPlatformException, IOException, RuntimeException
     {
+
         // data from the request (view)
         String title = request.getParameter("item-title");
         String body = request.getParameter("item-body");
@@ -468,7 +469,8 @@ public class SnippeToDoController extends HttpServlet
         User user = null;
         for (User currentUser : allUsers)
         {
-            if (currentUser.getEmail().equals(email))
+            String currentUserEmail = currentUser.getEmail();
+            if (currentUserEmail != null && currentUserEmail.equals(email))
             {
                 user = currentUser;
                 break;

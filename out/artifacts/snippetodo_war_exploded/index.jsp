@@ -9,9 +9,9 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SnippeToDo Homepage</title>
     <link rel="stylesheet" type="text/css" media="all"
-          href="${pageContext.request.contextPath}/css/bootstrap.css">
-    <link rel="stylesheet" media="all" href="${pageContext.request.contextPath}/css/client.css">
-    <link rel="stylesheet" media="all" href="${pageContext.request.contextPath}/css/index.css">
+          href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
+    <link rel="stylesheet" media="all" href="${pageContext.request.contextPath}/resources/css/client.css">
+    <link rel="stylesheet" media="all" href="${pageContext.request.contextPath}/resources/css/index.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700'
           rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet'
@@ -86,8 +86,8 @@
             </div>
             <!-- Modal Body -->
             <div class="modal-body">
-                <a id="fbLoginButton" href="<%=fbConnection.getFBAuthUrl()%>">
-                    <img  src="./img/facebookloginbutton.png"/>
+                <a href="<%=fbConnection.getFBAuthUrl()%>">
+                    <img id="fbLoginButton" src="./resources/img/facebookloginbutton.png"/>
                 </a>
                 <form id="login-form" role="form" method="post">
                     <div class="form-group">
@@ -112,11 +112,6 @@
                         data-dismiss="modal">
                     Close
                 </button>
-                <%--<button id="facebookLoginButton" type="button" class="btn btn-primary"--%>
-                <%--data-loading-text="<span class='glyphicon glyphicon-refresh--%>
-                <%--glyphicon-refresh-animate'></span> Logging in">--%>
-                <%--Facebook Login--%>
-                <%--</button>--%>
                 <button id="loginButton" type="button" class="btn btn-primary"
                         data-loading-text="<span class='glyphicon glyphicon-refresh
                         glyphicon-refresh-animate'></span> Logging in">
@@ -261,8 +256,8 @@
         integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk="
         crossorigin="anonymous"></script>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/js/index.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>
