@@ -162,7 +162,7 @@ public class SnippeToDoController extends HttpServlet
                         String lastName = request.getParameter("signupLastName");
                         String password = request.getParameter("signupPassword");
 
-                        createNewUser(email, firstName, lastName, password);
+                        createNewUser(request, email, firstName, lastName, password);
                         break;
                     }
                     case "/initlogin":
@@ -415,16 +415,21 @@ public class SnippeToDoController extends HttpServlet
         writeJsonResponse(response, jsonResponse);
     }
 
-    private void createNewUser(String email, String firstName, String lastName, String password)
+    private void createNewUser(HttpServletRequest request, String email, String firstName,
+                               String lastName, String password)
             throws SnippeToDoPlatformException, IOException
     {
         // validate user data is not already exist
-        boolean isUserExist = getUserByEmail(email) != null;
+        boolean isUserExist = getUserByEmail(request, email) != null;
 
         if (!isUserExist)
         {
+            int currentLastUserId =
+                    Integer.parseInt(
+                            request.getSession().getAttribute("currentLastUserId").toString());
+            int newUserId = currentLastUserId + 1;
             // data for the response (view)
-            User newUser = new User(1, email, firstName, lastName, password);
+            User newUser = new User(newUserId, email, firstName, lastName, password);
 
             // data for the database (model)
             snippeToDoUsersDB.create(newUser);
@@ -440,7 +445,7 @@ public class SnippeToDoController extends HttpServlet
         {
             email = email.trim();
             password = password.trim();
-            User user = getUserByEmail(email);
+            User user = getUserByEmail(request, email);
             boolean isUserAuthenticated = authenticateUser(user, password);
             if (isUserAuthenticated)
             {
@@ -463,20 +468,27 @@ public class SnippeToDoController extends HttpServlet
         return user != null && user.getPassword().equals(password);
     }
 
-    private User getUserByEmail(String email) throws SnippeToDoPlatformException
+    private User getUserByEmail(HttpServletRequest request, String email)
+            throws SnippeToDoPlatformException
     {
         List<User> allUsers = snippeToDoUsersDB.getAll();
+        int currentLastUserId = 1;
         User user = null;
         for (User currentUser : allUsers)
         {
             String currentUserEmail = currentUser.getEmail();
+            int id = currentUser.getId();
+            if (currentUserEmail != null && currentLastUserId < id)
+            {
+                currentLastUserId = id;
+            }
             if (currentUserEmail != null && currentUserEmail.equals(email))
             {
                 user = currentUser;
                 break;
             }
         }
-
+        request.getSession().setAttribute("currentLastUserId", currentLastUserId);
         return user;
     }
 }
