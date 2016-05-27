@@ -3,6 +3,7 @@
  */
 package com.github.idnbso.snippetodo.model.data.item;
 
+import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.github.idnbso.snippetodo.model.*;
 
 /**

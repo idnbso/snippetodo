@@ -107,7 +107,7 @@ body {
 }
 
 /* Board */
-.board-list {
+.snpptd-client-board-list {
     color: rgb(30, 30, 30);
     background: rgb(30, 30, 30);
     min-height: 770px;
@@ -137,7 +137,7 @@ body {
     font-size: 120%;
 }
 
-.panel-list-todo-btn {
+.snpptd-client-listtodo-panelbtn {
     padding: 0px 5px 0px 0px;
     margin: 0;
     color: #73de73;
@@ -146,7 +146,7 @@ body {
     font-size: medium;
 }
 
-.panel-list-todo-btn .glyphicon {
+.snpptd-client-listtodo-panelbtn .glyphicon {
     position: static;
 }
 
@@ -182,7 +182,7 @@ button {
     outline: none;
 }
 
-.panel-list-todo-btn
+.snpptd-client-listtodo-panelbtn,
 .btn:active,
 .btn.active,
 .btn:focus,

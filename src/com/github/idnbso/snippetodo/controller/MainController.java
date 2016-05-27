@@ -1,8 +1,5 @@
 package com.github.idnbso.snippetodo.controller;
 
-import com.github.idnbso.snippetodo.model.SnippeToDoPlatformException;
-import com.github.idnbso.snippetodo.model.data.user.User;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

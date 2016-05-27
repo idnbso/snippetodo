@@ -3,12 +3,12 @@
  */
 package com.github.idnbso.snippetodo.model;
 
+import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.github.idnbso.snippetodo.model.data.user.*;
 
 import java.util.List;
 
 import com.github.idnbso.snippetodo.model.data.item.*;
-import static org.junit.Assert.*;
 
 /**
  * Test class for the SnippeToDo application to test all of the ISnippeToDoDAO

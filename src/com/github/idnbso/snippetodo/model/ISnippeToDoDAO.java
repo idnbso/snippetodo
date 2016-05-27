@@ -3,6 +3,8 @@
  */
 package com.github.idnbso.snippetodo.model;
 
+import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
+
 import java.util.List;
 
 /**

@@ -1,11 +1,8 @@
-/**
- *
- */
 package com.github.idnbso.snippetodo.model;
 
-import java.io.Serializable;
 import java.util.List;
 
+import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,7 +14,7 @@ import com.github.idnbso.snippetodo.model.data.user.User;
 
 /**
  * The HibernateSnippeToDoDAO class implements the Data Access Object design pattern, using
- * Hibernate 3 with the MySQL database, for the use of CRUD operations regarding ToDo items and
+ * Hibernate 3.x with the MySQL database, for the use of CRUD operations regarding to do items and
  * registered users of the SnippeToDo application.
  *
  * @author Idan Busso

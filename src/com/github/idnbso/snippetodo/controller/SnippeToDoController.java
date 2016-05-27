@@ -3,7 +3,7 @@ package com.github.idnbso.snippetodo.controller;
 import com.github.idnbso.snippetodo.controller.facebook.FBConnection;
 import com.github.idnbso.snippetodo.controller.facebook.FBGraph;
 import com.github.idnbso.snippetodo.model.ISnippeToDoDAO;
-import com.github.idnbso.snippetodo.model.SnippeToDoPlatformException;
+import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.github.idnbso.snippetodo.model.data.item.Item;
 import com.github.idnbso.snippetodo.model.data.item.SnippeToDoItemDAO;
 import com.github.idnbso.snippetodo.model.data.user.SnippeToDoUserDAO;
@@ -157,10 +157,14 @@ public class SnippeToDoController extends HttpServlet
                     case "/newuser":
                     {
                         // data from the request (view)
-                        String email = request.getParameter("signupEmail");
-                        String firstName = request.getParameter("signupFirstName");
-                        String lastName = request.getParameter("signupLastName");
-                        String password = request.getParameter("signupPassword");
+                        String email =
+                                request.getParameter("snpptd-home-signupinput-email");
+                        String firstName =
+                                request.getParameter("snpptd-home-signupinput-firstname");
+                        String lastName =
+                                request.getParameter("snpptd-home-signupinput-lastname");
+                        String password =
+                                request.getParameter("snpptd-home-signupinput-password");
 
                         createNewUser(request, email, firstName, lastName, password);
                         break;
@@ -325,8 +329,8 @@ public class SnippeToDoController extends HttpServlet
     {
 
         // data from the request (view)
-        String title = request.getParameter("item-title");
-        String body = request.getParameter("item-body");
+        String title = request.getParameter("snpptd-client-item-title");
+        String body = request.getParameter("snpptd-client-item-body");
         int positionIndex = Integer.parseInt(request.getParameter("positionIndex"));
         int currentLastItemId = Integer.parseInt(
                 request.getSession().getAttribute("currentLastItemId").toString()) + 1;
@@ -357,8 +361,8 @@ public class SnippeToDoController extends HttpServlet
     private void updateItem(HttpServletRequest request, HttpServletResponse response)
             throws SnippeToDoPlatformException, IOException
     {
-        String title = request.getParameter("edit-item-title");
-        String body = request.getParameter("edit-item-body");
+        String title = request.getParameter("snpptd-client-edititem-title");
+        String body = request.getParameter("snpptd-client-edititem-body");
         int itemId = Integer.parseInt(request.getParameter("id"));
         Item item = snippeToDoItemsDB.get(itemId);
 
@@ -391,6 +395,7 @@ public class SnippeToDoController extends HttpServlet
     private void updateList(HttpServletRequest request, HttpServletResponse response)
             throws SnippeToDoPlatformException, IOException
     {
+        final String elementDataIdName = "snpptd-client-list-item";
         String jsonArray = request.getParameter("order");
         Type listType = new TypeToken<List<String>>()
         {
@@ -399,7 +404,9 @@ public class SnippeToDoController extends HttpServlet
 
         for (int itemIndex = 1; itemIndex < itemsNames.size(); itemIndex++)
         {
-            int itemId = Integer.parseInt(itemsNames.get(itemIndex).substring(8));
+            int itemId =
+                    Integer.parseInt(
+                            itemsNames.get(itemIndex).substring(elementDataIdName.length()));
             Item item = snippeToDoItemsDB.get(itemId);
             item.setPositionIndex(itemIndex);
             snippeToDoItemsDB.update(item);
@@ -439,8 +446,8 @@ public class SnippeToDoController extends HttpServlet
     private void loginUser(HttpServletRequest request, HttpServletResponse response)
             throws SnippeToDoPlatformException, ServletException, IOException
     {
-        String email = request.getParameter("loginInputEmail");
-        String password = request.getParameter("loginInputPassword");
+        String email = request.getParameter("snpptd-home-logininput-email");
+        String password = request.getParameter("snpptd-home-logininput-password");
         if (email != null && password != null)
         {
             email = email.trim();

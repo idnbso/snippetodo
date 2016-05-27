@@ -1,56 +1,16 @@
 (function() {
     'use strict';
+    removeHash();
 
     var byId = function(id) {
-            return document.getElementById(id);
-        },
+        return document.getElementById(id);
+    };
 
-        loadScripts = function(desc, callback) {
-            var deps = [], key, idx = 0;
-
-            for (key in desc) {
-                deps.push(key);
-            }
-
-            (function _next() {
-                var pid,
-                    name = deps[idx],
-                    script = document.createElement('script');
-
-                script.type = 'text/javascript';
-                script.src = desc[deps[idx]];
-
-                pid = setInterval(function() {
-                    if (window[name]) {
-                        clearTimeout(pid);
-
-                        deps[idx++] = window[name];
-
-                        if (deps[idx]) {
-                            _next();
-                        } else {
-                            callback.apply(null, deps);
-                        }
-                    }
-                }, 30);
-
-                document.getElementsByTagName('head')[0].appendChild(script);
-            })()
-        },
-
-        console = window.console;
-
-    if (!console.log) {
-        console.log = function() {
-            alert([].join.apply(arguments, ' '));
-        };
-    }
-    removeHash();
     var snippeToDoLists = {};
 
     // Lists with handle
-    snippeToDoLists.listTodo = Sortable.create(byId('listTodo'), {
-        group: 'board-lists',
+    snippeToDoLists.listTodo = Sortable.create(byId('snpptd-client-listtodo'), {
+        group: 'snpptd-client-board-lists',
         filter: '.list-group-item-dummy',
         handle: '.glyphicon-move',
         animation: 150,
@@ -63,16 +23,16 @@
              */
             get: function(sortable) {
                 // get the current order from the localStorage
-                var order = localStorage.getItem('listTodo');
+                var order = localStorage.getItem('snpptd-client-listtodo');
                 $.get("initlisttodo", function(responseJson) {
                     var dummyItem =
-                        '<li class="list-group-item-dummy" data-id="listTodoItem0"></li>';
-                    $("#listTodo").empty().append(dummyItem);
+                        '<li class="list-group-item-dummy" data-id="snpptd-client-listtodo-item0"></li>';
+                    $("#snpptd-client-listtodo").empty().append(dummyItem);
                     $.each(responseJson, function(index, item) {
-                        $("#listTodo").append(generateItemElement(item));
+                        $("#snpptd-client-listtodo").append(generateItemElement(item));
                     });
                     var order = sortable.toArray();
-                    localStorage.setItem('listTodo', order.join('|'));
+                    localStorage.setItem('snpptd-client-listtodo', order.join('|'));
                 });
 
                 return order ? order.split('|') : [];
@@ -85,55 +45,56 @@
             set: function(sortable) {
                 var order = sortable.toArray();
                 console.log(order.join('|'));
-                localStorage.setItem('listTodo', order.join('|'));
+                localStorage.setItem('snpptd-client-listtodo', order.join('|'));
             }
         },
 
         // Element is dropped into the list from another list (does not call onEnd in this case)
         onAdd: function(evt) {
-            console.log('onAdd.listTodo:', evt.item);
+            console.log('onAdd.snpptd-client-listtodo:', evt.item);
             console.log(evt.item.parentElement);
             console.log(evt.newIndex);
             var newIndex = evt.newIndex !== 0 ? evt.newIndex : 1;
-            var itemId = evt.item.getAttribute('data-id').substring(8);
+            var elementDataIdName = "snpptd-client-list-item";
+            var itemId = evt.item.getAttribute('data-id').substring(elementDataIdName.length);
             var itemPositionSerialized = "id=" + itemId + "&positionIndex=" + newIndex +
                 "&listId=" + 1;
 
-            $.post("updateitemposition", itemPositionSerialized, function(response) {
+            $.post("updateitemposition", itemPositionSerialized, function() {
                 var order = snippeToDoLists.listTodo.toArray();
                 updateList(order);
                 console.log(order.join('|'));
-                localStorage.setItem('listTodo', order.join('|'));
+                localStorage.setItem('snpptd-client-listtodo', order.join('|'));
             });
         },
 
         // Changed sorting within list
         onUpdate: function(evt) {
-            console.log('onUpdate.listTodo:', evt.item);
+            console.log('onUpdate.snpptd-client-listtodo:', evt.item);
             var order = snippeToDoLists.listTodo.toArray();
             updateList(order);
         },
 
         // Element is removed from the list into another list
         onRemove: function(evt) {
-            console.log('onRemove.listTodo:', evt.item);
+            console.log('onRemove.snpptd-client-listtodo:', evt.item);
             var order = snippeToDoLists.listTodo.toArray();
             updateList(order);
         },
 
         // Element dragging started
         onStart: function(evt) {
-            console.log('onStart.listTodo:', evt.item);
+            console.log('onStart.snpptd-client-listtodo:', evt.item);
         },
 
         // Element dragging ended
         onEnd: function(evt) {
-            console.log('onEnd.listTodo:', evt.item);
+            console.log('onEnd.snpptd-client-listtodo:', evt.item);
         }
     });
 
-    snippeToDoLists.listToday = Sortable.create(byId('listToday'), {
-        group: 'board-lists',
+    snippeToDoLists.listToday = Sortable.create(byId('snpptd-client-listtoday'), {
+        group: 'snpptd-client-board-lists',
         filter: '.list-group-item-dummy',
         handle: '.glyphicon-move',
         animation: 150,
@@ -146,20 +107,20 @@
              */
             get: function(sortable) {
                 // get the current order from the localStorage
-                var order = localStorage.getItem('listToday');
+                var order = localStorage.getItem('snpptd-client-listtoday');
                 $.get("initlisttoday", function(responseJson) {
                     /*
                      var list_new = $('#list_new').html();
                      $('#list').empty().append(list_new);
                      * */
                     var dummyItem =
-                        '<li class="list-group-item-dummy" data-id="listTodayItem0"></li>';
-                    $("#listToday").empty().append(dummyItem);
+                        '<li class="list-group-item-dummy" data-id="snpptd-client-listtoday-item0"></li>';
+                    $("#snpptd-client-listtoday").empty().append(dummyItem);
                     $.each(responseJson, function(index, item) {
-                        $("#listToday").append(generateItemElement(item));
+                        $("#snpptd-client-listtoday").append(generateItemElement(item));
                         var order = sortable.toArray();
                         console.log(order.join('|'));
-                        localStorage.setItem('listToday', order.join('|'));
+                        localStorage.setItem('snpptd-client-listtoday', order.join('|'));
                     });
                 });
 
@@ -176,50 +137,51 @@
             set: function(sortable) {
                 var order = sortable.toArray();
                 console.log(order.join('|'));
-                localStorage.setItem('listToday', order.join('|'));
+                localStorage.setItem('snpptd-client-listtoday', order.join('|'));
             }
         },
         // Element is dropped into the list from another list
         onAdd: function(evt) {
-            console.log('onAdd.listToday:', evt.item);
+            console.log('onAdd.snpptd-client-listtoday:', evt.item);
             console.log(evt.item.parentElement);
             console.log(evt.newIndex);
             var newIndex = evt.newIndex !== 0 ? evt.newIndex : 1;
-            var itemId = evt.item.getAttribute('data-id').substring(8);
+            var elementDataIdName = "snpptd-client-list-item";
+            var itemId = evt.item.getAttribute('data-id').substring(elementDataIdName.length);
             var itemPositionSerialized = "id=" + itemId + "&positionIndex=" + newIndex +
                 "&listId=" + 2;
 
-            $.post("updateitemposition", itemPositionSerialized, function(response) {
+            $.post("updateitemposition", itemPositionSerialized, function() {
                 var order = snippeToDoLists.listToday.toArray();
                 updateList(order);
                 console.log(order.join('|'));
-                localStorage.setItem('listToday', order.join('|'));
+                localStorage.setItem('snpptd-client-listtoday', order.join('|'));
             });
         },
         // Changed sorting within list
         onUpdate: function(evt) {
-            console.log('onUpdate.listToday:', evt.item);
+            console.log('onUpdate.snpptd-client-listtoday:', evt.item);
             var order = snippeToDoLists.listToday.toArray();
             updateList(order);
         },
         // Element is removed from the list into another list
         onRemove: function(evt) {
-            console.log('onRemove.listToday:', evt.item);
+            console.log('onRemove.snpptd-client-listtoday:', evt.item);
             var order = snippeToDoLists.listToday.toArray();
             updateList(order);
         },
         // Element dragging started
         onStart: function(evt) {
-            console.log('onStart.listToday:', evt.item);
+            console.log('onStart.snpptd-client-listtoday:', evt.item);
         },
         // Element dragging ended
         onEnd: function(evt) {
-            console.log('onEnd.listToday:', evt.item);
+            console.log('onEnd.snpptd-client-listtoday:', evt.item);
         }
     });
 
-    snippeToDoLists.listDoing = Sortable.create(byId('listDoing'), {
-        group: 'board-lists',
+    snippeToDoLists.listDoing = Sortable.create(byId('snpptd-client-listdoing'), {
+        group: 'snpptd-client-board-lists',
         filter: '.list-group-item-dummy',
         handle: '.glyphicon-move',
         animation: 150,
@@ -232,7 +194,7 @@
              */
             get: function(sortable) {
                 // get the current order from the localStorage
-                var order = localStorage.getItem('listDoing');
+                var order = localStorage.getItem('snpptd-client-listdoing');
 
                 $.get("initlistdoing", function(responseJson) {
                     /*
@@ -240,13 +202,13 @@
                      $('#list').empty().append(list_new);
                      * */
                     var dummyItem =
-                        '<li class="list-group-item-dummy" data-id="listDoingItem0"></li>';
-                    $("#listDoing").empty().append(dummyItem);
+                        '<li class="list-group-item-dummy" data-id="snpptd-client-listdoing-item0"></li>';
+                    $("#snpptd-client-listdoing").empty().append(dummyItem);
                     $.each(responseJson, function(index, item) {
-                        $("#listDoing").append(generateItemElement(item));
+                        $("#snpptd-client-listdoing").append(generateItemElement(item));
                         var order = sortable.toArray();
                         console.log(order.join('|'));
-                        localStorage.setItem('listDoing', order.join('|'));
+                        localStorage.setItem('snpptd-client-listdoing', order.join('|'));
                     });
                 });
 
@@ -263,24 +225,25 @@
             set: function(sortable) {
                 var order = sortable.toArray();
                 console.log(order.join('|'));
-                localStorage.setItem('listDoing', order.join('|'));
+                localStorage.setItem('snpptd-client-listdoing', order.join('|'));
             }
         },
         // Element is dropped into the list from another list
         onAdd: function(evt) {
-            console.log('onAdd.listDoing:', evt.item);
+            console.log('onAdd.snpptd-client-listdoing:', evt.item);
             console.log(evt.item.parentElement);
             console.log(evt.newIndex);
             var newIndex = evt.newIndex !== 0 ? evt.newIndex : 1;
-            var itemId = evt.item.getAttribute('data-id').substring(8);
+            var elementDataIdName = "snpptd-client-list-item";
+            var itemId = evt.item.getAttribute('data-id').substring(elementDataIdName.length);
             var itemPositionSerialized = "id=" + itemId + "&positionIndex=" + newIndex +
                 "&listId=" + 3;
 
-            $.post("updateitemposition", itemPositionSerialized, function(response) {
+            $.post("updateitemposition", itemPositionSerialized, function() {
                 var order = snippeToDoLists.listDoing.toArray();
                 updateList(order);
                 console.log(order.join('|'));
-                localStorage.setItem('listDoing', order.join('|'));
+                localStorage.setItem('snpptd-client-listdoing', order.join('|'));
             });
         },
         // Changed sorting within list
@@ -295,16 +258,16 @@
         },
         // Element dragging started
         onStart: function(evt) {
-            console.log('onStart.listDoing:', evt.item);
+            console.log('onStart.snpptd-client-listdoing:', evt.item);
         },
         // Element dragging ended
         onEnd: function(evt) {
-            console.log('onEnd.listDoing:', evt.item);
+            console.log('onEnd.snpptd-client-listdoing:', evt.item);
         }
     });
 
-    snippeToDoLists.listCheck = Sortable.create(byId('listCheck'), {
-        group: 'board-lists',
+    snippeToDoLists.listCheck = Sortable.create(byId('snpptd-client-listcheck'), {
+        group: 'snpptd-client-board-lists',
         filter: '.list-group-item-dummy',
         handle: '.glyphicon-move',
         animation: 150,
@@ -317,20 +280,20 @@
              */
             get: function(sortable) {
                 // get the current order from the localStorage
-                var order = localStorage.getItem('listCheck');
+                var order = localStorage.getItem('snpptd-client-listcheck');
                 $.get("initlistcheck", function(responseJson) {
                     /*
                      var list_new = $('#list_new').html();
                      $('#list').empty().append(list_new);
                      * */
                     var dummyItem =
-                        '<li class="list-group-item-dummy" data-id="listCheckItem0"></li>';
-                    $("#listCheck").empty().append(dummyItem);
+                        '<li class="list-group-item-dummy" data-id="snpptd-client-listcheck-item0"></li>';
+                    $("#snpptd-client-listcheck").empty().append(dummyItem);
                     $.each(responseJson, function(index, item) {
-                        $("#listCheck").append(generateItemElement(item));
+                        $("#snpptd-client-listcheck").append(generateItemElement(item));
                         var order = sortable.toArray();
                         console.log(order.join('|'));
-                        localStorage.setItem('listCheck', order.join('|'));
+                        localStorage.setItem('snpptd-client-listcheck', order.join('|'));
                     });
                 });
 
@@ -347,24 +310,25 @@
             set: function(sortable) {
                 var order = sortable.toArray();
                 console.log(order.join('|'));
-                localStorage.setItem('listCheck', order.join('|'));
+                localStorage.setItem('snpptd-client-listcheck', order.join('|'));
             }
         },
         // Element is dropped into the list from another list
         onAdd: function(evt) {
-            console.log('onAdd.listCheck:', evt.item);
+            console.log('onAdd.snpptd-client-listcheck:', evt.item);
             console.log(evt.item.parentElement);
             console.log(evt.newIndex);
             var newIndex = evt.newIndex !== 0 ? evt.newIndex : 1;
-            var itemId = evt.item.getAttribute('data-id').substring(8);
+            var elementDataIdName = "snpptd-client-list-item";
+            var itemId = evt.item.getAttribute('data-id').substring(elementDataIdName.length);
             var itemPositionSerialized = "id=" + itemId + "&positionIndex=" + newIndex +
                 "&listId=" + 4;
 
-            $.post("updateitemposition", itemPositionSerialized, function(response) {
+            $.post("updateitemposition", itemPositionSerialized, function() {
                 var order = snippeToDoLists.listCheck.toArray();
                 updateList(order);
                 console.log(order.join('|'));
-                localStorage.setItem('listCheck', order.join('|'));
+                localStorage.setItem('snpptd-client-listcheck', order.join('|'));
             });
         },
         // Changed sorting within list
@@ -379,16 +343,16 @@
         },
         // Element dragging started
         onStart: function(evt) {
-            console.log('onStart.listCheck:', evt.item);
+            console.log('onStart.snpptd-client-listcheck:', evt.item);
         },
         // Element dragging ended
         onEnd: function(evt) {
-            console.log('onEnd.listCheck:', evt.item);
+            console.log('onEnd.snpptd-client-listcheck:', evt.item);
         }
     });
 
-    snippeToDoLists.listDone = Sortable.create(byId('listDone'), {
-        group: 'board-lists',
+    snippeToDoLists.listDone = Sortable.create(byId('snpptd-client-listdone'), {
+        group: 'snpptd-client-board-lists',
         filter: '.list-group-item-dummy',
         handle: '.glyphicon-move',
         animation: 150,
@@ -401,20 +365,20 @@
              */
             get: function(sortable) {
                 // get the current order from the localStorage
-                var order = localStorage.getItem('listDone');
+                var order = localStorage.getItem('snpptd-client-listdone');
                 $.get("initlistdone", function(responseJson) {
                     /*
                      var list_new = $('#list_new').html();
                      $('#list').empty().append(list_new);
                      * */
                     var dummyItem =
-                        '<li class="list-group-item-dummy" data-id="listDoneItem0"></li>';
-                    $("#listDone").empty().append(dummyItem);
+                        '<li class="list-group-item-dummy" data-id="snpptd-client-listdone-item0"></li>';
+                    $("#snpptd-client-listdone").empty().append(dummyItem);
                     $.each(responseJson, function(index, item) {
-                        $("#listDone").append(generateItemElement(item));
+                        $("#snpptd-client-listdone").append(generateItemElement(item));
                         var order = sortable.toArray();
                         console.log(order.join('|'));
-                        localStorage.setItem('listDone', order.join('|'));
+                        localStorage.setItem('snpptd-client-listdone', order.join('|'));
                     });
                 });
 
@@ -431,24 +395,25 @@
             set: function(sortable) {
                 var order = sortable.toArray();
                 console.log(order.join('|'));
-                localStorage.setItem('listDone', order.join('|'));
+                localStorage.setItem('snpptd-client-listdone', order.join('|'));
             }
         },
         // Element is dropped into the list from another list
         onAdd: function(evt) {
-            console.log('onAdd.listDone:', evt.item);
+            console.log('onAdd.snpptd-client-listdone:', evt.item);
             console.log(evt.item.parentElement);
             console.log(evt.newIndex);
             var newIndex = evt.newIndex !== 0 ? evt.newIndex : 1;
-            var itemId = evt.item.getAttribute('data-id').substring(8);
+            var elementDataIdName = "snpptd-client-list-item";
+            var itemId = evt.item.getAttribute('data-id').substring(elementDataIdName.length);
             var itemPositionSerialized = "id=" + itemId + "&positionIndex=" + newIndex +
                 "&listId=" + 5;
 
-            $.post("updateitemposition", itemPositionSerialized, function(response) {
+            $.post("updateitemposition", itemPositionSerialized, function() {
                 var order = snippeToDoLists.listDone.toArray();
                 updateList(order);
                 console.log(order.join('|'));
-                localStorage.setItem('listDone', order.join('|'));
+                localStorage.setItem('snpptd-client-listdone', order.join('|'));
             });
         },
         // Changed sorting within list
@@ -463,17 +428,17 @@
         },
         // Element dragging started
         onStart: function(evt) {
-            console.log('onStart.listDone:', evt.item);
+            console.log('onStart.snpptd-client-listdone:', evt.item);
         },
         // Element dragging ended
         onEnd: function(evt) {
-            console.log('onEnd.listDone:', evt.item);
+            console.log('onEnd.snpptd-client-listdone:', evt.item);
         }
     });
 
     // Create new item
-    $(document).on("click", "#saveButton", function() {
-        var $form = $('#new-item-form');
+    $(document).on("click", "#snpptd-client-newitem-savebutton", function() {
+        var $form = $('#snpptd-client-newitem-form');
         var serializedForm = $form.serialize();
         var $this = $(this);
         $this.button('loading');
@@ -483,22 +448,23 @@
 
         $.post("newitem", serializedForm, function(responseJsonItem) {
             $this.button('reset');
-            $("#listTodo").append(generateItemElement(responseJsonItem));
-            order[responseJsonItem.positionIndex] = 'listItem' + responseJsonItem.id;
+            $("#snpptd-client-listtodo").append(generateItemElement(responseJsonItem));
+            order[responseJsonItem.positionIndex] = 'snpptd-client-list-item' + responseJsonItem.id;
             console.log(order.join('|'));
-            localStorage.setItem('listTodo', order.join('|'));
-            $('#newItemModal').modal('toggle');
+            localStorage.setItem('snpptd-client-listtodo', order.join('|'));
+            $('#snpptd-client-newitem-modal').modal('toggle');
         });
 
         event.preventDefault(); // Important! Prevents submitting the form.
     });
 
     // Delete an item
-    $(document).on("click", ".deleteButton", function() {
+    $(document).on("click", ".snpptd-client-list-item-deletebtn", function() {
         var $item = $(this).closest('.list-group-item');
-        var itemId = 'id=' + $item.attr("data-id").substring(8);
+        var elementDataIdName = "snpptd-client-list-item";
+        var itemId = 'id=' + $item.attr("data-id").substring(elementDataIdName.length);
 
-        $.post("deleteitem", itemId, function(responseJsonItem) {
+        $.post("deleteitem", itemId, function() {
             $item.remove();
         });
 
@@ -512,19 +478,20 @@
      * Edit an item
      * NOTE: the button is a class since it is in every dropdown of every item on the page
      */
-    $(document).on("click", ".editButton", function() {
+    $(document).on("click", ".snpptd-client-list-item-editbtn", function() {
         var $item = $(this).closest('.list-group-item');
         currentItemElement = $item;
-        currentItemId = $item.attr("data-id").substring(8);
+        var elementDataIdName = "snpptd-client-list-item";
+        currentItemId = $item.attr("data-id").substring(elementDataIdName.length);
         var idSerialized = 'id=' + currentItemId;
 
         // TODO: loading here
 
         $.post("getitem", idSerialized, function(responseItem) {
-            var $modal = $('#editItemModal');
-            var $title = $modal.find('#edit-item-title');
+            var $modal = $('#snpptd-client-edititem-modal');
+            var $title = $modal.find('#snpptd-client-edititem-title');
             $title.val(responseItem.title);
-            var $body = $modal.find('#edit-item-body');
+            var $body = $modal.find('#snpptd-client-edititem-body');
             $body.val(responseItem.body);
             $modal.modal('toggle');
         });
@@ -534,7 +501,7 @@
 
     // TODO: refactor this method with atleast two new helper functions
     // Move an item to a new list with the actions dropdown menu
-    $(document).on("click", ".moveToButton", function() {
+    $(document).on("click", ".snpptd-client-list-item-movetobtn", function() {
         var $item = $(this).closest('.list-group-item');
         var $currentList = $item.closest('.list-group');
         currentItemElement = $item;
@@ -545,9 +512,11 @@
         var newListName;
         for (var curClassName = 0; curClassName < classList.length; curClassName++) {
             var className = classList[curClassName];
-            if (className.indexOf("moveToList") > -1) {
-                newListName = className.substring(10); // get the list name after moveToList|...
-                newListName = "list" + newListName;
+            var elementClassName = "snpptd-client-list-item-movetolist";
+            if (className.indexOf(elementClassName) > -1) {
+                // get the specific list name after elementClassName|...
+                newListName = className.substring(elementClassName.length);
+                newListName = "snpptd-client-list-" + newListName;
                 break;
             }
         }
@@ -576,8 +545,8 @@
     });
 
     // Update an item (when an edit is done)
-    $(document).on("click", "#editFormButton", function() {
-        var $form = $('#edit-item-form');
+    $(document).on("click", "#snpptd-client-edititem-savebutton", function() {
+        var $form = $('#snpptd-client-edititem-form');
         var $this = $(this);
         $this.button('loading');
 
@@ -589,27 +558,27 @@
                 $this.button('reset');
                 var $title = currentItemElement.find('.list-group-item-text');
                 $title.html(responseItem.title);
-                $('#editItemModal').modal('toggle');
+                $('#snpptd-client-edititem-modal').modal('toggle');
             });
         }
         event.preventDefault();
     });
 
     // Cancel an update of an item (when an edit is done)
-    $(document).on("click", "#cancelEditButton", function() {
+    $(document).on("click", "#snpptd-client-edititem-cancelbutton", function() {
         currentItemId = null;
         currentItemElement = null;
         event.preventDefault();
     });
 
     // Logout from client
-    $(document).on("click", "#logoutButton", function() {
+    $(document).on("click", "#snpptd-client-logout-button", function() {
         var $this = $(this);
         $this.button('loading');
 
-        $.get("logout", function(responseJson) {
+        $.get("logout", function() {
             window.open("http://localhost:8080/", "_self");
-            //window.open("http://snippetodo.azurewebsites.net/", "_self");
+            // window.open("http://snippetodo.azurewebsites.net/", "_self");
         });
 
         event.preventDefault(); // Important! Prevents submitting the form.
@@ -618,13 +587,12 @@
     // update the list in the database according to its current order in the Local Storage.
     function updateList(order) {
         var orderSerialized = 'order=' + JSON.stringify(order);
-        $.post("updatelist", orderSerialized, function(responseItem) {
-
+        $.post("updatelist", orderSerialized, function() {
         });
     }
 
     function generateItemElement(newItem) {
-        return '<li class="list-group-item" data-id="listItem' +
+        return '<li class="list-group-item" data-id="snpptd-client-list-item' +
             newItem.id + // the id of the item in database
             '"><div class="row nopadding">' +
             '<div class="col-xs-11 nopadding">' +
@@ -641,16 +609,26 @@
             '<span class="sr-only">Actions</span></button>' +
             '<ul class="dropdown-menu dropdown-menu-right multi-level" role="menu" ' +
             'id="dropdown-actions" aria-labelledby="dropdownMenu">' +
-            '<li><a class="editButton" href="#">Edit</a></li>' +
+            '<li><a class="snpptd-client-list-item-editbtn" href="#">Edit</a></li>' +
             '<li role="separator" class="divider"></li>' +
-            '<li><a class="moveToButton moveToListTodo" href="#">To Do</a></li>' +
-            '<li><a class="moveToButton moveToListToday" href="#">Do Today</a></li>' +
-            '<li><a class="moveToButton moveToListDoing" href="#">Do Now</a></li>' +
+            '<li><a class="snpptd-client-list-item-movetobtn ' +
+            'snpptd-client-list-item-movetolisttodo" ' +
+            'href="#snpptd-client-listtodo">To Do</a></li>' +
+            '<li><a class="snpptd-client-list-item-movetobtn ' +
+            'snpptd-client-list-item-movetolisttoday" ' +
+            'href="#snpptd-client-listtoday">Do Today</a></li>' +
+            '<li><a class="snpptd-client-list-item-movetobtn ' +
+            'snpptd-client-list-item-movetolistdoing" ' +
+            'href="#snpptd-client-listdoing">Do Now</a></li>' +
             '<li role="separator" class="divider"></li>' +
-            '<li><a class="moveToButton moveToListCheck" href="#">Check</a></li>' +
-            '<li><a class="moveToButton moveToListDone" href="#">Finish</a></li>' +
+            '<li><a class="snpptd-client-list-item-movetobtn ' +
+            'snpptd-client-list-item-movetolistcheck" ' +
+            'href="#snpptd-client-listcheck">Check</a></li>' +
+            '<li><a class="snpptd-client-list-item-movetobtn ' +
+            'snpptd-client-list-item-movetolistdone" ' +
+            'href="#snpptd-client-listdone">Finish</a></li>' +
             '<li role="separator" class="divider"></li>' +
-            '<li><a class="deleteButton" href="#">Delete</a></li>' +
+            '<li><a class="snpptd-client-list-item-deletebtn" href="#">Delete</a></li>' +
             '</ul></div></div></li>';
     }
 
