@@ -1,5 +1,8 @@
 package com.github.idnbso.snippetodo.controller;
 
+
+import org.slf4j.*;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +17,8 @@ import java.io.IOException;
 @WebServlet("/home/*")
 public class MainController extends HttpServlet
 {
+    static Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException
@@ -35,6 +40,7 @@ public class MainController extends HttpServlet
                 {
                     case "/":
                     {
+                        LOGGER.info("Connected to home, dispatching index.jsp.");
                         dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                         dispatcher.forward(request, response);
                         break;

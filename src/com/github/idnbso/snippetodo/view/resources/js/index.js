@@ -34,7 +34,7 @@
         // TODO: change the jquery call to $.ajax for seperated success and failure cases
         $.post("/client/login", $form.serialize(), function() {
             window.open("http://localhost:8080/client/", "_self");
-            // window.open("http://snippetodo.azurewebsites.net/client/","_self");
+            // window.open("https://snippetodo.azurewebsites.net/client/","_self");
         });
 
         event.preventDefault(); // Important! Prevents submitting the form.

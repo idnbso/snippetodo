@@ -3,6 +3,14 @@
     <output-path>$PROJECT_DIR$/out/artifacts/snippetodo_war</output-path>
     <root id="archive" name="snippetodo_war.war">
       <element id="artifact" artifact-name="snippetodo:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="log4j-1.2.17" />
+          <element id="library" level="project" name="hibernate-c3p0-3.6.10.Final" />
+          <element id="library" level="project" name="c3p0-0.9.5.2" />
+          <element id="library" level="project" name="slf4j-log4j12-1.6.1" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>

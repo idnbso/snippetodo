@@ -2,12 +2,12 @@
 //
 //import static org.junit.Assert.*;
 //
+//import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 //import org.hibernate.HibernateException;
 //import org.hibernate.Session;
 //import org.hibernate.SessionFactory;
 //import org.hibernate.cfg.Configuration;
 //import org.junit.After;
-//import org.junit.AfterClass;
 //import org.junit.Before;
 //import org.junit.BeforeClass;
 //import org.junit.Test;

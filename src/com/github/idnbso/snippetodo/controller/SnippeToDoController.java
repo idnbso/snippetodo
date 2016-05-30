@@ -329,8 +329,8 @@ public class SnippeToDoController extends HttpServlet
     {
 
         // data from the request (view)
-        String title = request.getParameter("snpptd-client-item-title");
-        String body = request.getParameter("snpptd-client-item-body");
+        String title = request.getParameter("item-title");
+        String body = request.getParameter("item-body");
         int positionIndex = Integer.parseInt(request.getParameter("positionIndex"));
         int currentLastItemId = Integer.parseInt(
                 request.getSession().getAttribute("currentLastItemId").toString()) + 1;

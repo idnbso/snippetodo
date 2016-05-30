@@ -35,5 +35,7 @@
     <orderEntry type="library" name="gson-2.6.2" level="project" />
     <orderEntry type="library" name="c3p0-0.9.5.2" level="project" />
     <orderEntry type="library" name="hibernate-c3p0-3.6.10.Final" level="project" />
+    <orderEntry type="library" name="log4j-1.2.17" level="project" />
+    <orderEntry type="library" name="slf4j-log4j12-1.6.1" level="project" />
   </component>
 </module>
