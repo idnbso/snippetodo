@@ -1,4 +1,4 @@
-package com.github.idnbso.snippetodo.controller.facebook;
+package com.github.idnbso.snippetodo.controller.user.facebook;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

@@ -1,7 +1,7 @@
-package com.github.idnbso.snippetodo.controller;
+package com.github.idnbso.snippetodo.controller.client;
 
-import com.github.idnbso.snippetodo.controller.facebook.FBConnection;
-import com.github.idnbso.snippetodo.controller.facebook.FBGraph;
+import com.github.idnbso.snippetodo.controller.user.facebook.FBConnection;
+import com.github.idnbso.snippetodo.controller.user.facebook.FBGraph;
 import com.github.idnbso.snippetodo.model.ISnippeToDoDAO;
 import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.github.idnbso.snippetodo.model.data.item.Item;
@@ -24,7 +24,7 @@ import com.google.gson.reflect.TypeToken;
  * TODO
  */
 @WebServlet("/client/*")
-public class SnippeToDoController extends HttpServlet
+public class ClientController extends HttpServlet
 {
     private ISnippeToDoDAO<User> snippeToDoUsersDB;
     private ISnippeToDoDAO<Item> snippeToDoItemsDB;
@@ -84,44 +84,18 @@ public class SnippeToDoController extends HttpServlet
 
                         break;
                     }
-                    case "/initlisttodo":
+                    case "/initlist":
                     {
-                        ArrayList<Item> listTodo =
-                                (ArrayList<Item>) request.getSession().getAttribute("listTodo");
-                        String jsonResponse = new Gson().toJson(listTodo);
+                        String listName = "list" + request.getParameter("listName");
+                        ArrayList<Item> list =
+                                (ArrayList<Item>) request.getSession().getAttribute(listName);
+                        String jsonResponse = new Gson().toJson(list);
                         writeJsonResponse(response, jsonResponse);
                         break;
                     }
-                    case "/initlisttoday":
+                    case "/updatelist":
                     {
-                        ArrayList<Item> listToday =
-                                (ArrayList<Item>) request.getSession().getAttribute("listToday");
-                        String jsonResponse = new Gson().toJson(listToday);
-                        writeJsonResponse(response, jsonResponse);
-                        break;
-                    }
-                    case "/initlistdoing":
-                    {
-                        ArrayList<Item> listDoing =
-                                (ArrayList<Item>) request.getSession().getAttribute("listDoing");
-                        String jsonResponse = new Gson().toJson(listDoing);
-                        writeJsonResponse(response, jsonResponse);
-                        break;
-                    }
-                    case "/initlistcheck":
-                    {
-                        ArrayList<Item> listCheck =
-                                (ArrayList<Item>) request.getSession().getAttribute("listCheck");
-                        String jsonResponse = new Gson().toJson(listCheck);
-                        writeJsonResponse(response, jsonResponse);
-                        break;
-                    }
-                    case "/initlistdone":
-                    {
-                        ArrayList<Item> listDone =
-                                (ArrayList<Item>) request.getSession().getAttribute("listDone");
-                        String jsonResponse = new Gson().toJson(listDone);
-                        writeJsonResponse(response, jsonResponse);
+                        updateList(request, response);
                         break;
                     }
                     case "/newitem":
@@ -147,11 +121,6 @@ public class SnippeToDoController extends HttpServlet
                     case "/updateitemposition":
                     {
                         updateItemPosition(request, response);
-                        break;
-                    }
-                    case "/updatelist":
-                    {
-                        updateList(request, response);
                         break;
                     }
                     case "/newuser":
@@ -308,7 +277,7 @@ public class SnippeToDoController extends HttpServlet
         }
     }
 
-    private void writeJsonResponse(HttpServletResponse response, String jsonResponse)
+    public static void writeJsonResponse(HttpServletResponse response, String jsonResponse)
             throws IOException
     {
         response.setContentType("application/json");
@@ -316,7 +285,7 @@ public class SnippeToDoController extends HttpServlet
         response.getWriter().write(jsonResponse);
     }
 
-    private void writeTextResponse(HttpServletResponse response, String text)
+    public static void writeTextResponse(HttpServletResponse response, String text)
             throws IOException
     {
         response.setContentType("text/plain");
@@ -392,26 +361,7 @@ public class SnippeToDoController extends HttpServlet
         writeJsonResponse(response, jsonResponse);
     }
 
-    private void updateList(HttpServletRequest request, HttpServletResponse response)
-            throws SnippeToDoPlatformException, IOException
-    {
-        final String elementDataIdName = "snpptd-client-list-item";
-        String jsonArray = request.getParameter("order");
-        Type listType = new TypeToken<List<String>>()
-        {
-        }.getType();
-        List<String> itemsNames = new Gson().fromJson(jsonArray, listType);
 
-        for (int itemIndex = 1; itemIndex < itemsNames.size(); itemIndex++)
-        {
-            int itemId =
-                    Integer.parseInt(
-                            itemsNames.get(itemIndex).substring(elementDataIdName.length()));
-            Item item = snippeToDoItemsDB.get(itemId);
-            item.setPositionIndex(itemIndex);
-            snippeToDoItemsDB.update(item);
-        }
-    }
 
     private void getItem(HttpServletRequest request, HttpServletResponse response)
             throws SnippeToDoPlatformException, IOException
@@ -466,6 +416,27 @@ public class SnippeToDoController extends HttpServlet
             {
                 // TODO: throw new exception with error message for the view with the response
             }
+        }
+    }
+
+    private void updateList(HttpServletRequest request, HttpServletResponse response)
+            throws SnippeToDoPlatformException, IOException
+    {
+        final String elementDataIdName = "snpptd-client-list-item";
+        String jsonArray = request.getParameter("order");
+        Type listType = new TypeToken<List<String>>()
+        {
+        }.getType();
+        List<String> itemsNames = new Gson().fromJson(jsonArray, listType);
+
+        for (int itemIndex = 1; itemIndex < itemsNames.size(); itemIndex++)
+        {
+            int itemId =
+                    Integer.parseInt(
+                            itemsNames.get(itemIndex).substring(elementDataIdName.length()));
+            Item item = snippeToDoItemsDB.get(itemId);
+            item.setPositionIndex(itemIndex);
+            snippeToDoItemsDB.update(item);
         }
     }
 

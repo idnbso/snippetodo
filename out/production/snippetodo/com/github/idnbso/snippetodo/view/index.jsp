@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"
-         import="com.github.idnbso.snippetodo.controller.facebook.*" %>
+         import="com.github.idnbso.snippetodo.controller.user.facebook.*" %>
 <%
     FBConnection fbConnection = new FBConnection();
 %>

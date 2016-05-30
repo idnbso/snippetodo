@@ -15,9 +15,9 @@ import java.io.IOException;
  * Created by Idan on 23-5-16.
  */
 @WebServlet("/home/*")
-public class MainController extends HttpServlet
+public class HomeController extends HttpServlet
 {
-    static Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+    static Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)

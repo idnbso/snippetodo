@@ -15,8 +15,10 @@
         var that = this;
         var snippeToDoRef = snippeToDo;
         var order = localStorage.getItem(that.listElementId);
+        var listName = snippeToDo.listNames[that.index];
+        var request = "listName=" + listName[0].toUpperCase() + listName.substring(1);
 
-        $.get("initlist" + snippeToDo.listNames[that.index], function(responseJson) {
+        $.post("initlist", request, function(responseJson) {
             var dummyItem =
                 '<li class="list-group-item-dummy" data-id="' + that.listElementId +
                 '-item0"></li>';
@@ -84,7 +86,9 @@
         $.each(snippeToDo.listNames, function(index, value) {
             var listElementId = 'snpptd-client-list' + value;
             var listElement = document.getElementById(listElementId);
-            var listSortableOptions = new snippeToDo.sortableOptions(listElementId, index); // index for listId
+            var listSortableOptions = new snippeToDo.sortableOptions(listElementId, index); // index
+                                                                                            // for
+                                                                                            // listId
             var sortableList = Sortable.create(listElement, listSortableOptions);
             snippeToDo.sortableLists.push(sortableList);
         });
@@ -149,191 +153,195 @@
             '</ul></div></div></li>';
     };
 
-    // Create new item
-    $(document).on("click", "#snpptd-client-newitem-savebutton", function() {
-        var $form = $('#snpptd-client-newitem-form');
-        var serializedForm = $form.serialize();
-        var $this = $(this);
-        var snippeToDoRef = snippeToDo;
-        $this.button('loading');
-        // set the position index to be the last one according to the current order of listTodo
-        var listTodoIndex = snippeToDo.listNames.indexOf('todo');
-        var order = snippeToDo.sortableLists[listTodoIndex].toArray();
-        serializedForm = serializedForm + '&positionIndex=' + order.length;
-
-        $.post("newitem", serializedForm, function(responseJsonItem) {
-            $this.button('reset');
-            $("#snpptd-client-listtodo")
-                .append(snippeToDoRef.generateItemElement(responseJsonItem));
-            order[responseJsonItem.positionIndex] = 'snpptd-client-list-item' + responseJsonItem.id;
-            console.log(order.join('|'));
-            localStorage.setItem('snpptd-client-listtodo', order.join('|'));
-            $('#snpptd-client-newitem-modal').modal('toggle');
-        });
-
-        event.preventDefault(); // Important! Prevents submitting the form.
-    });
-
-    // Delete an item
-    $(document).on("click", ".snpptd-client-list-item-deletebtn", function() {
-        var $item = $(this).closest('.list-group-item');
-        var elementDataIdName = "snpptd-client-list-item";
-        var itemId = 'id=' + $item.attr("data-id").substring(elementDataIdName.length);
-
-        $.post("deleteitem", itemId, function() {
-            $item.remove();
-        });
-
-        event.preventDefault();
-    });
-
-    var currentItemId = null;
-    var currentItemElement = null;
-
-    /**
-     * Edit an item
-     * NOTE: the button is a class since it is in every dropdown of every item on the page
-     */
-    $(document).on("click", ".snpptd-client-list-item-editbtn", function() {
-        var $item = $(this).closest('.list-group-item');
-        currentItemElement = $item;
-        var elementDataIdName = "snpptd-client-list-item";
-        currentItemId = $item.attr("data-id").substring(elementDataIdName.length);
-        var idSerialized = 'id=' + currentItemId;
-
-        // TODO: loading here
-
-        $.post("getitem", idSerialized, function(responseItem) {
-            var $modal = $('#snpptd-client-edititem-modal');
-            var $title = $modal.find('#snpptd-client-edititem-title');
-            $title.val(responseItem.title);
-            var $body = $modal.find('#snpptd-client-edititem-body');
-            $body.val(responseItem.body);
-            $modal.modal('toggle');
-        });
-
-        event.preventDefault();
-    });
-
-    // TODO: refactor this method with atleast two new helper functions
-    // Move an item to a new list with the actions dropdown menu
-    $(document).on("click", ".snpptd-client-list-item-movetobtn", function() {
-        var $item = $(this).closest('.list-group-item');
-        var $currentList = $item.closest('.list-group');
-        var listElementId = "snpptd-client-list";
-        currentItemElement = $item;
-
-        // get all classes inorder to get the list name
-        var thisElement = $(this)[0];
-        var classList = thisElement.className.split(/\s+/);
-        var newListName;
-        var newListElementId;
-        for (var curClassName = 0; curClassName < classList.length; curClassName++) {
-            var className = classList[curClassName];
-            var elementClassName = "snpptd-client-list-item-movetolist";
-            if (className.indexOf(elementClassName) > -1) {
-                // get the specific list name after elementClassName|...
-                newListName = className.substring(elementClassName.length);
-                newListElementId = listElementId + newListName;
-                break;
-            }
-        }
-
-        // get the new position of the item in the new list
-        var newListIndex = snippeToDo.listNames.indexOf(newListName);
-        var newListObj = snippeToDo.sortableLists[newListIndex];
-        var order = newListObj.toArray();
-        var itemNewIndex = order.length;
-
-        // NOTE: the append operation also removes the item from the previous list
-        $('#' + newListElementId).append($item);
-        // call the Sortable methods of the new list to add
-        // the item to the list both in client and to the database
-        var newList = newListObj['options'];
-        newList.onAdd({
-            item: $item[0], // saves the html element itself from the selector
-            newIndex: itemNewIndex
-        });
-
-        // update the old list of the item
-        var oldListName = $currentList[0]['id'].substring(listElementId.length);
-        var oldListObj = snippeToDo.sortableLists[snippeToDo.listNames.indexOf(oldListName)];
-        var oldList = oldListObj['options'];
-        oldList.onRemove({item: $item[0]});
-        oldList['store'].set(oldListObj);
-
-        event.preventDefault();
-    });
-
-    // Update an item (when an edit is done)
-    $(document).on("click", "#snpptd-client-edititem-savebutton", function() {
-        var $form = $('#snpptd-client-edititem-form');
-        var $this = $(this);
-        $this.button('loading');
-
-        if (currentItemId !== null && currentItemElement !== null) {
-
-            var serializedForm = $form.serialize() + '&id=' + currentItemId;
-
-            $.post("updateitem", serializedForm, function(responseItem) {
-                $this.button('reset');
-                var $title = currentItemElement.find('.list-group-item-text');
-                $title.html(responseItem.title);
-                $('#snpptd-client-edititem-modal').modal('toggle');
-            });
-        }
-        event.preventDefault();
-    });
-
-    // Cancel an update of an item (when an edit is done)
-    $(document).on("click", "#snpptd-client-edititem-cancelbutton", function() {
-        currentItemId = null;
-        currentItemElement = null;
-        event.preventDefault();
-    });
-
-    // Logout from client
-    $(document).on("click", "#snpptd-client-logout-button", function() {
-        var $this = $(this);
-        $this.button('loading');
-
-        $.get("logout", function() {
-            window.open("http://localhost:8080/", "_self");
-            // window.open("https://snippetodo.azurewebsites.net/", "_self");
-        });
-
-        event.preventDefault(); // Important! Prevents submitting the form.
-    });
-
     /**
      * Removes the hash (#), and every other character afterwords,
      * from the url address on page load.
      */
-    (function removeHash() {
+    (snippeToDo.removeHash = function() {
         history.pushState("", document.title, window.location.pathname
             + window.location.search);
     })();
 
-    /**
-     * Fixes a Bootstrap 3.x bug of a 'navbar' classs element's
-     * unwanted movement when a modal is open.
-     */
-    $(document).ready(function() {
-        $(window).load(function() {
-            var oldSSB = $.fn.modal.Constructor.prototype.setScrollbar;
-            $.fn.modal.Constructor.prototype.setScrollbar = function() {
-                oldSSB.apply(this);
-                if (this.bodyIsOverflowing && this.scrollbarWidth) {
-                    $('.navbar-fixed-top, .navbar-fixed-bottom')
-                        .css('padding-right', this.scrollbarWidth);
-                }
-            };
+    snippeToDo.clientEvents = (function($) {
+        var currentItemId = null;
+        var currentItemElement = null;
+        
+        // Create new item
+        $(document).on("click", "#snpptd-client-newitem-savebutton", function() {
+            var $form = $('#snpptd-client-newitem-form');
+            var serializedForm = $form.serialize();
+            var $this = $(this);
+            var snippeToDoRef = snippeToDo;
+            $this.button('loading');
+            // set the position index to be the last one according to the current order of listTodo
+            var listTodoIndex = snippeToDo.listNames.indexOf('todo');
+            var order = snippeToDo.sortableLists[listTodoIndex].toArray();
+            serializedForm = serializedForm + '&positionIndex=' + order.length;
 
-            var oldRSB = $.fn.modal.Constructor.prototype.resetScrollbar;
-            $.fn.modal.Constructor.prototype.resetScrollbar = function() {
-                oldRSB.apply(this);
-                $('.navbar-fixed-top, .navbar-fixed-bottom').css('padding-right', '');
-            }
+            $.post("newitem", serializedForm, function(responseJsonItem) {
+                $this.button('reset');
+                $("#snpptd-client-listtodo")
+                    .append(snippeToDoRef.generateItemElement(responseJsonItem));
+                order[responseJsonItem.positionIndex] =
+                    'snpptd-client-list-item' + responseJsonItem.id;
+                console.log(order.join('|'));
+                localStorage.setItem('snpptd-client-listtodo', order.join('|'));
+                $('#snpptd-client-newitem-modal').modal('toggle');
+            });
+
+            event.preventDefault(); // Important! Prevents submitting the form.
         });
-    });
+
+        // Delete an item
+        $(document).on("click", ".snpptd-client-list-item-deletebtn", function() {
+            var $item = $(this).closest('.list-group-item');
+            var elementDataIdName = "snpptd-client-list-item";
+            var itemId = 'id=' + $item.attr("data-id").substring(elementDataIdName.length);
+
+            $.post("deleteitem", itemId, function() {
+                $item.remove();
+            });
+
+            event.preventDefault();
+        });
+
+        /**
+         * Edit an item
+         * NOTE: the button is a class since it is in every dropdown of every item on the page
+         */
+        $(document).on("click", ".snpptd-client-list-item-editbtn", function() {
+            var $item = $(this).closest('.list-group-item');
+            currentItemElement = $item;
+            var elementDataIdName = "snpptd-client-list-item";
+            currentItemId = $item.attr("data-id").substring(elementDataIdName.length);
+            var idSerialized = 'id=' + currentItemId;
+
+            // TODO: loading here
+
+            $.post("getitem", idSerialized, function(responseItem) {
+                var $modal = $('#snpptd-client-edititem-modal');
+                var $title = $modal.find('#snpptd-client-edititem-title');
+                $title.val(responseItem.title);
+                var $body = $modal.find('#snpptd-client-edititem-body');
+                $body.val(responseItem.body);
+                $modal.modal('toggle');
+            });
+
+            event.preventDefault();
+        });
+
+        // TODO: refactor this method with atleast two new helper functions
+        // Move an item to a new list with the actions dropdown menu
+        $(document).on("click", ".snpptd-client-list-item-movetobtn", function() {
+            var $item = $(this).closest('.list-group-item');
+            var $currentList = $item.closest('.list-group');
+            var listElementId = "snpptd-client-list";
+            currentItemElement = $item;
+
+            // get all classes inorder to get the list name
+            var thisElement = $(this)[0];
+            var classList = thisElement.className.split(/\s+/);
+            var newListName;
+            var newListElementId;
+            for (var curClassName = 0; curClassName < classList.length; curClassName++) {
+                var className = classList[curClassName];
+                var elementClassName = "snpptd-client-list-item-movetolist";
+                if (className.indexOf(elementClassName) > -1) {
+                    // get the specific list name after elementClassName|...
+                    newListName = className.substring(elementClassName.length);
+                    newListElementId = listElementId + newListName;
+                    break;
+                }
+            }
+
+            // get the new position of the item in the new list
+            var newListIndex = snippeToDo.listNames.indexOf(newListName);
+            var newListObj = snippeToDo.sortableLists[newListIndex];
+            var order = newListObj.toArray();
+            var itemNewIndex = order.length;
+
+            // NOTE: the append operation also removes the item from the previous list
+            $('#' + newListElementId).append($item);
+            // call the Sortable methods of the new list to add
+            // the item to the list both in client and to the database
+            var newList = newListObj['options'];
+            newList.onAdd({
+                item: $item[0], // saves the html element itself from the selector
+                newIndex: itemNewIndex
+            });
+
+            // update the old list of the item
+            var oldListName = $currentList[0]['id'].substring(listElementId.length);
+            var oldListObj = snippeToDo.sortableLists[snippeToDo.listNames.indexOf(oldListName)];
+            var oldList = oldListObj['options'];
+            oldList.onRemove({item: $item[0]});
+            oldList['store'].set(oldListObj);
+
+            event.preventDefault();
+        });
+
+        // Update an item (when an edit is done)
+        $(document).on("click", "#snpptd-client-edititem-savebutton", function() {
+            var $form = $('#snpptd-client-edititem-form');
+            var $this = $(this);
+            $this.button('loading');
+
+            if (currentItemId !== null && currentItemElement !== null) {
+
+                var serializedForm = $form.serialize() + '&id=' + currentItemId;
+
+                $.post("updateitem", serializedForm, function(responseItem) {
+                    $this.button('reset');
+                    var $title = currentItemElement.find('.list-group-item-text');
+                    $title.html(responseItem.title);
+                    $('#snpptd-client-edititem-modal').modal('toggle');
+                });
+            }
+            event.preventDefault();
+        });
+
+        // Cancel an update of an item (when an edit is done)
+        $(document).on("click", "#snpptd-client-edititem-cancelbutton", function() {
+            currentItemId = null;
+            currentItemElement = null;
+            event.preventDefault();
+        });
+
+        // Logout from client
+        $(document).on("click", "#snpptd-client-logout-button", function() {
+            var $this = $(this);
+            $this.button('loading');
+
+            $.get("logout", function() {
+                window.open("http://localhost:8080/", "_self");
+                // window.open("https://snippetodo.azurewebsites.net/", "_self");
+            });
+
+            event.preventDefault(); // Important! Prevents submitting the form.
+        });
+
+        /**
+         * Fixes a Bootstrap 3.x bug of a 'navbar' classs element's
+         * unwanted movement when a modal is open.
+         */
+        $(document).ready(function() {
+            $(window).load(function() {
+                var oldSSB = $.fn.modal.Constructor.prototype.setScrollbar;
+                $.fn.modal.Constructor.prototype.setScrollbar = function() {
+                    oldSSB.apply(this);
+                    if (this.bodyIsOverflowing && this.scrollbarWidth) {
+                        $('.navbar-fixed-top, .navbar-fixed-bottom')
+                            .css('padding-right', this.scrollbarWidth);
+                    }
+                };
+
+                var oldRSB = $.fn.modal.Constructor.prototype.resetScrollbar;
+                $.fn.modal.Constructor.prototype.resetScrollbar = function() {
+                    oldRSB.apply(this);
+                    $('.navbar-fixed-top, .navbar-fixed-bottom').css('padding-right', '');
+                }
+            });
+        });
+
+    })(jQuery);
 })();
