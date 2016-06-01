@@ -16,7 +16,7 @@ public class FBConnection
 //    private static final String REDIRECT_URI =
 //            "http://localhost:8080/client/facebooklogin";
     private static final String REDIRECT_URI =
-            "http://snippetodo.azurewebsites.net/client/facebooklogin";
+            "http://snippetodo.azurewebsites.net/user/facebooklogin";
 
     private static String accessToken = "";
 
@@ -69,7 +69,7 @@ public class FBConnection
                 throw new RuntimeException("Invalid code received " + e);
             }
             URLConnection fbConnection;
-            StringBuffer b = null;
+            StringBuffer b;
             try
             {
                 fbConnection = fbGraphURL.openConnection();
@@ -80,7 +80,7 @@ public class FBConnection
                 b = new StringBuffer();
                 while ((inputLine = in.readLine()) != null)
                 {
-                    b.append(inputLine + "\n");
+                    b.append(inputLine).append("\n");
                 }
                 in.close();
             }

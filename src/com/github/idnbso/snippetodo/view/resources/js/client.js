@@ -1,15 +1,45 @@
 (function() {
     'use strict';
 
+    /**
+     * The SnippeToDo application namespace.
+     */
     var snippeToDo = {};
+
+    /**
+     * List of all of the to do lists names.
+     *
+     * @type {string[]}
+     */
     snippeToDo.listNames = ["todo", "today", "doing", "check", "done"];
+
+    /**
+     * Stores all of the initialized lists Sortable objects.
+     *
+     * @type {Array}
+     */
     snippeToDo.sortableLists = [];
 
+    /**
+     * The Sortable library's store object to be used as the options object for Sortable
+     * initialization.
+     *
+     * @param listElementId THe HTML element id of the list
+     * @param index         The index in of the list in the sortableList array
+     * @see Sortable
+     * @see sortableLists
+     */
     snippeToDo.sortableStore = function(listElementId, index) {
         this.listElementId = listElementId;
         this.index = index;
     };
 
+    /**
+     * Get the order of elements in a Sortable list. Called once during initialization.
+     *
+     * @param   {Sortable}  sortable
+     * @returns {Array}
+     */
     snippeToDo.sortableStore.prototype.get = function(sortable) {
         // get the current order from the localStorage
         var that = this;
@@ -35,12 +65,23 @@
         return order ? order.split('|') : [];
     };
 
+    /**
+     * Save the order of elements in a Sortable list. Called onEnd (when the item is dropped).
+     *
+     * @param {Sortable}  sortable
+     */
     snippeToDo.sortableStore.prototype.set = function(sortable) {
         var order = sortable.toArray();
         console.log(order.join('|'));
         localStorage.setItem(this.listElementId, order.join('|'));
     };
 
+    /**
+     * The Sortable list initialization options object.
+     *
+     * @param listElementId
+     * @param index
+     */
     snippeToDo.sortableOptions = function(listElementId, index) {
         this.listElementId = listElementId;
         this.group = 'snpptd-client-board-lists';
@@ -60,7 +101,7 @@
             var itemPositionSerialized = "id=" + itemId + "&positionIndex=" + newIndex +
                 "&listId=" + listId;
 
-            $.post("updateitemposition", itemPositionSerialized, function() {
+            $.post("/client/item/updateposition", itemPositionSerialized, function() {
                 var sortableList = snippeToDo.sortableLists[index];
                 var order = sortableList.toArray();
                 snippeToDo.updateList(order);
@@ -69,27 +110,46 @@
             });
         };
 
-        // When there is a change in sorting within list
-        this.onUpdate = update;
-
-        // When an element is removed from the list into another list
-        this.onRemove = update;
-
+        /**
+         * Prepares an update of the list in the database,
+         * from the corresponded list saved in Sortable.
+         */
         var update = function() {
             var sortableList = snippeToDo.sortableLists[index];
             var order = sortableList.toArray();
             snippeToDo.updateList(order);
         };
+
+        /**
+         * It is being called by Sortable whenever there is a change in sorting within a list
+         * @type {update}
+         */
+        this.onUpdate = update;
+
+        /**
+         * It is being called by Sortable whenever an element is removed
+         * from the list into another list.
+         *
+         * @type {update}
+         */
+        this.onRemove = update;
+
     };
 
+    /**
+     * Setup of all the lists defined in the listNames array.
+     * @see listNames
+     */
     (snippeToDo.setupLists = function() {
         $.each(snippeToDo.listNames, function(index, value) {
             var listElementId = 'snpptd-client-list' + value;
             var listElement = document.getElementById(listElementId);
-            var listSortableOptions = new snippeToDo.sortableOptions(listElementId, index); // index
-                                                                                            // for
-                                                                                            // listId
-            var sortableList = Sortable.create(listElement, listSortableOptions);
+
+            // initialize a new Sortable list object.
+            var sortableList = Sortable.create(listElement,
+                new snippeToDo.sortableOptions(listElementId, index));
+
+            // add to the list of all Sortable list object.
             snippeToDo.sortableLists.push(sortableList);
         });
     })();
@@ -101,7 +161,7 @@
      */
     snippeToDo.updateList = function(order) {
         var orderSerialized = 'order=' + JSON.stringify(order);
-        $.post("updatelist", orderSerialized, function() {
+        $.post("/client/item/updatelist", orderSerialized, function() {
         });
     };
 
@@ -162,11 +222,16 @@
             + window.location.search);
     })();
 
+    /**
+     * all of the SnippeToDo events handling including by jQuery.
+     */
     snippeToDo.clientEvents = (function($) {
         var currentItemId = null;
         var currentItemElement = null;
-        
-        // Create new item
+
+        /**
+         * Create a new item.
+         */
         $(document).on("click", "#snpptd-client-newitem-savebutton", function() {
             var $form = $('#snpptd-client-newitem-form');
             var serializedForm = $form.serialize();
@@ -176,15 +241,15 @@
             // set the position index to be the last one according to the current order of listTodo
             var listTodoIndex = snippeToDo.listNames.indexOf('todo');
             var order = snippeToDo.sortableLists[listTodoIndex].toArray();
-            serializedForm = serializedForm + '&positionIndex=' + order.length;
+            var positionIndex = order.length;
+            serializedForm = serializedForm + '&positionIndex=' + positionIndex;
 
-            $.post("newitem", serializedForm, function(responseJsonItem) {
+            $.post("/client/item/new", serializedForm, function(responseJsonItem) {
                 $this.button('reset');
                 $("#snpptd-client-listtodo")
                     .append(snippeToDoRef.generateItemElement(responseJsonItem));
-                order[responseJsonItem.positionIndex] =
+                order[positionIndex] =
                     'snpptd-client-list-item' + responseJsonItem.id;
-                console.log(order.join('|'));
                 localStorage.setItem('snpptd-client-listtodo', order.join('|'));
                 $('#snpptd-client-newitem-modal').modal('toggle');
             });
@@ -192,13 +257,15 @@
             event.preventDefault(); // Important! Prevents submitting the form.
         });
 
-        // Delete an item
+        /**
+         * Delete an item
+         */
         $(document).on("click", ".snpptd-client-list-item-deletebtn", function() {
             var $item = $(this).closest('.list-group-item');
             var elementDataIdName = "snpptd-client-list-item";
             var itemId = 'id=' + $item.attr("data-id").substring(elementDataIdName.length);
 
-            $.post("deleteitem", itemId, function() {
+            $.post("/client/item/delete", itemId, function() {
                 $item.remove();
             });
 
@@ -207,7 +274,7 @@
 
         /**
          * Edit an item
-         * NOTE: the button is a class since it is in every dropdown of every item on the page
+         * NOTE: the button is a class since it is in every dropdown of every item on the page.
          */
         $(document).on("click", ".snpptd-client-list-item-editbtn", function() {
             var $item = $(this).closest('.list-group-item');
@@ -218,7 +285,7 @@
 
             // TODO: loading here
 
-            $.post("getitem", idSerialized, function(responseItem) {
+            $.post("/client/item/get", idSerialized, function(responseItem) {
                 var $modal = $('#snpptd-client-edititem-modal');
                 var $title = $modal.find('#snpptd-client-edititem-title');
                 $title.val(responseItem.title);
@@ -230,8 +297,9 @@
             event.preventDefault();
         });
 
-        // TODO: refactor this method with atleast two new helper functions
-        // Move an item to a new list with the actions dropdown menu
+        /**
+         * Move an item to a new list with the actions dropdown menu.
+         */
         $(document).on("click", ".snpptd-client-list-item-movetobtn", function() {
             var $item = $(this).closest('.list-group-item');
             var $currentList = $item.closest('.list-group');
@@ -280,7 +348,9 @@
             event.preventDefault();
         });
 
-        // Update an item (when an edit is done)
+        /**
+         * Update an item (when an edit is done).
+         */
         $(document).on("click", "#snpptd-client-edititem-savebutton", function() {
             var $form = $('#snpptd-client-edititem-form');
             var $this = $(this);
@@ -290,7 +360,7 @@
 
                 var serializedForm = $form.serialize() + '&id=' + currentItemId;
 
-                $.post("updateitem", serializedForm, function(responseItem) {
+                $.post("/client/item/update", serializedForm, function(responseItem) {
                     $this.button('reset');
                     var $title = currentItemElement.find('.list-group-item-text');
                     $title.html(responseItem.title);
@@ -300,19 +370,23 @@
             event.preventDefault();
         });
 
-        // Cancel an update of an item (when an edit is done)
+        /**
+         * Cancel an update of an item (when an edit is done).
+         */
         $(document).on("click", "#snpptd-client-edititem-cancelbutton", function() {
             currentItemId = null;
             currentItemElement = null;
             event.preventDefault();
         });
 
-        // Logout from client
+        /**
+         * Logout from client.
+         */
         $(document).on("click", "#snpptd-client-logout-button", function() {
             var $this = $(this);
             $this.button('loading');
 
-            $.get("logout", function() {
+            $.get("/user/logout", function() {
                 window.open("http://localhost:8080/", "_self");
                 // window.open("https://snippetodo.azurewebsites.net/", "_self");
             });
@@ -342,6 +416,5 @@
                 }
             });
         });
-
     })(jQuery);
 })();

@@ -27,7 +27,7 @@ public class SnippeToDoFilter implements Filter
             // Let the resources be loaded normally
             chain.doFilter(request, response);
         }
-        else if (path.startsWith("/client/"))
+        else if (path.startsWith("/client/") || path.startsWith("/user/"))
         {
             request.getRequestDispatcher(path).forward(request, response);
         }
