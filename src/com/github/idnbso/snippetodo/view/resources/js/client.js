@@ -252,6 +252,8 @@
                     'snpptd-client-list-item' + responseJsonItem.id;
                 localStorage.setItem('snpptd-client-listtodo', order.join('|'));
                 $('#snpptd-client-newitem-modal').modal('toggle');
+                $('#snpptd-client-item-title').val('');
+                $('#snpptd-client-item-body').val('');
             });
 
             event.preventDefault(); // Important! Prevents submitting the form.
@@ -380,7 +382,7 @@
         });
 
         /**
-         * Logout from client.
+         * Log out from client.
          */
         $(document).on("click", "#snpptd-client-logout-button", function() {
             var $this = $(this);
@@ -395,10 +397,23 @@
         });
 
         /**
-         * Fixes a Bootstrap 3.x bug of a 'navbar' classs element's
-         * unwanted movement when a modal is open.
+         * Handles events to be executed when the current page has finished loading.
          */
         $(document).ready(function() {
+            /**
+             * check for the current user session status
+             */
+            $.get("/user/checkstatus", function(firstName) {
+                if (firstName === "") { // no logged in user in the current session
+                    window.open("http://localhost:8080/", "_self");
+                    // window.open("https://snippetodo.azurewebsites.net/", "_self");
+                }
+            });
+
+            /**
+             * Fixes a Bootstrap 3.x bug of a 'navbar' classs element's
+             * unwanted movement when a modal is open.
+             */
             $(window).load(function() {
                 var oldSSB = $.fn.modal.Constructor.prototype.setScrollbar;
                 $.fn.modal.Constructor.prototype.setScrollbar = function() {

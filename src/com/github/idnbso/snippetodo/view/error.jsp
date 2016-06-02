@@ -70,6 +70,33 @@
 </div>
 <!-- /Navigation Bar -->
 
+<!-- Error Modal -->
+<div class="modal fade" id="snpptd-home-error-modal" tabindex="-1" role="dialog"
+     aria-labelledby="snpptd-home-error-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    An error has occurred!
+                </h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p id="snpptd-home-error-message"></p>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Error Modal -->
+
 <!-- Login Modal -->
 <div class="modal fade" id="snpptd-home-login-modal" tabindex="-1" role="dialog"
      aria-labelledby="snpptd-home-login-modal">
@@ -211,7 +238,7 @@
                 <h4 id="snpptd-error-main-message"></h4>
                 <hr>
                 <div id="snpptd-error-main-solution">
-                    <a href="https://snippetodo.azurewebsites.net/" class="btn btn-default btn-lg"
+                    <a href="#" class="btn btn-default btn-lg"
                        data-toggle="modal"
                        data-target="#snpptd-home-signup-modal">
                         Get Started!

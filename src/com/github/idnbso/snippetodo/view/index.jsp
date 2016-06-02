@@ -1,8 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"
-         import="com.github.idnbso.snippetodo.controller.user.facebook.*" %>
-<%
-    FBConnection fbConnection = new FBConnection();
-%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +22,7 @@
     <div class="container">
         <div class="row">
             <div class="navbar-header">
-                <a href="/" class="navbar-brand">
+                <a href="#" class="navbar-brand">
                     SNIPPEToDo
                 </a>
                 <button type="button" class="navbar-toggle"
@@ -39,15 +35,24 @@
             </div>
             <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
                 <li>
-                    <button class="btn" data-toggle="modal"
-                            data-target="#snpptd-home-signup-modal">
+                    <a href="http://localhost:8080/client/" class="hidden"
+                       id="snpptd-home-login-status">
+                        <i class="glyphicon glyphicon-user"
+                           aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <button class="btn hidden" data-toggle="modal"
+                            data-target="#snpptd-home-signup-modal"
+                            id="snpptd-home-signup-btn">
                         <i class="glyphicon glyphicon-user"
                            aria-hidden="true"></i>Signup
                     </button>
                 </li>
                 <li>
-                    <button class="btn" data-toggle="modal"
-                            data-target="#snpptd-home-login-modal">
+                    <button class="btn hidden" data-toggle="modal"
+                            data-target="#snpptd-home-login-modal"
+                            id="snpptd-home-login-btn">
                         <i class="glyphicon glyphicon-log-in"
                            aria-hidden="true"></i>Login
                     </button>
@@ -88,7 +93,7 @@
             </div>
             <!-- Modal Body -->
             <div class="modal-body">
-                <a href="<%=fbConnection.getFBAuthUrl()%>">
+                <a href="#">
                     <img id="snpptd-home-fblogin-btn"
                          src="./resources/img/facebookloginbutton.png"/>
                 </a>
@@ -97,19 +102,21 @@
                 </div>
                 <form id="snpptd-home-login-form" role="form" method="post">
                     <div class="form-group">
-                        <label for="snpptd-home-logininput-email">Email address</label>
-                        <div class="input-group">
-                            <input type="email" class="form-control"
-                                   id="snpptd-home-logininput-email"
-                                   name="snpptd-home-logininput-email"
-                                   placeholder="Enter email"/>
+                        <div class="form-control-group">
+                            <label class="control-label" for="snpptd-home-logininput-email">Email
+                                Address</label>
+                            <div class="controls">
+                                <input type="text" name="email"
+                                       id="snpptd-home-logininput-email">
+                            </div>
                         </div>
-                        <label for="snpptd-home-logininput-password">Password</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control"
-                                   id="snpptd-home-logininput-password"
-                                   name="snpptd-home-logininput-password"
-                                   placeholder="Password"/>
+                        <div class="form-control-group">
+                            <label class="control-label"
+                                   for="snpptd-home-logininput-password">Password</label>
+                            <div class="controls">
+                                <input type="password" name="password"
+                                       id="snpptd-home-logininput-password">
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -120,7 +127,7 @@
                         data-dismiss="modal">
                     Close
                 </button>
-                <button id="snpptd-home-login-btn" type="button" class="btn btn-primary"
+                <button id="snpptd-home-login-modal-btn" type="button" class="btn btn-primary"
                         data-loading-text="<span class='glyphicon glyphicon-refresh
                         glyphicon-refresh-animate'></span> Logging in">
                     Login
@@ -154,33 +161,47 @@
                         <a id="snppt-alert-signup" href="#" class="alert-link"></a>
                     </div>
                     <div class="form-group">
-                        <label for="snpptd-home-signupinput-email">Email address</label>
-                        <div class="input-group">
-                            <input type="email" class="form-control"
-                                   id="snpptd-home-signupinput-email"
-                                   name="snpptd-home-signupinput-email"
-                                   placeholder="Email"/>
+                        <div class="form-control-group">
+                            <label class="control-label" for="snpptd-home-signup-email">Email
+                                Address</label>
+                            <div class="controls">
+                                <input type="text" class="input-xlarge" name="email"
+                                       id="snpptd-home-signup-email">
+                            </div>
                         </div>
-                        <label for="snpptd-home-signupinput-firstname">First name</label>
-                        <div class="input-group">
-                            <input class="form-control"
-                                   id="snpptd-home-signupinput-firstname"
-                                   name="snpptd-home-signupinput-firstname"
-                                   placeholder="Enter your first name"/>
+                        <div class="form-control-group">
+                            <label class="control-label" for="snpptd-home-signup-firstname">Your
+                                First Name</label>
+                            <div class="controls">
+                                <input type="text" class="input-xlarge" name="first_name"
+                                       id="snpptd-home-signup-firstname">
+                            </div>
                         </div>
-                        <label for="snpptd-home-signupinput-lastname">Last name</label>
-                        <div class="input-group">
-                            <input class="form-control"
-                                   id="snpptd-home-signupinput-lastname"
-                                   name="snpptd-home-signupinput-lastname"
-                                   placeholder="Enter your last name"/>
+                        <div class="form-control-group">
+                            <label class="control-label" for="snpptd-home-signup-lastname">Your Last
+                                Name</label>
+                            <div class="controls">
+                                <input type="text" class="input-xlarge" name="last_name"
+                                       id="snpptd-home-signup-lastname">
+                            </div>
                         </div>
-                        <label for="snpptd-home-signupinput-password">Password</label>
-                        <div class="input-group">
-                            <input class="form-control"
-                                   id="snpptd-home-signupinput-password"
-                                   name="snpptd-home-signupinput-password"
-                                   placeholder="Enter your password"/>
+                        <div class="form-control-group">
+                            <label class="control-label"
+                                   for="snpptd-home-signup-password">Password</label>
+                            <div class="controls">
+                                <input type="password" class="input-xlarge" name="password"
+                                       id="snpptd-home-signup-password">
+                            </div>
+                        </div>
+                        <div class="form-control-group">
+                            <label class="control-label"
+                                   for="snpptd-home-signup-confirmpassword">Retype
+                                Password
+                            </label>
+                            <div class="controls">
+                                <input type="password" class="input-xlarge" name="confirm_password"
+                                       id="snpptd-home-signup-confirmpassword">
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -191,7 +212,7 @@
                         data-dismiss="modal">
                     Close
                 </button>
-                <button id="snpptd-home-signup-btn" type="button" class="btn btn-primary"
+                <button id="snpptd-home-signup-modal-btn" type="button" class="btn btn-primary"
                         data-loading-text="<span class='glyphicon glyphicon-refresh
                         glyphicon-refresh-animate'></span> Processing">
                     Sign Up
@@ -210,10 +231,14 @@
                 <h1 id="snpptd-home-main-header">SNIPPEToDo</h1>
                 <h4>A simple, organised, and visual way to be productive for developers.</h4>
                 <hr>
-                <button class="btn btn-default btn-lg" data-toggle="modal"
+                <button class="btn btn-default btn-lg hidden" data-toggle="modal"
+                        id="snpptd-home-main-getstarted-btn"
                         data-target="#snpptd-home-signup-modal">
                     Get Started!
                 </button>
+                <a href="http://localhost:8080/client/" class="btn btn-default btn-lg hidden"
+                   id="snpptd-home-main-use-btn">
+                </a>
             </div>
         </div>
     </div>
@@ -270,6 +295,8 @@
 
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/lib/jquery-2.2.4.min.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 <script type="text/javascript"

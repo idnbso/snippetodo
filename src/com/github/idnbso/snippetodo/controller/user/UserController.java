@@ -4,11 +4,9 @@ import com.github.idnbso.snippetodo.controller.user.facebook.FBConnection;
 import com.github.idnbso.snippetodo.controller.user.facebook.FBGraph;
 import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.github.idnbso.snippetodo.model.ISnippeToDoDAO;
-import com.github.idnbso.snippetodo.model.data.item.SnippeToDoItemDAO;
 import com.github.idnbso.snippetodo.model.data.user.SnippeToDoUserDAO;
 import com.github.idnbso.snippetodo.model.data.user.User;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -51,7 +49,6 @@ public class UserController extends HttpServlet
         try
         {
             String path = request.getPathInfo();
-            RequestDispatcher dispatcher;
             if (path != null)
             {
                 switch (path)
@@ -60,15 +57,21 @@ public class UserController extends HttpServlet
                     {
                         // data from the request (view)
                         String email =
-                                request.getParameter("snpptd-home-signupinput-email");
+                                request.getParameter("email");
                         String firstName =
-                                request.getParameter("snpptd-home-signupinput-firstname");
+                                request.getParameter("first_name");
                         String lastName =
-                                request.getParameter("snpptd-home-signupinput-lastname");
+                                request.getParameter("last_name");
                         String password =
-                                request.getParameter("snpptd-home-signupinput-password");
+                                request.getParameter("password");
 
                         createNewUser(request, email, firstName, lastName, password);
+                        break;
+                    }
+                    case "/checkstatus":
+                    {
+                        String firstName = check(request);
+                        writeTextResponse(response, firstName);
                         break;
                     }
                     case "/initlogin":
@@ -89,14 +92,19 @@ public class UserController extends HttpServlet
                             }
                         }
 
-                        response.setContentType("text/plain");
-                        response.setCharacterEncoding("UTF-8");
-                        response.getWriter().write(userEmail);
+                        writeTextResponse(response, userEmail);
                         break;
                     }
                     case "/login":
                     {
                         loginUser(request, response);
+                        break;
+                    }
+                    case "/initfblogin":
+                    {
+                        FBConnection fbConnection = new FBConnection();
+                        String redirectUrl = fbConnection.getFBAuthUrl();
+                        writeTextResponse(response, redirectUrl);
                         break;
                     }
                     case "/facebooklogin":
@@ -144,6 +152,9 @@ public class UserController extends HttpServlet
                         break;
                     }
                     default:
+                    {
+                        response.sendRedirect("/");
+                    }
                 }
             }
         }
@@ -153,6 +164,18 @@ public class UserController extends HttpServlet
             e.printStackTrace();
             // throw new RuntimeException("ERROR: run time errors", e.getCause());
         }
+    }
+
+    private String check(HttpServletRequest request)
+    {
+        String firstName = "";
+        User user = (User) request.getSession().getAttribute("user");
+        if (user != null)
+        {
+            firstName = user.getFirstName();
+        }
+
+        return firstName;
     }
 
     private void createNewUser(HttpServletRequest request, String email, String firstName,
@@ -179,8 +202,8 @@ public class UserController extends HttpServlet
     private void loginUser(HttpServletRequest request, HttpServletResponse response)
             throws SnippeToDoPlatformException, ServletException, IOException
     {
-        String email = request.getParameter("snpptd-home-logininput-email");
-        String password = request.getParameter("snpptd-home-logininput-password");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
         if (email != null && password != null)
         {
             email = email.trim();
@@ -230,5 +253,13 @@ public class UserController extends HttpServlet
         }
         request.getSession().setAttribute("currentLastUserId", currentLastUserId);
         return user;
+    }
+
+    private void writeTextResponse(HttpServletResponse response, String text)
+            throws IOException
+    {
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(text);
     }
 }

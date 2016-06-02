@@ -13,8 +13,8 @@ public class FBConnection
 {
     private static final String FB_APP_ID = "955639281222919";
     private static final String FB_APP_SECRET = "02040901b549c57fd003fc2f082257be";
-//    private static final String REDIRECT_URI =
-//            "http://localhost:8080/client/facebooklogin";
+    //    private static final String REDIRECT_URI =
+//            "http://localhost:8080/user/facebooklogin";
     private static final String REDIRECT_URI =
             "http://snippetodo.azurewebsites.net/user/facebooklogin";
 
@@ -74,8 +74,7 @@ public class FBConnection
             {
                 fbConnection = fbGraphURL.openConnection();
                 BufferedReader in;
-                in = new BufferedReader(new InputStreamReader(
-                        fbConnection.getInputStream()));
+                in = new BufferedReader(new InputStreamReader(fbConnection.getInputStream()));
                 String inputLine;
                 b = new StringBuffer();
                 while ((inputLine = in.readLine()) != null)
@@ -87,15 +86,13 @@ public class FBConnection
             catch (IOException e)
             {
                 e.printStackTrace();
-                throw new RuntimeException("Unable to connect with Facebook "
-                                                   + e);
+                throw new RuntimeException("Unable to connect with Facebook " + e);
             }
 
             accessToken = b.toString();
             if (accessToken.startsWith("{"))
             {
-                throw new RuntimeException("ERROR: Access Token Invalid: "
-                                                   + accessToken);
+                throw new RuntimeException("ERROR: Access Token Invalid: " + accessToken);
             }
         }
         return accessToken;

@@ -27,7 +27,7 @@
 
                 <button type="button" class="navbar-toggle"
                         data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only">Toggle lists navigation</span>
                     <i class="glyphicon glyphicon-option-vertical" aria-hidden="true"></i>
                 </button>
 
@@ -106,15 +106,16 @@
                         <a id="snpptd-client-newitem-alert" href="#" class="alert-link"></a>
                     </div>
                     <div class="form-group">
-                        <label for="snpptd-client-item-title">Your snippet text title</label>
+                        <label for="snpptd-client-item-title"></label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="snpptd-client-item-title"
-                                   name="item-title"/>
+                                   name="item-title" placeholder="Title of the snippet"/>
                         </div>
-                        <label for="snpptd-client-item-body">Your snippet text body</label>
+                        <label for="snpptd-client-item-body"></label>
                         <div class="input-group">
                             <textarea class="form-control" rows="5" id="snpptd-client-item-body"
-                                      name="item-body"></textarea>
+                                      name="item-body"
+                                      placeholder="Text body of the snippet"></textarea>
                         </div>
                     </div>
                 </form>

@@ -93,6 +93,9 @@ public class ClientController extends HttpServlet
                         break;
                     }
                     default:
+                    {
+                        response.sendRedirect("/");
+                    }
                 }
             }
         }

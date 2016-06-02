@@ -72,6 +72,9 @@ public class ItemController extends ClientController
                         break;
                     }
                     default:
+                    {
+                        response.sendRedirect("/");
+                    }
                 }
             }
         }

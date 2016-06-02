@@ -44,9 +44,11 @@ public class HomeController extends HttpServlet
                         dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                         dispatcher.forward(request, response);
                         break;
-
                     }
                     default:
+                    {
+                        response.sendRedirect("/");
+                    }
                 }
             }
         }
