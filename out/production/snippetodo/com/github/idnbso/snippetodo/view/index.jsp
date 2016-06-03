@@ -14,6 +14,8 @@
           rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet'
           type='text/css'>
+    <link rel='shortcut icon' type='image/x-icon'
+          href='${pageContext.request.contextPath}/resources/img/favicon.ico'/>
 </head>
 <body>
 
@@ -75,6 +77,40 @@
 </div>
 <!-- /Navigation Bar -->
 
+<!-- Error Modal -->
+<div class="modal fade" id="snpptd-error-modal" tabindex="0" role="dialog"
+     aria-labelledby="snpptd-error-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="snpptd-error-modallabel">
+                    An Error has Occurred!
+                </h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p id="snpptd-error-modal-message"></p>
+                <p>Please try again later.</p>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal" value="Reload Page"
+                        onClick="window.location.reload()">
+                    Reload Page
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Error Modal -->
+
 <!-- Login Modal -->
 <div class="modal fade" id="snpptd-home-login-modal" tabindex="-1" role="dialog"
      aria-labelledby="snpptd-home-login-modal">
@@ -93,20 +129,23 @@
             </div>
             <!-- Modal Body -->
             <div class="modal-body">
+                <div class="alert alert-warning hidden"
+                     id="snpptd-home-login-fb-alert">
+                </div>
                 <a href="#">
                     <img id="snpptd-home-fblogin-btn"
                          src="./resources/img/facebookloginbutton.png"/>
                 </a>
-                <div class="alert alert-warning hidden">
-                    <a id="snpptd-home-login-alert" href="#" class="alert-link"></a>
+                <div class="alert alert-warning hidden"
+                     id="snpptd-home-login-alert">
                 </div>
                 <form id="snpptd-home-login-form" role="form" method="post">
                     <div class="form-group">
                         <div class="form-control-group">
-                            <label class="control-label" for="snpptd-home-logininput-email">Email
-                                Address</label>
+                            <label class="control-label"
+                                   for="snpptd-home-logininput-email">Email Address</label>
                             <div class="controls">
-                                <input type="text" name="email"
+                                <input type="text" name="email" class="input-xlarge"
                                        id="snpptd-home-logininput-email">
                             </div>
                         </div>
@@ -114,7 +153,7 @@
                             <label class="control-label"
                                    for="snpptd-home-logininput-password">Password</label>
                             <div class="controls">
-                                <input type="password" name="password"
+                                <input type="password" name="password" class="input-xlarge"
                                        id="snpptd-home-logininput-password">
                             </div>
                         </div>
@@ -123,7 +162,7 @@
             </div>
             <!-- Modal Footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-default"
+                <button type="button" class="btn btn-default snpptd-home-modal-closebtn"
                         data-dismiss="modal">
                     Close
                 </button>
@@ -157,8 +196,8 @@
             <!-- Modal Body -->
             <div class="modal-body">
                 <form id="snpptd-home-signup-form" role="form" method="post">
-                    <div class="alert alert-warning hidden">
-                        <a id="snppt-alert-signup" href="#" class="alert-link"></a>
+                    <div class="alert alert-warning hidden"
+                         id="snpptd-home-signup-alert">
                     </div>
                     <div class="form-group">
                         <div class="form-control-group">
@@ -208,7 +247,7 @@
             </div>
             <!-- Modal Footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-default"
+                <button type="button" class="btn btn-default snpptd-home-modal-closebtn"
                         data-dismiss="modal">
                     Close
                 </button>

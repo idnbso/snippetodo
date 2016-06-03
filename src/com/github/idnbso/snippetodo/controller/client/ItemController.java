@@ -5,7 +5,6 @@ import com.github.idnbso.snippetodo.model.data.item.Item;
 import com.github.idnbso.snippetodo.model.data.user.User;
 import com.google.gson.Gson;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -14,6 +13,8 @@ import java.util.*;
 import java.lang.reflect.Type;
 
 import com.google.gson.reflect.TypeToken;
+
+import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.writeJsonResponse;
 
 /**
  * TODO
@@ -36,7 +37,6 @@ public class ItemController extends ClientController
         try
         {
             String path = request.getPathInfo();
-            RequestDispatcher dispatcher;
             if (path != null)
             {
                 switch (path)

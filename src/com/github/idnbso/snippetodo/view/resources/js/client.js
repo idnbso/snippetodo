@@ -43,25 +43,35 @@
     snippeToDo.sortableStore.prototype.get = function(sortable) {
         // get the current order from the localStorage
         var that = this;
-        var snippeToDoRef = snippeToDo;
-        var order = localStorage.getItem(that.listElementId);
-        var listName = snippeToDo.listNames[that.index];
+        var snippeToDoRef = snippeToDo; // reference to the namespace for the ajax success logic
+        var order = localStorage.getItem(that.listElementId); // get the current saved list's data
+        var listName = snippeToDo.listNames[that.index]; // index as list id
         var request = "listName=" + listName[0].toUpperCase() + listName.substring(1);
 
+        // get the current list's data from the database and initialize it in html code
         $.post("initlist", request, function(responseJson) {
-            var dummyItem =
-                '<li class="list-group-item-dummy" data-id="' + that.listElementId +
-                '-item0"></li>';
-            var $listSelector = $('#' + that.listElementId);
-            $listSelector.empty().append(dummyItem);
 
-            $.each(responseJson, function(index, item) {
-                $listSelector.append(snippeToDoRef.generateItemElement(item));
-            });
-            var order = sortable.toArray();
-            localStorage.setItem(that.listElementId, order.join('|'));
+            if (responseJson === undefined) {}
+            else if (responseJson.error !== undefined) {}
+            else {
+                var dummyItem = // dummy item element to enable item drag and drop on an empty list
+                    '<li class="list-group-item-dummy" data-id="' + that.listElementId +
+                    '-item0"></li>';
+                var $listSelector = $('#' + that.listElementId);
+                $listSelector.empty().append(dummyItem);
+
+                // iterate over each item in the list and generate its html code
+                $.each(responseJson, function(index, item) {
+                    $listSelector.append(snippeToDoRef.generateItemElement(item));
+                });
+
+                // get the updated order and save it to the local storage
+                order = sortable.toArray();
+                localStorage.setItem(that.listElementId, order.join('|'));
+            }
         });
 
+        // update Sortable with the latest order
         return order ? order.split('|') : [];
     };
 
@@ -403,7 +413,7 @@
             /**
              * check for the current user session status
              */
-            $.get("/user/checkstatus", function(firstName) {
+            $.get("/user/checksession", function(firstName) {
                 if (firstName === "") { // no logged in user in the current session
                     window.open("http://localhost:8080/", "_self");
                     // window.open("https://snippetodo.azurewebsites.net/", "_self");

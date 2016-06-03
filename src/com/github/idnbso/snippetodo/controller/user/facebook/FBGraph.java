@@ -1,12 +1,15 @@
 package com.github.idnbso.snippetodo.controller.user.facebook;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.google.gson.*;
 
 public class FBGraph
@@ -18,7 +21,7 @@ public class FBGraph
         this.accessToken = accessToken;
     }
 
-    public String getFBGraph()
+    public String getFBGraph() throws SnippeToDoPlatformException
     {
         String graph = null;
         try
@@ -38,17 +41,19 @@ public class FBGraph
             graph = builder.toString();
             System.out.println(graph);
         }
-        catch (Exception e)
+        catch (IOException e)
         {
-            e.printStackTrace();
-            throw new RuntimeException("ERROR in getting FB graph data. " + e);
+            Throwable t = new Throwable("ERROR: unable to get FB graph data. " + e.getCause());
+            throw new SnippeToDoPlatformException(null, t);
         }
+
         return graph;
     }
 
-    public Map<String, String> getGraphData(String fbGraph)
+    public Map<String, String> getGraphData(String fbGraph) throws SnippeToDoPlatformException
     {
         Map<String, String> fbProfile = new HashMap<>();
+
         try
         {
             JsonObject json = new JsonParser().parse(fbGraph).getAsJsonObject();
@@ -60,9 +65,10 @@ public class FBGraph
         }
         catch (JsonSyntaxException e)
         {
-            e.printStackTrace();
-            throw new RuntimeException("ERROR in parsing FB graph data. " + e);
+            Throwable t = new Throwable("ERROR: unable to parse FB graph data. " + e.getCause());
+            throw new SnippeToDoPlatformException(null, t);
         }
+
         return fbProfile;
     }
 }

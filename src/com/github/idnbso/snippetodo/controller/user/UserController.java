@@ -6,12 +6,20 @@ import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.github.idnbso.snippetodo.model.ISnippeToDoDAO;
 import com.github.idnbso.snippetodo.model.data.user.SnippeToDoUserDAO;
 import com.github.idnbso.snippetodo.model.data.user.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
+
+import static com.github.idnbso.snippetodo.SnippeToDoLogger.LOGGER;
+import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil
+        .handleSnippeToDoPlatformException;
+import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.writeJsonResponse;
+import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.writeTextResponse;
 
 /**
  * TODO
@@ -55,43 +63,18 @@ public class UserController extends HttpServlet
                 {
                     case "/new":
                     {
-                        // data from the request (view)
-                        String email =
-                                request.getParameter("email");
-                        String firstName =
-                                request.getParameter("first_name");
-                        String lastName =
-                                request.getParameter("last_name");
-                        String password =
-                                request.getParameter("password");
-
-                        createNewUser(request, email, firstName, lastName, password);
+                        processUserRegistration(request);
                         break;
                     }
-                    case "/checkstatus":
+                    case "/checksession":
                     {
-                        String firstName = check(request);
+                        String firstName = checkUserSession(request);
                         writeTextResponse(response, firstName);
                         break;
                     }
                     case "/initlogin":
                     {
-                        // get the current user's email from a saved cookie
-                        Cookie[] cookies = request.getCookies();
-                        String userEmail = "";
-                        if (cookies != null)
-                        {
-                            for (Cookie cookie : cookies)
-                            {
-                                String cookieValue = cookie.getValue();
-                                if (cookie.getName().equals("userEmail") &&
-                                        cookieValue.length() > 0)
-                                {
-                                    userEmail = cookieValue;
-                                }
-                            }
-                        }
-
+                        String userEmail = getEmailFromCookie(request);
                         writeTextResponse(response, userEmail);
                         break;
                     }
@@ -109,38 +92,8 @@ public class UserController extends HttpServlet
                     }
                     case "/facebooklogin":
                     {
-                        String code = request.getParameter("code");
-                        if (code == null || code.equals(""))
-                        {
-                            throw new RuntimeException(
-                                    "ERROR: Didn't get code parameter in callback.");
-                        }
-                        FBConnection fbConnection = new FBConnection();
-                        String accessToken = fbConnection.getAccessToken(code);
-
-                        FBGraph fbGraph = new FBGraph(accessToken);
-                        String graph = fbGraph.getFBGraph();
-                        Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
-                        String strUserId = fbProfileData.get("id");
-
-                        int userId = 0;
-
-                        if (strUserId != null)
-                        {
-                            strUserId = strUserId.substring(0, 9);
-                            // add try and catch for NumberFormatException
-                            userId = Integer.parseInt(strUserId);
-                        }
-
-                        User user = snippeToDoUsersDB.get(userId);
-                        if (user == null)
-                        {
-                            String firstName = fbProfileData.get("firstName");
-                            String lastName = fbProfileData.get("lastName");
-                            user = new User(userId, null, firstName, lastName, null);
-                            snippeToDoUsersDB.create(user);
-                        }
-                        request.getSession().setAttribute("user", user);
+                        // redirected here after facebook authentication
+                        facebookLogin(request);
                         response.sendRedirect("/client/");
                         break;
                     }
@@ -158,17 +111,83 @@ public class UserController extends HttpServlet
                 }
             }
         }
-        catch (IOException | SnippeToDoPlatformException e)
+        catch (SnippeToDoPlatformException e)
         {
-            // TODO: replace with message for an alert in the view
-            e.printStackTrace();
-            // throw new RuntimeException("ERROR: run time errors", e.getCause());
+            handleSnippeToDoPlatformException(response, e);
         }
     }
 
-    private String check(HttpServletRequest request)
+    private void facebookLogin(HttpServletRequest request) throws SnippeToDoPlatformException
+    {
+        try
+        {
+            String code = request.getParameter("code");
+            if (code == null || code.equals(""))
+            {
+                throw new SnippeToDoPlatformException(null, new Throwable(
+                        "ERROR: Didn't get code parameter in callback."));
+            }
+            FBConnection fbConnection = new FBConnection();
+            String accessToken = fbConnection.getAccessToken(code);
+
+            FBGraph fbGraph = new FBGraph(accessToken);
+            String graph = fbGraph.getFBGraph();
+            Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
+            String strUserId = fbProfileData.get("id");
+
+            int userId = 0;
+
+            if (strUserId != null)
+            {
+                strUserId = strUserId.substring(0, 9);
+                // add try and catch for NumberFormatException
+                userId = Integer.parseInt(strUserId);
+            }
+
+            User user = snippeToDoUsersDB.get(userId);
+            if (user == null)
+            {
+                String firstName = fbProfileData.get("firstName");
+                String lastName = fbProfileData.get("lastName");
+                user = new User(userId, null, firstName, lastName, null);
+                snippeToDoUsersDB.create(user);
+            }
+            request.getSession().setAttribute("user", user);
+        }
+        catch (SnippeToDoPlatformException e)
+        {
+            String exceptionMessage = e.getMessage();
+            String message = exceptionMessage != null ? exceptionMessage :
+                    "There was a problem logging in with Facebook. Try again.";
+            throw new SnippeToDoPlatformException(message, e.getCause());
+        }
+    }
+
+    private String getEmailFromCookie(HttpServletRequest request)
+    {
+        // get the current user's email from a saved cookie
+        Cookie[] cookies = request.getCookies();
+        String userEmail = "";
+        if (cookies != null)
+        {
+            for (Cookie cookie : cookies)
+            {
+                String cookieValue = cookie.getValue();
+                if (cookie.getName().equals("userEmail") &&
+                        cookieValue.length() > 0)
+                {
+                    userEmail = cookieValue;
+                }
+            }
+        }
+
+        return userEmail;
+    }
+
+    private String checkUserSession(HttpServletRequest request)
     {
         String firstName = "";
+
         User user = (User) request.getSession().getAttribute("user");
         if (user != null)
         {
@@ -178,37 +197,91 @@ public class UserController extends HttpServlet
         return firstName;
     }
 
-    private void createNewUser(HttpServletRequest request, String email, String firstName,
-                               String lastName, String password)
-            throws SnippeToDoPlatformException, IOException
+    private void processUserRegistration(HttpServletRequest request)
+            throws SnippeToDoPlatformException
     {
-        // validate user data is not already exist
-        boolean isUserExist = getUserByEmail(request, email) != null;
-
-        if (!isUserExist)
+        try
         {
-            int currentLastUserId =
-                    Integer.parseInt(
-                            request.getSession().getAttribute("currentLastUserId").toString());
-            int newUserId = currentLastUserId + 1;
-            // data for the response (view)
-            User newUser = new User(newUserId, email, firstName, lastName, password);
+            // data from the request (view)
+            String email = request.getParameter("email");
+            String firstName = request.getParameter("first_name");
+            String lastName = request.getParameter("last_name");
+            String password = request.getParameter("password");
 
-            // data for the database (model)
-            snippeToDoUsersDB.create(newUser);
+            if (email == null || password == null || firstName == null || lastName == null)
+            {
+                Throwable t = new Throwable(
+                        "ERROR: At least one value in the sign up form is of a null value.");
+                throw new SnippeToDoPlatformException(
+                        "There is a problem with one or more of the provided values.", t);
+            }
+
+            email = email.trim();
+            password = password.trim();
+            firstName = firstName.trim();
+            lastName = lastName.trim();
+
+            // verify whether user data already exist
+            boolean isUserExist = getUserByEmail(request, email) != null;
+
+            if (!isUserExist)
+            {
+                int currentLastUserId = Integer.parseInt(
+                        request.getSession().getAttribute("currentLastUserId").toString());
+                int newUserId = currentLastUserId + 1;
+
+                // data for the response (view)
+                User newUser = new User(newUserId, email, firstName, lastName, password);
+
+                // data for the database (model)
+                snippeToDoUsersDB.create(newUser);
+            }
+            else
+            {
+                Throwable t = new Throwable(
+                        "ERROR: There is a user with the same email address in the database.");
+                throw new SnippeToDoPlatformException(
+                        "There is already a registered user with the same email address.", t);
+            }
+        }
+        catch (SnippeToDoPlatformException e)
+        {
+            String exceptionMessage = e.getMessage();
+            String message = exceptionMessage != null ? exceptionMessage :
+                    "There was a problem creating a new user.";
+            throw new SnippeToDoPlatformException(message, e.getCause());
         }
     }
 
     private void loginUser(HttpServletRequest request, HttpServletResponse response)
-            throws SnippeToDoPlatformException, ServletException, IOException
+            throws SnippeToDoPlatformException
     {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        if (email != null && password != null)
+        try
         {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            if (email == null || password == null)
+            {
+                Throwable t = new Throwable(
+                        "ERROR: At least one value in the login form is of a null value.");
+                throw new SnippeToDoPlatformException(
+                        "There is a problem with one or more of the provided values.", t);
+            }
+
             email = email.trim();
             password = password.trim();
+
             User user = getUserByEmail(request, email);
+            if (user == null)
+            {
+                Throwable t = new Throwable(
+                        "ERROR: There is no user with the input email address in the database.");
+                throw new SnippeToDoPlatformException(
+                        "There is no registered user with the input email address.", t);
+
+            }
+
             boolean isUserAuthenticated = authenticateUser(user, password);
             if (isUserAuthenticated)
             {
@@ -220,13 +293,21 @@ public class UserController extends HttpServlet
             }
             else
             {
-                // TODO: throw new exception with error message for the view with the response
+                Throwable t = new Throwable("ERROR: User authentication has failed.");
+                throw new SnippeToDoPlatformException(
+                        "The email and password values are incorrect.", t);
             }
+        }
+        catch (SnippeToDoPlatformException e)
+        {
+            String exceptionMessage = e.getMessage();
+            String message = exceptionMessage != null ? exceptionMessage :
+                    "There was a problem logging in to client. Try again.";
+            throw new SnippeToDoPlatformException(message, e.getCause());
         }
     }
 
     private boolean authenticateUser(User user, String password)
-            throws SnippeToDoPlatformException
     {
         return user != null && user.getPassword().equals(password);
     }
@@ -253,13 +334,5 @@ public class UserController extends HttpServlet
         }
         request.getSession().setAttribute("currentLastUserId", currentLastUserId);
         return user;
-    }
-
-    private void writeTextResponse(HttpServletResponse response, String text)
-            throws IOException
-    {
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(text);
     }
 }

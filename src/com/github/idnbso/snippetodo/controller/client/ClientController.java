@@ -1,12 +1,9 @@
 package com.github.idnbso.snippetodo.controller.client;
 
-import com.github.idnbso.snippetodo.controller.user.facebook.FBConnection;
-import com.github.idnbso.snippetodo.controller.user.facebook.FBGraph;
 import com.github.idnbso.snippetodo.model.ISnippeToDoDAO;
 import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.github.idnbso.snippetodo.model.data.item.Item;
 import com.github.idnbso.snippetodo.model.data.item.SnippeToDoItemDAO;
-import com.github.idnbso.snippetodo.model.data.user.SnippeToDoUserDAO;
 import com.github.idnbso.snippetodo.model.data.user.User;
 import com.google.gson.Gson;
 
@@ -16,9 +13,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
-import java.lang.reflect.Type;
 
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonObject;
+
+import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.*;
 
 /**
  * TODO
@@ -58,7 +56,6 @@ public class ClientController extends HttpServlet
         doGet(request, response);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException
@@ -80,36 +77,83 @@ public class ClientController extends HttpServlet
                             dispatcher = getServletContext().getRequestDispatcher("/client.jsp");
                             dispatcher.forward(request, response);
                         }
+                        else
+                        {
+                            response.sendRedirect("/home");
+                        }
 
                         break;
                     }
                     case "/initlist":
                     {
-                        String listName = "list" + request.getParameter("listName");
-                        ArrayList<Item> list =
-                                (ArrayList<Item>) request.getSession().getAttribute(listName);
-                        String jsonResponse = new Gson().toJson(list);
-                        writeJsonResponse(response, jsonResponse);
+                        initList(request, response);
                         break;
                     }
                     default:
                     {
-                        response.sendRedirect("/");
+                        response.sendRedirect("/home");
                     }
                 }
             }
         }
-        catch (IOException e)
+        catch (SnippeToDoPlatformException e)
         {
-            // TODO: replace with message for an alert in the view
-            e.printStackTrace();
-            // throw new RuntimeException("ERROR: run time errors", e.getCause());
+            handleSnippeToDoPlatformException(response, e);
         }
     }
 
-    private void initLists(HttpServletRequest request, User user) throws IOException
+    /**
+     * Initialize the specific list at the client according to the request
+     *
+     * @param request the HttpServletRequest to access the session to get attributes
+     * @param response the HttpServletResponse to return the list to the client
+     * @throws SnippeToDoPlatformException
+     */
+    @SuppressWarnings("unchecked")
+    private void initList(HttpServletRequest request, HttpServletResponse response)
+            throws SnippeToDoPlatformException
     {
-        // setup the to-do list (view)
+        try
+        {
+            String listName = request.getParameter("listName");
+            if (listName == null)
+            {
+                Throwable t = new Throwable(
+                        "ERROR: Failed to recieve the list name from the client.");
+                throw new SnippeToDoPlatformException(null, t);
+            }
+
+            String sessionListName = "list" + listName;
+            ArrayList<Item> list = (ArrayList<Item>) request.getSession()
+                    .getAttribute(sessionListName);
+            if (list == null)
+            {
+                Throwable t = new Throwable(
+                        "ERROR: Failed to recieve a saved list from the session.");
+                throw new SnippeToDoPlatformException(null, t);
+            }
+
+            String jsonResponse = new Gson().toJson(list);
+            writeJsonResponse(response, jsonResponse);
+        }
+        catch (SnippeToDoPlatformException e)
+        {
+            String exceptionMessage = e.getMessage();
+            String message = exceptionMessage != null ? exceptionMessage :
+                    "There was a problem initializing the lists. Try again later.";
+            throw new SnippeToDoPlatformException(message, e.getCause());
+        }
+    }
+
+    /**
+     * Initialize all lists at the view according to the request
+     *
+     * @param request the HttpServletRequest to access the session to save attributes
+     * @param user    the current logged in user in the session
+     * @throws SnippeToDoPlatformException
+     */
+    private void initLists(HttpServletRequest request, User user) throws SnippeToDoPlatformException
+    {
         try
         {
             if (user != null)
@@ -154,15 +198,13 @@ public class ClientController extends HttpServlet
         }
         catch (SnippeToDoPlatformException e)
         {
-            System.out.println(e.getMessage());
+            throw new SnippeToDoPlatformException(e.getMessage(), e.getCause());
         }
-    }
-
-    protected static void writeJsonResponse(HttpServletResponse response, String jsonResponse)
-            throws IOException
-    {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(jsonResponse);
+        catch (IndexOutOfBoundsException | IllegalStateException e)
+        {
+            throw new SnippeToDoPlatformException(
+                    "There was a problem initialising the lists with data from the database.",
+                    e.getCause());
+        }
     }
 }

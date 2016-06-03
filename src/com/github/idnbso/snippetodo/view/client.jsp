@@ -13,6 +13,8 @@
           type='text/css'>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/lib/Sortable.min.js"></script>
+    <link rel='shortcut icon' type='image/x-icon'
+          href='${pageContext.request.contextPath}/resources/img/favicon.ico'/>
 </head>
 <body>
 

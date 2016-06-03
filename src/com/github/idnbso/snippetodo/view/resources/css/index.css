@@ -30,6 +30,24 @@ hr {
     margin-left: 15px;
 }
 
+.modal-footer {
+    margin-top: 10px;
+}
+
+.form-control-group {
+    margin-bottom: 10px;
+}
+
+.input-xlarge {
+    padding-left: 5px;
+}
+
+.error {
+    padding-left: 10px;
+    margin: 0 !important;
+
+}
+
 #snpptd-home-main-header {
     font-family: 'Press Start 2P', cursive;
     font-weight: 700;

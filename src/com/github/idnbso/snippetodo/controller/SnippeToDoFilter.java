@@ -4,6 +4,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Idan on 23-5-16.
@@ -11,6 +13,10 @@ import java.io.IOException;
 @WebFilter("/*")
 public class SnippeToDoFilter implements Filter
 {
+    public void init(FilterConfig config) throws ServletException
+    {
+    }
+
     public void destroy()
     {
     }
@@ -22,23 +28,15 @@ public class SnippeToDoFilter implements Filter
         HttpServletRequest req = (HttpServletRequest) request;
         String path = req.getRequestURI().substring(req.getContextPath().length());
 
-        if (path.startsWith("/resources/"))
+        if (path.startsWith("/resources/") || path.startsWith("/client/") ||
+                path.startsWith("/user/"))
         {
-            // Let the resources be loaded normally
             chain.doFilter(request, response);
-        }
-        else if (path.startsWith("/client/") || path.startsWith("/user/"))
-        {
-            request.getRequestDispatcher(path).forward(request, response);
         }
         else
         {
             // Delegate to the front controller.
             request.getRequestDispatcher("/home" + path).forward(request, response);
         }
-    }
-
-    public void init(FilterConfig config) throws ServletException
-    {
     }
 }

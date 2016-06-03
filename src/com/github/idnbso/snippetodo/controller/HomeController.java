@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.github.idnbso.snippetodo.SnippeToDoLogger.LOGGER;
+
 /**
  * Created by Idan on 23-5-16.
  */
 @WebServlet("/home/*")
 public class HomeController extends HttpServlet
 {
-    static Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
-
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException

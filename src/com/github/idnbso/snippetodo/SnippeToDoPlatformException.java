@@ -1,5 +1,7 @@
 package com.github.idnbso.snippetodo;
 
+import java.security.PrivilegedActionException;
+
 /**
  * SnippeToDoPlatformException provides exception handling for any class in the SnippeToDo project
  * platform.
