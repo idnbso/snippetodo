@@ -26,6 +26,10 @@ snippeToDoUtil.displayError = function(message) {
     $('#snpptd-error-modal').modal('show');
 };
 
+snippeToDoUtil.openClient =  function(){
+    window.open(snippeToDoUtil.hostname + "client/", "_self");
+};
+
 /**
  * Removes the hash (#), and every other character afterwords,
  * from the url address on page load.
