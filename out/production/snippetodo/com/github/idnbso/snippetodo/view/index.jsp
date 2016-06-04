@@ -37,11 +37,11 @@
             </div>
             <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
                 <li>
-                    <a href="http://localhost:8080/client/" class="hidden"
+                    <button onclick="window.snippeToDoUtil.openClient()" class="btn hidden"
                        id="snpptd-home-login-status">
                         <i class="glyphicon glyphicon-user"
                            aria-hidden="true"></i>
-                    </a>
+                    </button>
                 </li>
                 <li>
                     <button class="btn hidden" data-toggle="modal"
@@ -275,7 +275,7 @@
                         data-target="#snpptd-home-signup-modal">
                     Get Started!
                 </button>
-                <a href="http://localhost:8080/client/" class="btn btn-default btn-lg hidden"
+                <a OnClick="window.snippeToDoUtil.openClient()" class="btn btn-default btn-lg hidden"
                    id="snpptd-home-main-use-btn">
                 </a>
             </div>
