@@ -171,31 +171,24 @@
         };
 
         /**
+         * Called by Sortable whenever there is a change in sorting within a list.
          * Prepares an update of the list in the database,
          * from the corresponded list saved in Sortable.
+         *
+         * @see Sortable
          */
-        var update = function() {
+        this.onUpdate = function() {
             var sortableList = snippeToDoClient.sortableLists[index];
             var order = sortableList.toArray();
             snippeToDoClient.updateList(order);
         };
 
         /**
-         * Called by Sortable whenever there is a change in sorting within a list.
-         *
-         * @type {update} (function)
-         * @see Sortable
-         */
-        this.onUpdate = update;
-
-        /**
          * Called by Sortable whenever an element is removed.
          * from the list into another list.
-         *
-         * @type {update} (function)
-         * @see Sortable
+         * @type {snippeToDoClient.onUpdate|*}
          */
-        this.onRemove = update;
+        this.onRemove = this.onUpdate;
     };
 
     /**
@@ -295,6 +288,28 @@
     };
 
     /**
+     * Get the new list name of the item after moving it between lists.
+     *
+     * @param itemElement the item element which was moved between lists
+     * @returns {*} (the new list name of the item)
+     */
+    snippeToDoClient.getNewListNameOfItem = function(itemElement) {
+        var newListName;
+        var classList = itemElement.className.split(/\s+/);
+        for (var curClassName = 0; curClassName < classList.length; curClassName++) {
+            var className = classList[curClassName];
+            var elementClassName = "snpptd-client-list-item-movetolist";
+            if (className.indexOf(elementClassName) > -1) {
+                // get the specific list name after {elementClassName}...
+                newListName = className.substring(elementClassName.length);
+                break;
+            }
+        }
+
+        return newListName;
+    };
+
+    /**
      * all of the SnippeToDo events handling including by jQuery.
      */
     snippeToDoClient.eventsHandling = (function($) {
@@ -311,8 +326,8 @@
                 var $this = $(this);
                 var snippeToDoRef = snippeToDoClient;
                 $this.button('loading');
-                // set the position index to be the last one according to the current order of
-                // listTodo
+
+                // set the position index to be the last of listTodo
                 var listTodoIndex = snippeToDoClient.listNames.indexOf('todo');
                 var order = snippeToDoClient.sortableLists[listTodoIndex].toArray();
                 var positionIndex = order.length;
@@ -352,7 +367,6 @@
         $(document).on("click", ".snpptd-client-list-item-deletebtn", function() {
             try {
                 var $item = $(this).closest('.list-group-item');
-
                 var elementDataIdName = "snpptd-client-list-item";
                 var itemId = 'id=' + $item.attr("data-id").substring(elementDataIdName.length);
 
@@ -426,20 +440,9 @@
                 currentItemElement = $item;
 
                 // get all classes inorder to get the list name
-                var thisElement = $(this)[0];
-                var classList = thisElement.className.split(/\s+/);
-                var newListName;
-                var newListElementId;
-                for (var curClassName = 0; curClassName < classList.length; curClassName++) {
-                    var className = classList[curClassName];
-                    var elementClassName = "snpptd-client-list-item-movetolist";
-                    if (className.indexOf(elementClassName) > -1) {
-                        // get the specific list name after {elementClassName}...
-                        newListName = className.substring(elementClassName.length);
-                        newListElementId = listElementId + newListName;
-                        break;
-                    }
-                }
+                var thisItemElement = $(this)[0];
+                var newListName = snippeToDoClient.getNewListNameOfItem(thisItemElement);
+                var newListElementId = listElementId + newListName;
 
                 // get the new position of the item in the new list
                 var newListIndex = snippeToDoClient.listNames.indexOf(newListName);
@@ -460,9 +463,8 @@
 
                 // update the old list of the item
                 var oldListName = $currentList[0]['id'].substring(listElementId.length);
-                var oldListObj =
-                    snippeToDoClient.sortableLists[snippeToDoClient.listNames.indexOf(
-                        oldListName)];
+                var oldListIndex = snippeToDoClient.listNames.indexOf(oldListName);
+                var oldListObj = snippeToDoClient.sortableLists[oldListIndex];
                 var oldList = oldListObj['options'];
                 oldList.onRemove({item: $item[0]});
                 oldList['store'].set(oldListObj);
@@ -570,7 +572,7 @@
             }
 
             /**
-             * Fixes a Bootstrap 3.x bug of a 'navbar' classs element's
+             * Fixes a Bootstrap 3.x bug of a 'navbar' class element
              * unwanted movement when a modal is open.
              */
             $(window).load(function() {

@@ -13,18 +13,26 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
 
-import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil
-        .handleSnippeToDoPlatformException;
-import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.writeTextResponse;
+import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.*;
 
 /**
- * TODO
+ * UserController to handle any request from the client for operations on SnippeToDo users.
+ *
+ * @see HttpServlet
+ * @see User
  */
 @WebServlet("/user/*")
 public class UserController extends HttpServlet
 {
     private ISnippeToDoDAO<User> snippeToDoUsersDB;
 
+    /**
+     * Called by the servlet container to indicate to a servlet that the servlet is being placed
+     * into service.
+     *
+     * @throws ServletException if an exception occurs that interrupts the servlet's normal
+     *                          operation
+     */
     @Override
     public void init() throws ServletException
     {
@@ -38,6 +46,17 @@ public class UserController extends HttpServlet
         }
     }
 
+    /**
+     * Called by the server (via the service method) to allow a servlet to handle a POST request.
+     *
+     * @param request  an HttpServletRequest object that contains the request the client has made of
+     *                 the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to
+     *                 the client
+     * @throws ServletException if the request for the POST could not be handled
+     * @throws IOException      if an input or output error is detected when the servlet handles the
+     *                          request
+     */
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException
@@ -45,6 +64,17 @@ public class UserController extends HttpServlet
         doGet(request, response);
     }
 
+    /**
+     * Called by the server (via the service method) to allow a servlet to handle a GET request.
+     *
+     * @param request  an HttpServletRequest object that contains the request the client has made of
+     *                 the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to
+     *                 the client
+     * @throws ServletException if the request for the GET could not be handled
+     * @throws IOException      if an input or output error is detected when the servlet handles the
+     *                          GET request
+     */
     @SuppressWarnings("unchecked")
     @Override
     protected void doGet(HttpServletRequest request,
@@ -111,6 +141,13 @@ public class UserController extends HttpServlet
         }
     }
 
+    /**
+     * Log out a user from the current session.
+     *
+     * @param request the HttpServletRequest containing the data of the user to be logged out
+     * @throws SnippeToDoPlatformException
+     * @see HttpSession
+     */
     private void logoutUser(HttpServletRequest request) throws SnippeToDoPlatformException
     {
         try
@@ -128,6 +165,14 @@ public class UserController extends HttpServlet
         }
     }
 
+    /**
+     * Log in a user with Facebook API to the SnippeToDo client.
+     *
+     * @param request the HttpServletRequest containing the data of a Facebook user to be logged in
+     * @throws SnippeToDoPlatformException
+     * @see FBConnection
+     * @see FBGraph
+     */
     private void facebookLogin(HttpServletRequest request) throws SnippeToDoPlatformException
     {
         try
@@ -145,17 +190,24 @@ public class UserController extends HttpServlet
             String graph = fbGraph.getFBGraph();
             Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
             String strUserId = fbProfileData.get("id");
-
             int userId = 0;
 
             if (strUserId != null)
             {
                 strUserId = strUserId.substring(0, 9);
-                // add try and catch for NumberFormatException
+                if (!strUserId.matches("\\d+"))
+                {
+                    Throwable t = new Throwable(
+                            "ERROR facebookLogin: There is a problem with the Facebook profile " +
+                                    "data id value of the current user.");
+                    throw new SnippeToDoPlatformException(null, t);
+                }
+
                 userId = Integer.parseInt(strUserId);
             }
 
             User user = snippeToDoUsersDB.get(userId);
+            // Create the current Facebook user if he does not exist in the database of users
             if (user == null)
             {
                 String firstName = fbProfileData.get("firstName");
@@ -174,6 +226,12 @@ public class UserController extends HttpServlet
         }
     }
 
+    /**
+     * Get the email address of the last user which successfully logged in to the client.
+     *
+     * @param request the HttpServletRequest containing all of the stored cookies
+     * @return the user's email address which is stored as a cookie
+     */
     private String getEmailFromCookie(HttpServletRequest request)
     {
         // get the current user's email from a saved cookie
@@ -195,6 +253,13 @@ public class UserController extends HttpServlet
         return userEmail;
     }
 
+    /**
+     * Check in the session if there is currently a user logged in to the client,
+     * and if so than retrieve his first name.
+     *
+     * @param request the HttpServletRequest containing the data of the current user in the session
+     * @return the first name of the user which is logged in to the client
+     */
     private String checkUserSession(HttpServletRequest request)
     {
         String firstName = "";
@@ -208,6 +273,11 @@ public class UserController extends HttpServlet
         return firstName;
     }
 
+    /**
+     *
+     * @param request
+     * @throws SnippeToDoPlatformException
+     */
     private void processUserRegistration(HttpServletRequest request)
             throws SnippeToDoPlatformException
     {
@@ -266,6 +336,13 @@ public class UserController extends HttpServlet
         }
     }
 
+    /**
+     * Log in a user to the SnippeToDo client.
+     *
+     * @param request
+     * @param response
+     * @throws SnippeToDoPlatformException
+     */
     private void loginUser(HttpServletRequest request, HttpServletResponse response)
             throws SnippeToDoPlatformException
     {
@@ -321,11 +398,26 @@ public class UserController extends HttpServlet
         }
     }
 
+    /**
+     * Authenticate a user by a password.
+     *
+     * @param user
+     * @param password
+     * @return
+     */
     private boolean authenticateUser(User user, String password)
     {
         return user != null && user.getPassword().equals(password);
     }
 
+    /**
+     * Get a user by its email address sent from the client.
+     *
+     * @param request
+     * @param email
+     * @return
+     * @throws SnippeToDoPlatformException
+     */
     private User getUserByEmail(HttpServletRequest request, String email)
             throws SnippeToDoPlatformException
     {
@@ -346,6 +438,7 @@ public class UserController extends HttpServlet
                 break;
             }
         }
+
         request.getSession().setAttribute("currentLastUserId", currentLastUserId);
         return user;
     }

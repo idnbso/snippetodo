@@ -17,17 +17,25 @@ import java.util.*;
 import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.*;
 
 /**
- * TODO
+ * ClientController to handle any request from the SnippeToDo client.
+ *
+ * @see HttpServlet
  */
 @WebServlet("/client/*")
 public class ClientController extends HttpServlet
 {
-
     ISnippeToDoDAO<Item> snippeToDoItemsDB;
     private ArrayList<String> lists = new ArrayList<>();
     private static final Comparator<Item> POSITION_INDEX_ORDER =
             (t1, t2) -> t1.getPositionIndex() - t2.getPositionIndex(); // ascending order
 
+    /**
+     * Called by the servlet container to indicate to a servlet that the servlet is being placed
+     * into service.
+     *
+     * @throws ServletException if an exception occurs that interrupts the servlet's normal
+     *                          operation
+     */
     @Override
     public void init() throws ServletException
     {
@@ -47,6 +55,17 @@ public class ClientController extends HttpServlet
         }
     }
 
+    /**
+     * Called by the server (via the service method) to allow a servlet to handle a POST request.
+     *
+     * @param request  an HttpServletRequest object that contains the request the client has made of
+     *                 the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to
+     *                 the client
+     * @throws ServletException if the request for the POST could not be handled
+     * @throws IOException      if an input or output error is detected when the servlet handles the
+     *                          request
+     */
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException
@@ -54,6 +73,17 @@ public class ClientController extends HttpServlet
         doGet(request, response);
     }
 
+    /**
+     * Called by the server (via the service method) to allow a servlet to handle a GET request.
+     *
+     * @param request  an HttpServletRequest object that contains the request the client has made of
+     *                 the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to
+     *                 the client
+     * @throws ServletException if the request for the GET could not be handled
+     * @throws IOException      if an input or output error is detected when the servlet handles the
+     *                          GET request
+     */
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException
@@ -103,7 +133,7 @@ public class ClientController extends HttpServlet
     /**
      * Initialize the specific list at the client according to the request.
      *
-     * @param request the HttpServletRequest to access the session to get attributes
+     * @param request  the HttpServletRequest to access the session to get attributes
      * @param response the HttpServletResponse to return the list to the client
      * @throws SnippeToDoPlatformException
      */

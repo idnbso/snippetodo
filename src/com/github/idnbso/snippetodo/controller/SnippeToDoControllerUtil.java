@@ -10,10 +10,17 @@ import java.io.IOException;
 import static com.github.idnbso.snippetodo.SnippeToDoLogger.LOGGER;
 
 /**
- * Created by Idan on 3-6-16.
+ * SnippeToDoControllerUtil include helper methods for the SnippeToDo controllers.
  */
 public class SnippeToDoControllerUtil
 {
+    /**
+     * Write a Json object as a response to the client.
+     *
+     * @param response the HttpServletResponse to return the Json object to the client
+     * @param jsonResponse the Json object response to the client
+     * @see IOException
+     */
     public static void writeJsonResponse(HttpServletResponse response, String jsonResponse)
     {
         try
@@ -28,6 +35,13 @@ public class SnippeToDoControllerUtil
         }
     }
 
+    /**
+     * Write a text as a response to the client.
+     *
+     * @param response the HttpServletResponse to return the text to the client
+     * @param text the string text value to be returned to the client
+     * @see IOException
+     */
     public static void writeTextResponse(HttpServletResponse response, String text)
     {
         try
@@ -42,6 +56,14 @@ public class SnippeToDoControllerUtil
         }
     }
 
+    /**
+     * Handles a SnippeToDoPlatformException by logging the cause,
+     * and sending the corresponding error message back to the client.
+     *
+     * @param response the HttpServletResponse to return the error message to the client
+     * @param e the SnippeToDoPlatformException object that caused the error
+     * @see SnippeToDoPlatformException
+     */
     public static void handleSnippeToDoPlatformException(HttpServletResponse response,
                                                            SnippeToDoPlatformException e)
     {

@@ -66,12 +66,12 @@ public class Item implements Serializable
     public Item(int id, int userId, int listId, String title, String body, int positionIndex)
     {
         super();
-        this.setId(id);
-        this.setUserId(userId);
-        this.setListId(listId);
-        this.setTitle(title);
-        this.setBody(body);
-        this.setPositionIndex(positionIndex);
+        setId(id);
+        setUserId(userId);
+        setListId(listId);
+        setTitle(title);
+        setBody(body);
+        setPositionIndex(positionIndex);
     }
 
     /**

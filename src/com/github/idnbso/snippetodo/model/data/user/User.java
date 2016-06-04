@@ -159,7 +159,6 @@ public class User
             return false;
         }
         return getPassword().equals(user.getPassword());
-
     }
 
     @Override

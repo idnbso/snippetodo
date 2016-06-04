@@ -16,16 +16,29 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil
-        .handleSnippeToDoPlatformException;
-import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.writeJsonResponse;
+import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.*;
 
 /**
- * TODO
+ * ItemController to handle any request from the client for operations on SnippeToDo items. This
+ * class extends ClientController to use the same database instance values.
+ *
+ * @see ClientController
+ * @see Item
  */
 @WebServlet("/client/item/*")
 public class ItemController extends ClientController
 {
+    /**
+     * Called by the server (via the service method) to allow a servlet to handle a POST request.
+     *
+     * @param request  an HttpServletRequest object that contains the request the client has made of
+     *                 the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to
+     *                 the client
+     * @throws ServletException if the request for the POST could not be handled
+     * @throws IOException      if an input or output error is detected when the servlet handles the
+     *                          request
+     */
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException
@@ -33,10 +46,21 @@ public class ItemController extends ClientController
         doGet(request, response);
     }
 
+    /**
+     * Called by the server (via the service method) to allow a servlet to handle a GET request.
+     *
+     * @param request  an HttpServletRequest object that contains the request the client has made of
+     *                 the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to
+     *                 the client
+     * @throws ServletException if the request for the GET could not be handled
+     * @throws IOException      if an input or output error is detected when the servlet handles the
+     *                          GET request
+     */
     @SuppressWarnings("unchecked")
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException
     {
         try
         {
@@ -82,6 +106,13 @@ public class ItemController extends ClientController
                 }
             }
         }
+        catch (IOException e)
+        {
+            Throwable t = new Throwable(
+                    "ERROR ItemController.doGet: Redirect to the client root path has failed.");
+            handleSnippeToDoPlatformException(response, new SnippeToDoPlatformException(
+                    "Failed to redirect to the client page.", t));
+        }
         catch (SnippeToDoPlatformException e)
         {
             handleSnippeToDoPlatformException(response, e);
@@ -91,9 +122,10 @@ public class ItemController extends ClientController
     /**
      * Create a new item in the database with values from the client.
      *
-     * @param request
-     * @param response
+     * @param request  the HttpServletRequest containing the data of the item to be created
+     * @param response the HttpServletResponse containing the created item in the database
      * @throws SnippeToDoPlatformException
+     * @see Item
      */
     private void createNewItem(HttpServletRequest request, HttpServletResponse response)
             throws SnippeToDoPlatformException
@@ -143,7 +175,7 @@ public class ItemController extends ClientController
     /**
      * Delete an item from the database.
      *
-     * @param request
+     * @param request the HttpServletRequest containing the data of the item to be deleted
      * @throws SnippeToDoPlatformException
      */
     private void deleteItem(HttpServletRequest request)
@@ -175,8 +207,8 @@ public class ItemController extends ClientController
     /**
      * Update an item in the database after an edit to its values has been made in the client
      *
-     * @param request
-     * @param response
+     * @param request  the HttpServletRequest containing the data of the item to be updated
+     * @param response the HttpServletResponse containing the updated item from the database
      * @throws SnippeToDoPlatformException
      */
     private void updateItem(HttpServletRequest request, HttpServletResponse response)
@@ -216,6 +248,8 @@ public class ItemController extends ClientController
     }
 
     /**
+     * Update the position of the item from the client in the database.
+     *
      * @param request an HttpServletRequest with the parameters values of the item
      * @throws SnippeToDoPlatformException
      */
@@ -257,6 +291,13 @@ public class ItemController extends ClientController
         }
     }
 
+    /**
+     * Get the item data from the database to be used in the client.
+     *
+     * @param request  the HttpServletRequest containing the data of the item to be retrieved
+     * @param response the HttpServletResponse containing the retrieved item from the database
+     * @throws SnippeToDoPlatformException
+     */
     private void getItem(HttpServletRequest request, HttpServletResponse response)
             throws SnippeToDoPlatformException
     {
@@ -286,6 +327,12 @@ public class ItemController extends ClientController
         }
     }
 
+    /**
+     * Update a list's items order in the database.
+     *
+     * @param request the HttpServletRequest containing the order of items of a list
+     * @throws SnippeToDoPlatformException
+     */
     private void updateList(HttpServletRequest request)
             throws SnippeToDoPlatformException
     {

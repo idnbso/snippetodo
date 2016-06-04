@@ -13,7 +13,7 @@ import com.github.idnbso.snippetodo.model.data.item.Item;
 import com.github.idnbso.snippetodo.model.data.user.User;
 
 /**
- * The HibernateSnippeToDoDAO class implements the Data Access Object design pattern, using
+ * The HibernateSnippeToDoDAO abstract class implements the Data Access Object design pattern, using
  * Hibernate 3.x with the MySQL database, for the use of CRUD operations regarding to do items and
  * registered users of the SnippeToDo application.
  *
@@ -40,10 +40,10 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
         {
             sessionFactory = new Configuration().configure().buildSessionFactory();
         }
-        catch (HibernateException ex)
+        catch (HibernateException e)
         {
             throw new SnippeToDoPlatformException(
-                    "Initial SessionFactory creation failed: " + ex.getMessage(), ex);
+                    "Initial SessionFactory creation failed: " + e.getMessage(), e.getCause());
         }
     }
 
@@ -68,6 +68,7 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             session.save(entity);
             // commit the changes to the database
             transaction.commit();
+            session.close();
         }
         catch (HibernateException e)
         {
@@ -75,16 +76,9 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             {
                 session.getTransaction().rollback();
             }
-            StringBuilder message = new StringBuilder();
-            message.append("Failed to create a new ");
-            message.append(databaseClass.getName());
-            message.append(" in the database: ");
-            message.append(e.getMessage());
-            throw new SnippeToDoPlatformException(message.toString(), e);
-        }
-        finally
-        {
-            session.close();
+            String message = "Failed to create a new " + databaseClass.getName() +
+                    " in the database: " + e.getMessage();
+            throw new SnippeToDoPlatformException(message, e.getCause());
         }
     }
 
@@ -97,13 +91,12 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
      */
     public void deleteById(final int id) throws SnippeToDoPlatformException
     {
-        Session session = null;
         Transaction transaction = null;
 
         try
         {
             // creating a new session
-            session = sessionFactory.openSession();
+            Session session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             // get the specific entity from the database that match the id
             @SuppressWarnings("unchecked")
@@ -112,6 +105,7 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             session.delete(entity);
             // commit the changes to the database
             transaction.commit();
+            session.close();
         }
         catch (HibernateException e)
         {
@@ -119,16 +113,9 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             {
                 transaction.rollback();
             }
-            StringBuilder message = new StringBuilder();
-            message.append("Failed to delete an existing ");
-            message.append(databaseClass.getName());
-            message.append(" from the database: ");
-            message.append(e.getMessage());
-            throw new SnippeToDoPlatformException(message.toString(), e);
-        }
-        finally
-        {
-            session.close();
+            String message = "Failed to delete by id number an existing " +
+                    databaseClass.getName() + " from the database: " + e.getMessage();
+            throw new SnippeToDoPlatformException(message, e.getCause());
         }
     }
 
@@ -141,18 +128,18 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
      */
     public void delete(final T entity) throws SnippeToDoPlatformException
     {
-        Session session = null;
         Transaction transaction = null;
 
         try
         {
             // creating a new session
-            session = sessionFactory.openSession();
+            Session session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             // delete the entity from the database
             session.delete(entity);
             // commit the changes to the database
             transaction.commit();
+            session.close();
         }
         catch (HibernateException e)
         {
@@ -160,16 +147,9 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             {
                 transaction.rollback();
             }
-            StringBuilder message = new StringBuilder();
-            message.append("Failed to delete an existing ");
-            message.append(databaseClass.getName());
-            message.append(" from the database: ");
-            message.append(e.getMessage());
-            throw new SnippeToDoPlatformException(message.toString(), e);
-        }
-        finally
-        {
-            session.close();
+            String message = "Failed to delete an existing " + databaseClass.getName() +
+                    " from the database: " + e.getMessage();
+            throw new SnippeToDoPlatformException(message, e.getCause());
         }
     }
 
@@ -183,19 +163,16 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
     @SuppressWarnings("unchecked")
     public List<T> getAll() throws SnippeToDoPlatformException
     {
-        Session session = null;
         Transaction transaction = null;
-        List<T> entitiesList = null;
+        List<T> entitiesList;
         try
         {
             // creating a new session
-            session = sessionFactory.openSession();
+            Session session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             // create a query to get all of the entities from database
-            StringBuilder query = new StringBuilder();
-            query.append("from ");
-            query.append(databaseClass.getName());
-            entitiesList = session.createQuery(query.toString()).list();
+            String query = "from " + databaseClass.getName();
+            entitiesList = session.createQuery(query).list();
             // commit the query to the database
             transaction.commit();
             session.close();
@@ -206,12 +183,9 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             {
                 transaction.rollback();
             }
-            StringBuilder message = new StringBuilder();
-            message.append("Failed to get all entities of type ");
-            message.append(databaseClass.getName());
-            message.append(" from the database: ");
-            message.append(e.getMessage());
-            throw new SnippeToDoPlatformException(message.toString(), e);
+            String message = "Failed to get all entities of type " + databaseClass.getName() +
+                    " from the database: " + e.getMessage();
+            throw new SnippeToDoPlatformException(message, e.getCause());
         }
 
         return entitiesList;
@@ -228,19 +202,19 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
     @SuppressWarnings("unchecked")
     public T get(final int id) throws SnippeToDoPlatformException
     {
-        Session session = null;
         Transaction transaction = null;
-        T entity = null;
+        T entity;
 
         try
         {
             // creating a new session
-            session = sessionFactory.openSession();
+            Session session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             // get the specific entity from the database that match the id
             entity = (T) session.get(databaseClass, id);
             // commit the changes to the database
             transaction.commit();
+            session.close();
         }
         catch (HibernateException e)
         {
@@ -248,16 +222,9 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             {
                 transaction.rollback();
             }
-            StringBuilder message = new StringBuilder();
-            message.append("Failed to get an entity of type ");
-            message.append(databaseClass.getName());
-            message.append(" from the database: ");
-            message.append(e.getMessage());
-            throw new SnippeToDoPlatformException(message.toString(), e);
-        }
-        finally
-        {
-            session.close();
+            String message = "Failed to get an entity of type " + databaseClass.getName() +
+                    " from the database: " + e.getMessage();
+            throw new SnippeToDoPlatformException(message, e.getCause());
         }
 
         return entity;
@@ -274,19 +241,19 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
     @SuppressWarnings("unchecked")
     public T update(final T entity) throws SnippeToDoPlatformException
     {
-        Session session = null;
         Transaction transaction = null;
-        T updatedEntity = null;
+        T updatedEntity;
 
         try
         {
             // creating a new session for updating items
-            session = sessionFactory.openSession();
+            Session session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             // merge the specific entity from the database that match the id
             updatedEntity = (T) session.merge(entity);
             // commit the changes to the database
             transaction.commit();
+            session.close();
         }
         catch (HibernateException e)
         {
@@ -294,16 +261,9 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             {
                 transaction.rollback();
             }
-            StringBuilder message = new StringBuilder();
-            message.append("Failed to update an entity of type ");
-            message.append(databaseClass.getName());
-            message.append(" from the database: ");
-            message.append(e.getMessage());
-            throw new SnippeToDoPlatformException(message.toString(), e);
-        }
-        finally
-        {
-            session.close();
+            String message = "Failed to update an entity of type " + databaseClass.getName() +
+                    " from the database: " + e.getMessage();
+            throw new SnippeToDoPlatformException(message, e);
         }
 
         return updatedEntity;
@@ -318,15 +278,5 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
     protected final void setDatabaseClass(final Class<T> databaseClass)
     {
         this.databaseClass = databaseClass;
-    }
-
-    /**
-     * Get the current session created by the session factory.
-     *
-     * @return the current session created by the session factory
-     */
-    protected final Session getCurrentSession()
-    {
-        return sessionFactory.getCurrentSession();
     }
 }

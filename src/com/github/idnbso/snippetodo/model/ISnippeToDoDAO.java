@@ -23,7 +23,7 @@ public interface ISnippeToDoDAO<T>
      * @throws SnippeToDoPlatformException
      * @see ISnippeToDoDAO#create(T)
      */
-    public void create(final T entity) throws SnippeToDoPlatformException;
+    void create(final T entity) throws SnippeToDoPlatformException;
 
     /**
      * Delete an existing entity from the database by its id number.
@@ -32,7 +32,7 @@ public interface ISnippeToDoDAO<T>
      * @throws SnippeToDoPlatformException
      * @see ISnippeToDoDAO#deleteById(int)
      */
-    public void deleteById(final int id) throws SnippeToDoPlatformException;
+    void deleteById(final int id) throws SnippeToDoPlatformException;
 
     /**
      * Delete an existing entity from the database.
@@ -41,7 +41,7 @@ public interface ISnippeToDoDAO<T>
      * @throws SnippeToDoPlatformException
      * @see ISnippeToDoDAO#delete(T)
      */
-    public void delete(final T entity) throws SnippeToDoPlatformException;
+    void delete(final T entity) throws SnippeToDoPlatformException;
 
     /**
      * Get an array of all of the entities from the database.
@@ -50,7 +50,7 @@ public interface ISnippeToDoDAO<T>
      * @throws SnippeToDoPlatformException
      * @see ISnippeToDoDAO#getAll()
      */
-    public List<T> getAll() throws SnippeToDoPlatformException;
+    List<T> getAll() throws SnippeToDoPlatformException;
 
     /**
      * Get a specific entity reference from the database.
@@ -60,7 +60,7 @@ public interface ISnippeToDoDAO<T>
      * @throws SnippeToDoPlatformException
      * @see ISnippeToDoDAO#get(int)
      */
-    public T get(final int id) throws SnippeToDoPlatformException;
+    T get(final int id) throws SnippeToDoPlatformException;
 
     /**
      * Update an existing entity from the database.
@@ -70,5 +70,5 @@ public interface ISnippeToDoDAO<T>
      * @throws SnippeToDoPlatformException
      * @see ISnippeToDoDAO#update(T)
      */
-    public T update(final T entity) throws SnippeToDoPlatformException;
+    T update(final T entity) throws SnippeToDoPlatformException;
 }

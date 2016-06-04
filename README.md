@@ -1,5 +1,5 @@
 # SnippeToDo
-### A simple, organised, and visual way to be productive for developers.
+A simple, organised, and visual way to be productive for developers.
 
 ----
 ## Setup
