@@ -3,7 +3,6 @@ package com.github.idnbso.snippetodo.controller.user.facebook;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -23,7 +22,7 @@ public class FBGraph
 
     public String getFBGraph() throws SnippeToDoPlatformException
     {
-        String graph = null;
+        String graph;
         try
         {
             String g = "https://graph.facebook.com/me?" + accessToken;
@@ -43,7 +42,8 @@ public class FBGraph
         }
         catch (IOException e)
         {
-            Throwable t = new Throwable("ERROR: unable to get FB graph data. " + e.getCause());
+            Throwable t =
+                    new Throwable("ERROR getFBGraph: unable to get FB graph data. " + e.getCause());
             throw new SnippeToDoPlatformException(null, t);
         }
 
@@ -65,7 +65,8 @@ public class FBGraph
         }
         catch (JsonSyntaxException e)
         {
-            Throwable t = new Throwable("ERROR: unable to parse FB graph data. " + e.getCause());
+            Throwable t = new Throwable(
+                    "ERROR getFBGraph: unable to parse FB graph data. " + e.getCause());
             throw new SnippeToDoPlatformException(null, t);
         }
 

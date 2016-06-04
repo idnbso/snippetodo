@@ -6,8 +6,6 @@ import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.github.idnbso.snippetodo.model.ISnippeToDoDAO;
 import com.github.idnbso.snippetodo.model.data.user.SnippeToDoUserDAO;
 import com.github.idnbso.snippetodo.model.data.user.User;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,10 +13,8 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
 
-import static com.github.idnbso.snippetodo.SnippeToDoLogger.LOGGER;
 import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil
         .handleSnippeToDoPlatformException;
-import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.writeJsonResponse;
 import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.writeTextResponse;
 
 /**
@@ -99,9 +95,7 @@ public class UserController extends HttpServlet
                     }
                     case "/logout":
                     {
-                        HttpSession session = request.getSession();
-                        session.removeAttribute("user");
-                        session.invalidate();
+                        logoutUser(request);
                         break;
                     }
                     default:
@@ -117,6 +111,23 @@ public class UserController extends HttpServlet
         }
     }
 
+    private void logoutUser(HttpServletRequest request) throws SnippeToDoPlatformException
+    {
+        try
+        {
+            HttpSession session = request.getSession();
+            session.removeAttribute("user");
+            session.invalidate();
+        }
+        catch (IllegalStateException e)
+        {
+            String exceptionMessage = e.getMessage();
+            String message = exceptionMessage != null ? exceptionMessage :
+                    "There was a problem logging out from the client.";
+            throw new SnippeToDoPlatformException(message, e.getCause());
+        }
+    }
+
     private void facebookLogin(HttpServletRequest request) throws SnippeToDoPlatformException
     {
         try
@@ -125,7 +136,7 @@ public class UserController extends HttpServlet
             if (code == null || code.equals(""))
             {
                 throw new SnippeToDoPlatformException(null, new Throwable(
-                        "ERROR: Didn't get code parameter in callback."));
+                        "ERROR facebookLogin: Didn't get code parameter in callback."));
             }
             FBConnection fbConnection = new FBConnection();
             String accessToken = fbConnection.getAccessToken(code);
@@ -211,7 +222,8 @@ public class UserController extends HttpServlet
             if (email == null || password == null || firstName == null || lastName == null)
             {
                 Throwable t = new Throwable(
-                        "ERROR: At least one value in the sign up form is of a null value.");
+                        "ERROR processUserRegistration: At least one value in the sign up form is" +
+                                " of a null value.");
                 throw new SnippeToDoPlatformException(
                         "There is a problem with one or more of the provided values.", t);
             }
@@ -239,7 +251,8 @@ public class UserController extends HttpServlet
             else
             {
                 Throwable t = new Throwable(
-                        "ERROR: There is a user with the same email address in the database.");
+                        "ERROR processUserRegistration: There is a user with the same email " +
+                                "address in the database.");
                 throw new SnippeToDoPlatformException(
                         "There is already a registered user with the same email address.", t);
             }
@@ -264,7 +277,7 @@ public class UserController extends HttpServlet
             if (email == null || password == null)
             {
                 Throwable t = new Throwable(
-                        "ERROR: At least one value in the login form is of a null value.");
+                        "ERROR loginUser: At least one value in the login form is a null value.");
                 throw new SnippeToDoPlatformException(
                         "There is a problem with one or more of the provided values.", t);
             }
@@ -276,7 +289,8 @@ public class UserController extends HttpServlet
             if (user == null)
             {
                 Throwable t = new Throwable(
-                        "ERROR: There is no user with the input email address in the database.");
+                        "ERROR loginUser: There is no user with the input email address in the " +
+                                "database.");
                 throw new SnippeToDoPlatformException(
                         "There is no registered user with the input email address.", t);
 
@@ -293,7 +307,7 @@ public class UserController extends HttpServlet
             }
             else
             {
-                Throwable t = new Throwable("ERROR: User authentication has failed.");
+                Throwable t = new Throwable("ERROR loginUser: User authentication has failed.");
                 throw new SnippeToDoPlatformException(
                         "The email and password values are incorrect.", t);
             }

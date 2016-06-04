@@ -14,8 +14,6 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
 
-import com.google.gson.JsonObject;
-
 import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.*;
 
 /**
@@ -25,9 +23,9 @@ import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.*
 public class ClientController extends HttpServlet
 {
 
-    protected ISnippeToDoDAO<Item> snippeToDoItemsDB;
-    protected ArrayList<String> lists = new ArrayList<>();
-    protected static final Comparator<Item> POSITION_INDEX_ORDER =
+    ISnippeToDoDAO<Item> snippeToDoItemsDB;
+    private ArrayList<String> lists = new ArrayList<>();
+    private static final Comparator<Item> POSITION_INDEX_ORDER =
             (t1, t2) -> t1.getPositionIndex() - t2.getPositionIndex(); // ascending order
 
     @Override
@@ -103,7 +101,7 @@ public class ClientController extends HttpServlet
     }
 
     /**
-     * Initialize the specific list at the client according to the request
+     * Initialize the specific list at the client according to the request.
      *
      * @param request the HttpServletRequest to access the session to get attributes
      * @param response the HttpServletResponse to return the list to the client
@@ -119,7 +117,7 @@ public class ClientController extends HttpServlet
             if (listName == null)
             {
                 Throwable t = new Throwable(
-                        "ERROR: Failed to recieve the list name from the client.");
+                        "ERROR initList: Failed to recieve the list name from the client.");
                 throw new SnippeToDoPlatformException(null, t);
             }
 
@@ -129,7 +127,7 @@ public class ClientController extends HttpServlet
             if (list == null)
             {
                 Throwable t = new Throwable(
-                        "ERROR: Failed to recieve a saved list from the session.");
+                        "ERROR initList: Failed to recieve a saved list from the session.");
                 throw new SnippeToDoPlatformException(null, t);
             }
 

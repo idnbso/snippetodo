@@ -92,6 +92,40 @@
 </div>
 <!-- /Navigation Bar -->
 
+<!-- Error Modal -->
+<div class="modal fade" id="snpptd-error-modal" tabindex="-1" role="dialog"
+     aria-labelledby="snpptd-error-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="snpptd-error-modallabel">
+                    An Error has Occurred!
+                </h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p id="snpptd-error-modal-message"></p>
+                <p>Please try again later.</p>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal" value="Reload Page"
+                        onClick="window.location.reload()">
+                    Reload Page
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Error Modal -->
+
 <!-- Add new item modal -->
 <div class="modal fade" id="snpptd-client-newitem-modal" tabindex="-1" role="dialog"
      aria-labelledby="snpptd-client-newitem-modal">
@@ -257,7 +291,9 @@
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/lib/jquery-2.2.4.min.js"></script>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/client.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/snippetodo.util.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/snippetodo.client.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/lib/bootstrap.min.js"></script>
 

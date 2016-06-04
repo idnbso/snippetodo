@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -337,7 +337,9 @@
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/index.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/snippetodo.util.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/snippetodo.index.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/lib/bootstrap.min.js"></script>
 </body>

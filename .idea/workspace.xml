@@ -7,13 +7,12 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="41d0d7e2-d614-493b-86b9-d9a82f212640" name="Default" comment="Error handling - server side.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/SnippeToDoLogger.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/SnippeToDoControllerUtil.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/lib/jquery-2.2.4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/lib/jquery-2.2.4.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/lib/jquery.validate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/lib/jquery.validate.min.js" />
+    <list default="true" id="41d0d7e2-d614-493b-86b9-d9a82f212640" name="Default" comment="Error handling - client side.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/img/favicon.ico" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.client.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.util.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/error.jsp" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/index.js" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/snippetodo_war_exploded/WEB-INF/classes/com/github/idnbso/snippetodo/view/client.jsp" afterPath="$PROJECT_DIR$/out/artifacts/snippetodo_war_exploded/WEB-INF/classes/com/github/idnbso/snippetodo/view/client.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/snippetodo_war_exploded/WEB-INF/classes/com/github/idnbso/snippetodo/view/index.jsp" afterPath="$PROJECT_DIR$/out/artifacts/snippetodo_war_exploded/WEB-INF/classes/com/github/idnbso/snippetodo/view/index.jsp" />
@@ -22,8 +21,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/snippetodo/com/github/idnbso/snippetodo/view/client.jsp" afterPath="$PROJECT_DIR$/out/production/snippetodo/com/github/idnbso/snippetodo/view/client.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/snippetodo/com/github/idnbso/snippetodo/view/index.jsp" afterPath="$PROJECT_DIR$/out/production/snippetodo/com/github/idnbso/snippetodo/view/index.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/SnippeToDoPlatformException.java" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/SnippeToDoPlatformException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/HomeController.java" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/HomeController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/SnippeToDoFilter.java" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/SnippeToDoFilter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ClientController.java" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ClientController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ItemController.java" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ItemController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/UserController.java" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/UserController.java" />
@@ -31,9 +28,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/facebook/FBGraph.java" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/facebook/FBGraph.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/client.jsp" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/client.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/index.jsp" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/index.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/css/index.css" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/css/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/client.js" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/client.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/index.js" afterPath="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/index.js" />
     </list>
     <ignored path="snippetodo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,26 +58,6 @@
     <window id="1">
       <content type="file-editors">
         <state>
-          <leaf>
-            <file leaf-file-name="SnippeToDoControllerUtil.java" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/SnippeToDoControllerUtil.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="1180">
-                    <caret line="59" column="50" selection-start-line="59" selection-start-column="50" selection-end-line="59" selection-end-column="50" />
-                    <folding>
-                      <element signature="imports" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-    <window id="1">
-      <content type="file-editors">
-        <state>
           <splitter split-orientation="vertical" split-proportion="0.48506638">
             <split-first>
               <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -106,7 +80,35 @@
                     <provider selected="true" editor-type-id="text-editor">
                       <state relative-caret-position="440">
                         <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-                        <folding />
+                        <folding>
+                          <element signature="imports" expanded="false" />
+                          <element signature="e#1298#1299#0" expanded="false" />
+                          <element signature="e#1321#1322#0" expanded="false" />
+                          <element signature="e#2066#2067#0" expanded="false" />
+                          <element signature="e#2091#2092#0" expanded="false" />
+                          <element signature="e#2268#2269#0" expanded="false" />
+                          <element signature="e#2297#2298#0" expanded="false" />
+                          <element signature="e#2471#2472#0" expanded="false" />
+                          <element signature="e#2500#2501#0" expanded="false" />
+                          <element signature="e#2545#2546#0" expanded="false" />
+                          <element signature="e#2581#2582#0" expanded="false" />
+                          <element signature="e#2622#2623#0" expanded="false" />
+                          <element signature="e#2658#2659#0" expanded="false" />
+                          <element signature="e#2709#2710#0" expanded="false" />
+                          <element signature="e#2751#2752#0" expanded="false" />
+                          <element signature="e#2787#2788#0" expanded="false" />
+                          <element signature="e#2815#2816#0" expanded="false" />
+                          <element signature="e#2861#2862#0" expanded="false" />
+                          <element signature="e#2895#2896#0" expanded="false" />
+                          <element signature="e#2930#2931#0" expanded="false" />
+                          <element signature="e#2957#2958#0" expanded="false" />
+                          <element signature="e#3001#3002#0" expanded="false" />
+                          <element signature="e#3033#3034#0" expanded="false" />
+                          <element signature="e#3199#3200#0" expanded="false" />
+                          <element signature="e#3235#3236#0" expanded="false" />
+                          <element signature="e#3352#3353#0" expanded="false" />
+                          <element signature="e#3380#3381#0" expanded="false" />
+                        </folding>
                       </state>
                     </provider>
                   </entry>
@@ -114,11 +116,30 @@
                 <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
                   <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/model/data/user/User.java">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="660">
+                      <state relative-caret-position="1540">
                         <caret line="100" column="18" selection-start-line="100" selection-start-column="18" selection-end-line="100" selection-end-column="18" />
                         <folding>
-                          <element signature="e#1911#1912#0" expanded="true" />
-                          <element signature="e#1942#1943#0" expanded="true" />
+                          <element signature="n#!!doc" expanded="false" />
+                          <element signature="e#932#933#0" expanded="false" />
+                          <element signature="e#955#956#0" expanded="false" />
+                          <element signature="e#1434#1435#0" expanded="false" />
+                          <element signature="e#1462#1463#0" expanded="false" />
+                          <element signature="e#1508#1509#0" expanded="false" />
+                          <element signature="e#1542#1543#0" expanded="false" />
+                          <element signature="e#1582#1583#0" expanded="false" />
+                          <element signature="e#1614#1615#0" expanded="false" />
+                          <element signature="e#1668#1669#0" expanded="false" />
+                          <element signature="e#1710#1711#0" expanded="false" />
+                          <element signature="e#1749#1750#0" expanded="false" />
+                          <element signature="e#1780#1781#0" expanded="false" />
+                          <element signature="e#1832#1833#0" expanded="false" />
+                          <element signature="e#1872#1873#0" expanded="false" />
+                          <element signature="e#1994#1995#0" expanded="false" />
+                          <element signature="e#2034#2035#0" expanded="false" />
+                          <element signature="e#2146#2147#0" expanded="false" />
+                          <element signature="e#2171#2172#0" expanded="false" />
+                          <element signature="e#2301#2302#0" expanded="false" />
+                          <element signature="e#2329#2330#0" expanded="false" />
                         </folding>
                       </state>
                     </provider>
@@ -127,11 +148,10 @@
                 <file leaf-file-name="ClientController.java" pinned="false" current-in-tab="false">
                   <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ClientController.java">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="446">
-                        <caret line="66" column="29" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
+                      <state relative-caret-position="482">
+                        <caret line="129" column="39" selection-start-line="129" selection-start-column="39" selection-end-line="129" selection-end-column="39" />
                         <folding>
                           <element signature="imports" expanded="true" />
-                          <element signature="e#3550#3580#0" expanded="true" />
                         </folding>
                       </state>
                     </provider>
@@ -140,30 +160,33 @@
                 <file leaf-file-name="ItemController.java" pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ItemController.java">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="-617">
-                        <caret line="38" column="48" selection-start-line="38" selection-start-column="48" selection-end-line="38" selection-end-column="48" />
-                        <folding />
+                      <state relative-caret-position="382">
+                        <caret line="231" column="21" selection-start-line="231" selection-start-column="21" selection-end-line="231" selection-end-column="21" />
+                        <folding>
+                          <element signature="imports" expanded="true" />
+                        </folding>
                       </state>
                     </provider>
                   </entry>
                 </file>
-                <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-                  <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/index.js">
+                <file leaf-file-name="snippetodo.index.js" pinned="false" current-in-tab="false">
+                  <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.index.js">
                     <provider selected="true" editor-type-id="text-editor">
                       <state relative-caret-position="60">
-                        <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+                        <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
                         <folding />
                       </state>
                     </provider>
                   </entry>
                 </file>
-                <file leaf-file-name="client.js" pinned="false" current-in-tab="false">
-                  <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/client.js">
+                <file leaf-file-name="snippetodo.client.js" pinned="false" current-in-tab="false">
+                  <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.client.js">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="3100">
-                        <caret line="165" column="0" selection-start-line="165" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
+                      <state relative-caret-position="552">
+                        <caret line="567" column="44" selection-start-line="567" selection-start-column="16" selection-end-line="567" selection-end-column="44" />
                         <folding>
-                          <marker date="1464980036447" expanded="true" signature="12450:12459" ph="//..." />
+                          <marker date="1465054426627" expanded="true" signature="1431:1465" ph="//..." />
+                          <marker date="1465054426627" expanded="true" signature="17168:17177" ph="//..." />
                         </folding>
                       </state>
                     </provider>
@@ -176,11 +199,9 @@
                 <file leaf-file-name="ClientController.java" pinned="false" current-in-tab="false">
                   <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ClientController.java">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="838">
-                        <caret line="100" column="56" selection-start-line="100" selection-start-column="56" selection-end-line="100" selection-end-column="56" />
-                        <folding>
-                          <marker date="1464982843834" expanded="true" signature="1753:1767" ph="@{...}" />
-                        </folding>
+                      <state relative-caret-position="21">
+                        <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+                        <folding />
                       </state>
                     </provider>
                   </entry>
@@ -219,23 +240,13 @@
                     </provider>
                   </entry>
                 </file>
-                <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-                  <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/index.js">
+                <file leaf-file-name="snippetodo.client.js" pinned="false" current-in-tab="true">
+                  <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.client.js">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="1223">
-                        <caret line="172" column="7" selection-start-line="172" selection-start-column="7" selection-end-line="172" selection-end-column="7" />
-                        <folding />
-                      </state>
-                    </provider>
-                  </entry>
-                </file>
-                <file leaf-file-name="client.js" pinned="false" current-in-tab="true">
-                  <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/client.js">
-                    <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="638">
-                        <caret line="70" column="13" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="13" />
+                      <state relative-caret-position="300">
+                        <caret line="106" column="69" selection-start-line="106" selection-start-column="69" selection-end-line="106" selection-end-column="69" />
                         <folding>
-                          <marker date="1464980036447" expanded="true" signature="12450:12459" ph="//..." />
+                          <marker date="1465054426627" expanded="true" signature="17168:17177" ph="//..." />
                         </folding>
                       </state>
                     </provider>
@@ -244,6 +255,26 @@
               </leaf>
             </split-second>
           </splitter>
+        </state>
+      </content>
+    </window>
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+            <file leaf-file-name="SnippeToDoControllerUtil.java" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/SnippeToDoControllerUtil.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="1000">
+                    <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+                    <folding>
+                      <element signature="imports" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
         </state>
       </content>
     </window>
@@ -257,8 +288,8 @@
       <file leaf-file-name="FBConnection.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/facebook/FBConnection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="30" column="59" selection-start-line="30" selection-start-column="59" selection-end-line="30" selection-end-column="59" />
+            <state relative-caret-position="834">
+              <caret line="85" column="65" selection-start-line="85" selection-start-column="65" selection-end-line="85" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -267,8 +298,8 @@
       <file leaf-file-name="FBGraph.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/facebook/FBGraph.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1140">
-              <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+            <state relative-caret-position="80">
+              <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -277,11 +308,13 @@
       <file leaf-file-name="SnippeToDoPlatformException.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/SnippeToDoPlatformException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+            <state relative-caret-position="760">
+              <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
               <folding>
-                <element signature="e#1100#1101#0" expanded="true" />
-                <element signature="e#1137#1138#0" expanded="true" />
+                <element signature="e#1547#1548#0" expanded="true" />
+                <element signature="e#1577#1578#0" expanded="true" />
+                <element signature="e#2294#2295#0" expanded="true" />
+                <element signature="e#2322#2323#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -290,8 +323,8 @@
       <file leaf-file-name="index.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="17" selection-end-column="79" />
+            <state relative-caret-position="971">
+              <caret line="338" column="0" selection-start-line="338" selection-start-column="0" selection-end-line="339" selection-end-column="90" />
               <folding />
             </state>
           </provider>
@@ -300,20 +333,52 @@
       <file leaf-file-name="client.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/client.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="180">
+              <caret line="95" column="60" selection-start-line="95" selection-start-column="60" selection-end-line="95" selection-end-column="60" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="snippetodo.util.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.util.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="239" column="13" selection-start-line="239" selection-start-column="13" selection-end-line="239" selection-end-column="13" />
+            <state relative-caret-position="1105">
+              <caret line="130" column="66" selection-start-line="130" selection-start-column="66" selection-end-line="130" selection-end-column="66" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="snippetodo.index.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="556">
+              <caret line="169" column="34" selection-start-line="169" selection-start-column="34" selection-end-line="169" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Log4jLoggerAdapter.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/lib/slf4j-log4j12-1.6.1.jar!/org/slf4j/impl/Log4jLoggerAdapter.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="451">
+              <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+              <folding>
+                <element signature="e#3663#3664#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -325,9 +390,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="JavaScript File" />
         <option value="Jsp File" />
         <option value="Class" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -343,9 +408,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/homepage.jsp" />
-        <option value="C:/dev/apache-tomcat-8.0.32/lib/servlet-api.jar!/javax/servlet/http/HttpServlet.class" />
-        <option value="$PROJECT_DIR$/web/index.jsp" />
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/model/SnippeToDoMain.java" />
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/model/ISnippeToDoDAO.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/web.xml" />
@@ -381,19 +443,22 @@
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/css/index.css" />
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/SnippeToDoLogger.java" />
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/HomeController.java" />
-        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/index.js" />
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/SnippeToDoFilter.java" />
+        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/ControllerUtils.java" />
+        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/index.js" />
+        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/client.js" />
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/index.jsp" />
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/client.jsp" />
-        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/ControllerUtils.java" />
-        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/facebook/FBConnection.java" />
+        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.util.js" />
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/SnippeToDoPlatformException.java" />
+        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/facebook/FBConnection.java" />
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/facebook/FBGraph.java" />
-        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ItemController.java" />
-        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/client.js" />
-        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/UserController.java" />
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/SnippeToDoControllerUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/UserController.java" />
         <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ClientController.java" />
+        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ItemController.java" />
+        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.client.js" />
+        <option value="$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.index.js" />
       </list>
     </option>
   </component>
@@ -444,9 +509,9 @@
       <pane id="ProjectPane">
         <subPane />
       </pane>
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1114,7 +1179,8 @@
       <workItem from="1464765549825" duration="10003000" />
       <workItem from="1464857109013" duration="28513000" />
       <workItem from="1464936357655" duration="4026000" />
-      <workItem from="1464941696976" duration="25396000" />
+      <workItem from="1464941696976" duration="26234000" />
+      <workItem from="1465025044512" duration="22600000" />
     </task>
     <task id="LOCAL-00001" summary="Optimised init of client.">
       <created>1463491708477</created>
@@ -1186,7 +1252,14 @@
       <option name="project" value="LOCAL" />
       <updated>1464898220306</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Error handling - server side.">
+      <created>1464982984247</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1464982984247</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1198,14 +1271,14 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="466888000" />
+    <option name="totallyTimeSpent" value="490326000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1096" height="1896" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.404195" sideWeight="0.3619691" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26020408" sideWeight="0.4864865" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.488417" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3291506" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Azure Activity Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -1225,7 +1298,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.7027027" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282313" sideWeight="0.496139" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26020408" sideWeight="0.3880309" order="13" side_tool="false" content_ui="combo" x="-1066" y="1271" width="1042" height="451" />
+      <window_info id="Project" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26020408" sideWeight="0.5135135" order="13" side_tool="false" content_ui="combo" x="-1066" y="1271" width="1042" height="451" />
       <window_info id="Service Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2505669" sideWeight="0.43243244" order="16" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.46138996" order="4" side_tool="false" content_ui="tabs" />
@@ -1261,60 +1334,20 @@
     <MESSAGE value="Refactored the controllers." />
     <MESSAGE value="Error handling." />
     <MESSAGE value="Error handling - server side." />
-    <option name="LAST_COMMIT_MESSAGE" value="Error handling - server side." />
+    <MESSAGE value="Error handling - client side." />
+    <option name="LAST_COMMIT_MESSAGE" value="Error handling - client side." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="184" />
+      <option name="time" value="185" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
-        <watch expression="jsonResponse" language="JAVA" custom="" />
-      </configuration>
-    </watches-manager>
+    <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/out/artifacts/snippetodo_war_exploded/WEB-INF/classes/com/github/idnbso/snippetodo/controller/SnippeToDoController.class" />
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/model/data/item/Item.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/snippetodo/com/github/idnbso/snippetodo/controller/SnippeToDoFilter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/fonts/glyphicons-halflings-regular.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" column="48" selection-start-line="1" selection-start-column="48" selection-end-line="1" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/lib/bootstrap.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/lib/bootstrap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9547">
-          <caret line="605" column="34" selection-start-line="605" selection-start-column="34" selection-end-line="605" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
@@ -1408,14 +1441,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/error.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1365">
-          <caret line="118" column="29" selection-start-line="118" selection-start-column="29" selection-end-line="118" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/error.jsp" />
     <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/css/client.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6580">
@@ -1440,29 +1466,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="926" column="0" selection-start-line="926" selection-start-column="0" selection-end-line="926" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/dev/apache-tomcat-8.0.32/lib/servlet-api.jar!/javax/servlet/ServletRequest.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="37" column="18" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/SnippeToDoLogger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1479,17 +1487,9 @@
         <state relative-caret-position="600">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <marker date="1464959144829" expanded="false" signature="72:354" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="17" selection-end-column="79" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1497,10 +1497,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="353">
           <caret line="96" column="17" selection-start-line="96" selection-start-column="12" selection-end-line="96" selection-end-column="17" />
-          <folding>
-            <element signature="e#1813#1814#0" expanded="true" />
-            <element signature="e#1846#1847#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1508,17 +1504,35 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="282">
           <caret line="65" column="16" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/model/data/user/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
+        <state relative-caret-position="1540">
           <caret line="100" column="18" selection-start-line="100" selection-start-column="18" selection-end-line="100" selection-end-column="18" />
           <folding>
-            <element signature="e#1911#1912#0" expanded="true" />
-            <element signature="e#1942#1943#0" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#932#933#0" expanded="false" />
+            <element signature="e#955#956#0" expanded="false" />
+            <element signature="e#1434#1435#0" expanded="false" />
+            <element signature="e#1462#1463#0" expanded="false" />
+            <element signature="e#1508#1509#0" expanded="false" />
+            <element signature="e#1542#1543#0" expanded="false" />
+            <element signature="e#1582#1583#0" expanded="false" />
+            <element signature="e#1614#1615#0" expanded="false" />
+            <element signature="e#1668#1669#0" expanded="false" />
+            <element signature="e#1710#1711#0" expanded="false" />
+            <element signature="e#1749#1750#0" expanded="false" />
+            <element signature="e#1780#1781#0" expanded="false" />
+            <element signature="e#1832#1833#0" expanded="false" />
+            <element signature="e#1872#1873#0" expanded="false" />
+            <element signature="e#1994#1995#0" expanded="false" />
+            <element signature="e#2034#2035#0" expanded="false" />
+            <element signature="e#2146#2147#0" expanded="false" />
+            <element signature="e#2171#2172#0" expanded="false" />
+            <element signature="e#2301#2302#0" expanded="false" />
+            <element signature="e#2329#2330#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1531,14 +1545,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/client.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/lang/Exception.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -1547,53 +1553,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/SnippeToDoPlatformException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
-          <folding>
-            <element signature="e#1100#1101#0" expanded="true" />
-            <element signature="e#1137#1138#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/io/IOException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="38" column="30" selection-start-line="38" selection-start-column="30" selection-end-line="38" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/facebook/FBGraph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/dev/apache-tomcat-8.0.32/lib/servlet-api.jar!/javax/servlet/http/HttpSession.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="47" column="14" selection-start-line="47" selection-start-column="14" selection-end-line="47" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/facebook/FBConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="30" column="59" selection-start-line="30" selection-start-column="59" selection-end-line="30" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1606,71 +1569,200 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/client.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3100">
-          <caret line="165" column="0" selection-start-line="165" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
-          <folding>
-            <marker date="1464980036447" expanded="true" signature="12450:12459" ph="//..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/lang/Throwable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2562">
           <caret line="413" column="34" selection-start-line="413" selection-start-column="34" selection-end-line="413" selection-end-column="34" />
           <folding>
-            <element signature="e#17326#17327#0" expanded="true" />
-            <element signature="e#17377#17378#0" expanded="true" />
+            <element signature="e#17326#17327#0" expanded="false" />
+            <element signature="e#17377#17378#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/SnippeToDoControllerUtil.java">
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/client.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1180">
-          <caret line="59" column="50" selection-start-line="59" selection-start-column="50" selection-end-line="59" selection-end-column="50" />
+        <state relative-caret-position="180">
+          <caret line="95" column="60" selection-start-line="95" selection-start-column="60" selection-end-line="95" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="971">
+          <caret line="338" column="0" selection-start-line="338" selection-start-column="0" selection-end-line="339" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/SnippeToDoPlatformException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="760">
+          <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#1547#1548#0" expanded="true" />
+            <element signature="e#1577#1578#0" expanded="true" />
+            <element signature="e#2294#2295#0" expanded="true" />
+            <element signature="e#2322#2323#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/lang/IllegalArgumentException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="35" column="6" selection-start-line="35" selection-start-column="6" selection-end-line="35" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/lang/NumberFormatException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="37" column="47" selection-start-line="37" selection-start-column="47" selection-end-line="37" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$PROJECT_DIR$/lib/gson-2.6.2.jar!/com/google/gson/Gson.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="360" column="0" selection-start-line="360" selection-start-column="0" selection-end-line="360" selection-end-column="0" />
+        <state relative-caret-position="282">
+          <caret line="361" column="18" selection-start-line="361" selection-start-column="18" selection-end-line="361" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ClientController.java">
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/SnippeToDoLogger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="66" column="29" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3550#3580#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="40">
+          <caret line="2" column="62" selection-start-line="2" selection-start-column="62" selection-end-line="2" selection-end-column="62" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ItemController.java">
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/facebook/FBGraph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-617">
-          <caret line="38" column="48" selection-start-line="38" selection-start-column="48" selection-end-line="38" selection-end-column="48" />
+        <state relative-caret-position="80">
+          <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/facebook/FBConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="834">
+          <caret line="85" column="65" selection-start-line="85" selection-start-column="65" selection-end-line="85" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/lib/Sortable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="170" column="13" selection-start-line="170" selection-start-column="13" selection-end-line="170" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript5.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="173" column="0" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="873" column="0" selection-start-line="873" selection-start-column="0" selection-end-line="873" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/dev/apache-tomcat-8.0.32/lib/servlet-api.jar!/javax/servlet/http/HttpSession.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="11" column="28" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/user/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="239" column="13" selection-start-line="239" selection-start-column="13" selection-end-line="239" selection-end-column="13" />
+        <state relative-caret-position="1105">
+          <caret line="130" column="66" selection-start-line="130" selection-start-column="66" selection-end-line="130" selection-end-column="66" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ClientController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="129" column="39" selection-start-line="129" selection-start-column="39" selection-end-line="129" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/slf4j-log4j12-1.6.1.jar!/org/slf4j/impl/Log4jLoggerAdapter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+          <folding>
+            <element signature="e#3663#3664#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/SnippeToDoControllerUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1000">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/controller/client/ItemController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="231" column="21" selection-start-line="231" selection-start-column="21" selection-end-line="231" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="552">
+          <caret line="567" column="44" selection-start-line="567" selection-start-column="16" selection-end-line="567" selection-end-column="44" />
+          <folding>
+            <marker date="1465054426627" expanded="true" signature="1431:1465" ph="//..." />
+            <marker date="1465054426627" expanded="true" signature="17168:17177" ph="//..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/github/idnbso/snippetodo/view/resources/js/snippetodo.index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="169" column="34" selection-start-line="169" selection-start-column="34" selection-end-line="169" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>

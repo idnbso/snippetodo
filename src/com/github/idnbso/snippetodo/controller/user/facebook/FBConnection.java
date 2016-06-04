@@ -15,8 +15,6 @@ public class FBConnection
 {
     private static final String FB_APP_ID = "955639281222919";
     private static final String FB_APP_SECRET = "02040901b549c57fd003fc2f082257be";
-    //    private static final String REDIRECT_URI =
-//            "http://localhost:8080/user/facebooklogin";
     private static final String REDIRECT_URI =
             "http://snippetodo.azurewebsites.net/user/facebooklogin";
 
@@ -39,23 +37,6 @@ public class FBConnection
         return fbLoginUrl;
     }
 
-    public String getFBGraphUrl(String code) throws SnippeToDoPlatformException
-    {
-        String fbGraphUrl;
-        try
-        {
-            fbGraphUrl = "https://graph.facebook.com/oauth/access_token?"
-                    + "client_id=" + FBConnection.FB_APP_ID + "&redirect_uri="
-                    + URLEncoder.encode(FBConnection.REDIRECT_URI, "UTF-8")
-                    + "&client_secret=" + FB_APP_SECRET + "&code=" + code;
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            throw new SnippeToDoPlatformException(null, e.getCause());
-        }
-        return fbGraphUrl;
-    }
-
     public String getAccessToken(String code) throws SnippeToDoPlatformException
     {
         if ("".equals(accessToken))
@@ -71,7 +52,8 @@ public class FBConnection
             }
             catch (MalformedURLException e)
             {
-                Throwable t = new Throwable("ERROR: Invalid code received: " + e.getCause());
+                Throwable t = new Throwable(
+                        "ERROR getAccessToken: Invalid code received: " + e.getCause());
                 throw new SnippeToDoPlatformException(null, t);
             }
 
@@ -93,18 +75,36 @@ public class FBConnection
             catch (IOException e)
             {
                 Throwable t =
-                        new Throwable("ERROR: Unable to connect with Facebook: " + e.getCause());
+                        new Throwable("ERROR getAccessToken: Unable to connect with Facebook: " +
+                                              e.getCause());
                 throw new SnippeToDoPlatformException(null, t);
             }
 
             accessToken = buffer.toString();
             if (accessToken.startsWith("{"))
             {
-                Throwable t = new Throwable("ERROR: Access Token Invalid.");
+                Throwable t = new Throwable("ERROR getAccessToken: Access Token Invalid.");
                 throw new SnippeToDoPlatformException(null, t);
             }
         }
 
         return accessToken;
+    }
+
+    private String getFBGraphUrl(String code) throws SnippeToDoPlatformException
+    {
+        String fbGraphUrl;
+        try
+        {
+            fbGraphUrl = "https://graph.facebook.com/oauth/access_token?"
+                    + "client_id=" + FBConnection.FB_APP_ID + "&redirect_uri="
+                    + URLEncoder.encode(FBConnection.REDIRECT_URI, "UTF-8")
+                    + "&client_secret=" + FB_APP_SECRET + "&code=" + code;
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            throw new SnippeToDoPlatformException(null, e.getCause());
+        }
+        return fbGraphUrl;
     }
 }
