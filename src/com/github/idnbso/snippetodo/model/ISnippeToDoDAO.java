@@ -11,8 +11,7 @@ import java.util.List;
  * ISnippeToDoDAO interface provides all of the CRUD operations to be used in the SnippeToDo
  * database by the users.
  *
- * @author Idan Busso
- * @author Shani Kahila
+ * @see SnippeToDoPlatformException
  */
 public interface ISnippeToDoDAO<T>
 {
