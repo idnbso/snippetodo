@@ -2,6 +2,7 @@ package com.github.idnbso.snippetodo.controller.client;
 
 import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.github.idnbso.snippetodo.model.data.item.Item;
+import com.github.idnbso.snippetodo.model.data.item.ItemException;
 import com.github.idnbso.snippetodo.model.data.user.User;
 import com.google.gson.Gson;
 
@@ -163,12 +164,10 @@ public class ItemController extends ClientController
             String jsonResponse = new Gson().toJson(newItem);
             writeJsonResponse(response, jsonResponse);
         }
-        catch (SnippeToDoPlatformException e)
+        catch (ItemException | SnippeToDoPlatformException e)
         {
-            String exceptionMessage = e.getMessage();
-            String message = exceptionMessage != null ? exceptionMessage :
-                    "There was a problem creating a new item in the database.";
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            String message = "There was a problem creating a new item in the database.";
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
@@ -200,7 +199,7 @@ public class ItemController extends ClientController
             String exceptionMessage = e.getMessage();
             String message = exceptionMessage != null ? exceptionMessage :
                     "There was a problem deleting an item in the database.";
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
@@ -238,12 +237,10 @@ public class ItemController extends ClientController
             String jsonResponse = new Gson().toJson(item);
             writeJsonResponse(response, jsonResponse);
         }
-        catch (SnippeToDoPlatformException e)
+        catch (ItemException | SnippeToDoPlatformException e)
         {
-            String exceptionMessage = e.getMessage();
-            String message = exceptionMessage != null ? exceptionMessage :
-                    "There was a problem updating the item's values in the database.";
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            String message = "There was a problem updating the item's values in the database.";
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
@@ -282,12 +279,11 @@ public class ItemController extends ClientController
             item.setListId(listId);
             snippeToDoItemsDB.update(item);
         }
-        catch (SnippeToDoPlatformException e)
+        catch (ItemException | SnippeToDoPlatformException e)
         {
-            String exceptionMessage = e.getMessage();
-            String message = exceptionMessage != null ? exceptionMessage :
+            String message =
                     "There was a problem updating the item position value in the database.";
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
@@ -323,7 +319,7 @@ public class ItemController extends ClientController
             String exceptionMessage = e.getMessage();
             String message = exceptionMessage != null ? exceptionMessage :
                     "There was a problem getting the item from the database.";
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
@@ -362,12 +358,12 @@ public class ItemController extends ClientController
                 snippeToDoItemsDB.update(item);
             }
         }
-        catch (JsonSyntaxException | JsonIOException | SnippeToDoPlatformException e)
+        catch (JsonSyntaxException | JsonIOException | ItemException |
+                SnippeToDoPlatformException e)
         {
-            String exceptionMessage = e.getMessage();
-            String message = exceptionMessage != null ? exceptionMessage :
+            String message =
                     "There was a problem updating the list in the database with the new changes.";
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 }

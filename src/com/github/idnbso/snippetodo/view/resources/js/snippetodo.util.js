@@ -26,6 +26,9 @@ snippeToDoUtil.displayError = function(message) {
     $('#snpptd-error-modal').modal('show');
 };
 
+/**
+ * Open the client page with the correct hostname in the current window.
+ */
 snippeToDoUtil.openClient =  function(){
     window.open(snippeToDoUtil.hostname + "client/", "_self");
 };

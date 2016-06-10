@@ -11,15 +11,30 @@ import java.util.Map;
 import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.google.gson.*;
 
+/**
+ * FBGraph class for the connection to Facebook Graph API.
+ */
 public class FBGraph
 {
     private String accessToken;
 
+    /**
+     * FBGraph class constructor
+     *
+     * @param accessToken the access token to be used with the Facebook Graph API
+     */
     public FBGraph(String accessToken)
     {
         this.accessToken = accessToken;
     }
 
+    /**
+     * Get the Facebook Graph API JSON response according to the supplied acces token of the user to
+     * be logged in with facebook.
+     *
+     * @return the Facebook Graph API JSON response
+     * @throws SnippeToDoPlatformException
+     */
     public String getFBGraph() throws SnippeToDoPlatformException
     {
         String graph;
@@ -43,13 +58,20 @@ public class FBGraph
         catch (IOException e)
         {
             Throwable t =
-                    new Throwable("ERROR getFBGraph: unable to get FB graph data. " + e.getCause());
+                    new Throwable("ERROR getFBGraph: unable to get FB graph data. " + e);
             throw new SnippeToDoPlatformException(null, t);
         }
 
         return graph;
     }
 
+    /**
+     * Get the data of the user attempting to log in from the Facebook Graph API JSON response.
+     *
+     * @param fbGraph the Facebook Graph API JSON response
+     * @return the Facebook profile of the logged in user
+     * @throws SnippeToDoPlatformException
+     */
     public Map<String, String> getGraphData(String fbGraph) throws SnippeToDoPlatformException
     {
         Map<String, String> fbProfile = new HashMap<>();
@@ -66,7 +88,7 @@ public class FBGraph
         catch (JsonSyntaxException e)
         {
             Throwable t = new Throwable(
-                    "ERROR getFBGraph: unable to parse FB graph data. " + e.getCause());
+                    "ERROR getFBGraph: unable to parse FB graph data. " + e);
             throw new SnippeToDoPlatformException(null, t);
         }
 

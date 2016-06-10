@@ -11,7 +11,7 @@ import java.util.List;
 import com.github.idnbso.snippetodo.model.data.item.*;
 
 /**
- * Test class for the SnippeToDo application to test all of the ISnippeToDoDAO
+ * Test class for the SnippeToDo application to test run all of the ISnippeToDoDAO
  * interface's operations.
  * 
  * @author Idan Busso

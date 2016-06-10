@@ -168,8 +168,8 @@ public class ClientController extends HttpServlet
         {
             String exceptionMessage = e.getMessage();
             String message = exceptionMessage != null ? exceptionMessage :
-                    "There was a problem initializing the lists. Try again later.";
-            throw new SnippeToDoPlatformException(message, e.getCause());
+                    "There was a problem initializing the lists.";
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
@@ -226,13 +226,13 @@ public class ClientController extends HttpServlet
         }
         catch (SnippeToDoPlatformException e)
         {
-            throw new SnippeToDoPlatformException(e.getMessage(), e.getCause());
+            throw new SnippeToDoPlatformException(e.getMessage(), e);
         }
         catch (IndexOutOfBoundsException | IllegalStateException e)
         {
             throw new SnippeToDoPlatformException(
                     "There was a problem initialising the lists with data from the database.",
-                    e.getCause());
+                    e);
         }
     }
 }

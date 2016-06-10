@@ -5,9 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by Idan on 3-6-16.
+ * SnippeToDoLogger contains the SLF4J with log4j logger.
  */
 public class SnippeToDoLogger
 {
+    /**
+     * The logger for the SnippeToDo app, using SLF4J with log4j.
+     */
     public final static Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 }

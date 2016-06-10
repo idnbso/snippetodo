@@ -6,6 +6,7 @@ import com.github.idnbso.snippetodo.SnippeToDoPlatformException;
 import com.github.idnbso.snippetodo.model.ISnippeToDoDAO;
 import com.github.idnbso.snippetodo.model.data.user.SnippeToDoUserDAO;
 import com.github.idnbso.snippetodo.model.data.user.User;
+import com.github.idnbso.snippetodo.model.data.user.UserException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -161,7 +162,7 @@ public class UserController extends HttpServlet
             String exceptionMessage = e.getMessage();
             String message = exceptionMessage != null ? exceptionMessage :
                     "There was a problem logging out from the client.";
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
@@ -217,12 +218,10 @@ public class UserController extends HttpServlet
             }
             request.getSession().setAttribute("user", user);
         }
-        catch (SnippeToDoPlatformException e)
+        catch (UserException | SnippeToDoPlatformException e)
         {
-            String exceptionMessage = e.getMessage();
-            String message = exceptionMessage != null ? exceptionMessage :
-                    "There was a problem logging in with Facebook. Try again.";
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            String message = "There was a problem logging in with Facebook. Try again.";
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
@@ -254,8 +253,8 @@ public class UserController extends HttpServlet
     }
 
     /**
-     * Check in the session if there is currently a user logged in to the client,
-     * and if so than retrieve his first name.
+     * Check in the session if there is currently a user logged in to the client, and if so than
+     * retrieve his first name.
      *
      * @param request the HttpServletRequest containing the data of the current user in the session
      * @return the first name of the user which is logged in to the client
@@ -274,8 +273,9 @@ public class UserController extends HttpServlet
     }
 
     /**
+     * Process the user registration data before saving it to the database.
      *
-     * @param request
+     * @param request the HttpServletRequest containing the data of user registration
      * @throws SnippeToDoPlatformException
      */
     private void processUserRegistration(HttpServletRequest request)
@@ -327,20 +327,18 @@ public class UserController extends HttpServlet
                         "There is already a registered user with the same email address.", t);
             }
         }
-        catch (SnippeToDoPlatformException e)
+        catch (UserException | SnippeToDoPlatformException e)
         {
-            String exceptionMessage = e.getMessage();
-            String message = exceptionMessage != null ? exceptionMessage :
-                    "There was a problem creating a new user.";
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            String message = "There was a problem creating a new user.";
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
     /**
-     * Log in a user to the SnippeToDo client.
+     * Logs in a user to the SnippeToDo client.
      *
-     * @param request
-     * @param response
+     * @param request  the HttpServletRequest containing the data of the user logging in
+     * @param response the HttpServletResponse containing the cookie with logged in user details
      * @throws SnippeToDoPlatformException
      */
     private void loginUser(HttpServletRequest request, HttpServletResponse response)
@@ -394,16 +392,16 @@ public class UserController extends HttpServlet
             String exceptionMessage = e.getMessage();
             String message = exceptionMessage != null ? exceptionMessage :
                     "There was a problem logging in to client. Try again.";
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
     /**
      * Authenticate a user by a password.
      *
-     * @param user
-     * @param password
-     * @return
+     * @param user     the user to be authenticated
+     * @param password the password from the user's input for the authentication
+     * @return is the user authenticated successfully
      */
     private boolean authenticateUser(User user, String password)
     {
@@ -413,9 +411,9 @@ public class UserController extends HttpServlet
     /**
      * Get a user by its email address sent from the client.
      *
-     * @param request
-     * @param email
-     * @return
+     * @param request the HttpServletRequest containing the current session
+     * @param email   the email address to match a user account with
+     * @return user that is a match for the supplied email address
      * @throws SnippeToDoPlatformException
      */
     private User getUserByEmail(HttpServletRequest request, String email)

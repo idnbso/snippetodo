@@ -43,7 +43,7 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
         catch (HibernateException e)
         {
             throw new SnippeToDoPlatformException(
-                    "Initial SessionFactory creation failed: " + e.getMessage(), e.getCause());
+                    "Initial SessionFactory creation failed: " + e.getMessage(), e);
         }
     }
 
@@ -78,7 +78,7 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             }
             String message = "Failed to create a new " + databaseClass.getName() +
                     " in the database: " + e.getMessage();
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
@@ -115,7 +115,7 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             }
             String message = "Failed to delete by id number an existing " +
                     databaseClass.getName() + " from the database: " + e.getMessage();
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
@@ -149,7 +149,7 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             }
             String message = "Failed to delete an existing " + databaseClass.getName() +
                     " from the database: " + e.getMessage();
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            throw new SnippeToDoPlatformException(message, e);
         }
     }
 
@@ -185,7 +185,7 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             }
             String message = "Failed to get all entities of type " + databaseClass.getName() +
                     " from the database: " + e.getMessage();
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            throw new SnippeToDoPlatformException(message, e);
         }
 
         return entitiesList;
@@ -224,7 +224,7 @@ public abstract class HibernateSnippeToDoDAO<T> implements ISnippeToDoDAO<T>
             }
             String message = "Failed to get an entity of type " + databaseClass.getName() +
                     " from the database: " + e.getMessage();
-            throw new SnippeToDoPlatformException(message, e.getCause());
+            throw new SnippeToDoPlatformException(message, e);
         }
 
         return entity;

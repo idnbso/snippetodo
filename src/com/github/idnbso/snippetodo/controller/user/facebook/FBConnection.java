@@ -11,6 +11,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+/**
+ * FBConnection class is responsible to connect a Facebook user to the SnippeToDo application
+ * with the Facebook SDK.
+ */
 public class FBConnection
 {
     private static final String FB_APP_ID = "955639281222919";
@@ -20,6 +24,12 @@ public class FBConnection
 
     private static String accessToken = "";
 
+    /**
+     * Get the Facebook SDK authenticated url address for the login process.
+     *
+     * @return the facebook authentication url for the login process
+     * @throws SnippeToDoPlatformException
+     */
     public String getFBAuthUrl() throws SnippeToDoPlatformException
     {
         String fbLoginUrl;
@@ -32,11 +42,18 @@ public class FBConnection
         }
         catch (UnsupportedEncodingException e)
         {
-            throw new SnippeToDoPlatformException(null, e.getCause());
+            throw new SnippeToDoPlatformException(null, e);
         }
         return fbLoginUrl;
     }
 
+    /**
+     * Get the access token of the facebook user attempting to log in to the application.
+     *
+     * @param code the authentication code of the facebook for the access token
+     * @return the access token of the facebook user to log in to the application
+     * @throws SnippeToDoPlatformException
+     */
     public String getAccessToken(String code) throws SnippeToDoPlatformException
     {
         if ("".equals(accessToken))
@@ -48,12 +65,12 @@ public class FBConnection
             }
             catch (SnippeToDoPlatformException e)
             {
-                throw new SnippeToDoPlatformException(null, e.getCause());
+                throw new SnippeToDoPlatformException(null, e);
             }
             catch (MalformedURLException e)
             {
                 Throwable t = new Throwable(
-                        "ERROR getAccessToken: Invalid code received: " + e.getCause());
+                        "ERROR getAccessToken: Invalid code received: " + e);
                 throw new SnippeToDoPlatformException(null, t);
             }
 
@@ -76,7 +93,7 @@ public class FBConnection
             {
                 Throwable t =
                         new Throwable("ERROR getAccessToken: Unable to connect with Facebook: " +
-                                              e.getCause());
+                                              e);
                 throw new SnippeToDoPlatformException(null, t);
             }
 
@@ -91,6 +108,13 @@ public class FBConnection
         return accessToken;
     }
 
+    /**
+     * Get the graph url of the facebook user attempting to log in to the application.
+     *
+     * @param code the authentication code of the facebook for the graph url
+     * @return the graph url of the facebook user to log in to the application
+     * @throws SnippeToDoPlatformException
+     */
     private String getFBGraphUrl(String code) throws SnippeToDoPlatformException
     {
         String fbGraphUrl;
@@ -103,7 +127,7 @@ public class FBConnection
         }
         catch (UnsupportedEncodingException e)
         {
-            throw new SnippeToDoPlatformException(null, e.getCause());
+            throw new SnippeToDoPlatformException(null, e);
         }
         return fbGraphUrl;
     }

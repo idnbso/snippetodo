@@ -1,25 +1,22 @@
 /**
- * 
+ *
  */
 package com.github.idnbso.snippetodo.model.data.user;
 
 import javax.persistence.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * User class represents the SnippeToDo registered users which consists of the
- * user's id and user's name from the user input. An User is stored in the
- * snippetodo database's users table.
- * 
- * @author Idan Busso
- * @author Shani Kahila
+ * User class represents the SnippeToDo registered users which consists of the user's id and user's
+ * name from the user input. An User is stored in the snippetodo database's users table.
  */
 @Entity
 @Table(name = "users")
 public class User
 {
     /**
-     * The user's id number in the database with identity option to prevent
-     * duplicates.
+     * The user's id number in the database with identity option to prevent duplicates.
      */
     @Id
     private int id;
@@ -53,14 +50,14 @@ public class User
     }
 
     /**
-     * User class main constructor to create a complete User object to be stored
-     * in the database.
-     * 
+     * User class main constructor to create a complete User object to be stored in the database.
+     *
      * @param id The id of the user in database items table
-     * TODO
      */
     public User(int id, String email, String firstName, String lastName, String password)
+            throws UserException
     {
+        this();
         setId(id);
         setEmail(email);
         setFirstName(firstName);
@@ -68,49 +65,9 @@ public class User
         setPassword(password);
     }
 
-    public String getEmail()
-    {
-        return email;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
-    public String getFirstName()
-    {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName)
-    {
-        this.firstName = firstName;
-    }
-
-    public String getLastName()
-    {
-        return lastName;
-    }
-
-    public void setLastName(String lastName)
-    {
-        this.lastName = lastName;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
     /**
      * Get the user id.
-     * 
+     *
      * @return the id of the user
      */
     public int getId()
@@ -119,15 +76,143 @@ public class User
     }
 
     /**
-     * Set the user's id.
-     * 
-     * @param id the id of the user to set
+     * Get the email address of the user.
+     *
+     * @return the current email address of the user
      */
-    public void setId(int id)
+    public String getEmail()
     {
-        this.id = id;
+        return email;
     }
 
+    /**
+     * Get the first name of the user
+     *
+     * @return the current first name of the user
+     */
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    /**
+     * Get the last name of the user
+     *
+     * @return the current last name of the user
+     */
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    /**
+     * Get the password of the user
+     *
+     * @return the current password of the user
+     */
+    public String getPassword()
+    {
+        return password;
+    }
+
+    /**
+     * Set the email address of the user.
+     *
+     * @return the new email address of the user
+     */
+    public void setEmail(String email) throws UserException
+    {
+        if (isEmailValid(email))
+        {
+            this.email = email;
+        }
+        else
+        {
+            Throwable t = new Throwable(
+                    "ERROR setEmail: the email value is not a valid string email address.");
+            throw new UserException("There was a problem with the email address value to be set.",
+                                    t);
+        }
+    }
+
+    /**
+     * Set the first name of the user
+     *
+     * @return the new first name of the user
+     */
+    public void setFirstName(String firstName) throws UserException
+    {
+        if (firstName != null)
+        {
+            this.firstName = firstName;
+        }
+        else
+        {
+            Throwable t = new Throwable(
+                    "ERROR setFirstName: the first name value is not a valid string.");
+            throw new UserException(
+                    "There was a problem with the first name string value to be set.", t);
+        }
+    }
+
+    /**
+     * Set the last name of the user
+     *
+     * @return the new last name of the user
+     */
+    public void setLastName(String lastName) throws UserException
+    {
+        if (lastName != null)
+        {
+            this.lastName = lastName;
+        }
+        else
+        {
+            Throwable t = new Throwable(
+                    "ERROR setLastName: the last name value is not a valid string.");
+            throw new UserException(
+                    "There was a problem with the last name string value to be set.", t);
+        }
+    }
+
+    /**
+     * Set the password of the user
+     *
+     * @return the new password of the user
+     */
+    public void setPassword(String password) throws UserException
+    {
+        if (isPasswordValid(password))
+        {
+            this.password = password;
+        }
+        else
+        {
+            Throwable t = new Throwable(
+                    "ERROR setPassword: the last name value is not a valid string.");
+            throw new UserException(
+                    "There was a problem with the last name string value to be set.", t);
+        }
+    }
+
+    /**
+     * Set the user id.
+     *
+     * @param id the id of the user to set
+     */
+    public void setId(int id) throws UserException
+    {
+        if (id > 0)
+        {
+            this.id = id;
+        }
+    }
+
+    /**
+     * The equals method for user object.
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     @Override
     public boolean equals(Object o)
     {
@@ -161,6 +246,11 @@ public class User
         return getPassword().equals(user.getPassword());
     }
 
+    /**
+     * hashCode method for User object.
+     *
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public int hashCode()
     {
@@ -172,6 +262,11 @@ public class User
         return result;
     }
 
+    /**
+     * toString method for the User object which consists of all of its properties: id and name.
+     *
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {
@@ -184,82 +279,46 @@ public class User
         sb.append('}');
         return sb.toString();
     }
-//    /**
-//     * Set the user name.
-//     *
-//     * @param name the name to set for the user
-//     */
-//    public void setName(String name)
-//    {
-//        this.name = name;
-//    }
-//
-//    /**
-//     * hashCode method for User object.
-//     *
-//     * @see java.lang.Object#hashCode()
-//     */
-//    @Override
-//    public int hashCode()
-//    {
-//        final int prime = 31;
-//        int result = 1;
-//        result = prime * result + id;
-//        result = prime * result + ((name == null) ? 0 : name.hashCode());
-//        return result;
-//    }
-//
-//    /**
-//     * The equals method for user object.
-//     *
-//     * @see java.lang.Object#equals(java.lang.Object)
-//     */
-//    @Override
-//    public boolean equals(Object obj)
-//    {
-//        if (this == obj)
-//        {
-//            return true;
-//        }
-//        if (obj == null)
-//        {
-//            return false;
-//        }
-//        if (!(obj instanceof User))
-//        {
-//            return false;
-//        }
-//        User other = (User) obj;
-//        if (id != other.id)
-//        {
-//            return false;
-//        }
-//        if (name == null)
-//        {
-//            if (other.name != null)
-//            {
-//                return false;
-//            }
-//        }
-//        else if (!name.equals(other.name))
-//        {
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    /**
-//     * toString method for the User object which consists of all of its
-//     * properties: id and name.
-//     *
-//     * @see java.lang.Object#toString()
-//     */
-//    @Override
-//    public String toString()
-//    {
-//        StringBuilder builder = new StringBuilder();
-//        builder.append("User [id=").append(id).append(", name=").append(name).append("]");
-//        return builder.toString();
-//    }
 
+    /**
+     * Validates an email address with regular expression
+     *
+     * @param email email address for validation
+     * @return true valid email address, false invalid email address
+     */
+    private boolean isEmailValid(String email)
+    {
+        final String EMAIL_PATTERN =
+                "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
+                        "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        return isValid(email, EMAIL_PATTERN);
+    }
+
+    /**
+     * Validates a password with regular expression
+     *
+     * @param password password for validation
+     * @return true valid password, false invalid password
+     */
+    private boolean isPasswordValid(String password)
+    {
+        final String PASSWORD_PATTERN =
+                "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+
+        return isValid(password, PASSWORD_PATTERN);
+    }
+
+    /**
+     * Validate a string with regular expression
+     *
+     * @param stringToValid string for validation
+     * @return true valid string value, false invalid string value
+     */
+    private boolean isValid(String stringToValid, final String PATTERN)
+    {
+        Pattern pattern = Pattern.compile(PATTERN);
+        Matcher matcher = pattern.matcher(stringToValid);
+        return matcher.matches();
+    }
 }

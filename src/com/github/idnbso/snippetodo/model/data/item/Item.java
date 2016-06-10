@@ -7,9 +7,6 @@ import java.io.Serializable;
  * Item class represents the SnippeToDo items which consists of the item id, the user's id creating
  * the item, and the message description itself from the user input. An Item is stored in the
  * snippetodo database's items table.
- *
- * @author Idan Busso
- * @author Shani Kahila
  */
 @Entity
 @Table(name = "items")
@@ -59,13 +56,14 @@ public class Item implements Serializable
     /**
      * Item class main constructor to create a complete Item object to be stored in the database.
      *
-     * @param id          The id of the item in database items table
-     * @param userId      The user id of the user which created the item
-     * @param listId      The text describing the item
+     * @param id     The id of the item in database items table
+     * @param userId The user id of the user which created the item
+     * @param listId The text describing the item
      */
     public Item(int id, int userId, int listId, String title, String body, int positionIndex)
+            throws ItemException
     {
-        super();
+        this();
         setId(id);
         setUserId(userId);
         setListId(listId);
@@ -97,43 +95,105 @@ public class Item implements Serializable
     /**
      * Get the list id of the list containing the item.
      *
-     * @return the userId of the user which created the item
+     * @return the list id of the item
      */
     public int getListId()
     {
         return listId;
     }
 
-    public void setListId(int listId)
-    {
-        this.listId = listId;
-    }
-
-    public int getPositionIndex()
-    {
-        return positionIndex;
-    }
-
-    public void setPositionIndex(int index)
-    {
-        this.positionIndex = index;
-    }
-
+    /**
+     * Get the title of the item.
+     *
+     * @return the current title of the item
+     */
     public String getTitle()
     {
         return title;
     }
 
-    public void setTitle(String title)
-    {
-        this.title = title;
-    }
-
+    /**
+     * Get the body text of the item.
+     *
+     * @return the current body text of the item
+     */
     public String getBody()
     {
         return body;
     }
 
+    /**
+     * Get the position index in the current list of the item.
+     *
+     * @return the position index of the item in the current list
+     */
+    public int getPositionIndex()
+    {
+        return positionIndex;
+    }
+
+    /**
+     * Set the list id of the list containing the item.
+     *
+     * @param listId the integer list id of the item to be set
+     */
+    public void setListId(int listId) throws ItemException
+    {
+        if (listId > 0)
+        {
+            this.listId = listId;
+        }
+        else
+        {
+            Throwable t = new Throwable(
+                    "ERROR setListId: the listId value is not a valid positive integer.");
+            throw new ItemException("There was a problem with the listId value to be set.", t);
+        }
+    }
+
+    /**
+     * Set the position index in the current list of the item.
+     *
+     * @param index the new position index of the item in a list
+     */
+    public void setPositionIndex(int index) throws ItemException
+    {
+        if (index > 0)
+        {
+            this.positionIndex = index;
+        }
+        else
+        {
+            Throwable t = new Throwable(
+                    "ERROR setPositionIndex: the index value is not a valid positive integer.");
+            throw new ItemException("There was a problem with the index value to be set.", t);
+        }
+    }
+
+    /**
+     * Set the title of the item.
+     *
+     * @param title the new title of the item
+     */
+    public void setTitle(String title) throws ItemException
+    {
+        if (title != null)
+        {
+            this.title = title;
+        }
+        else
+        {
+            Throwable t = new Throwable(
+                    "ERROR setTitle: the title value is not a valid string.");
+            throw new ItemException("There was a problem with the title value to be set.", t);
+        }
+    }
+
+    /**
+     * Set the body text of the item.
+     *
+     * @param body the new body text of the item
+     */
     public void setBody(String body)
     {
         this.body = body;
@@ -144,19 +204,37 @@ public class Item implements Serializable
      *
      * @param userId The userId to set
      */
-    public void setUserId(int userId)
+    public void setUserId(int userId) throws ItemException
     {
-        this.userId = userId;
+        if (userId > 0)
+        {
+            this.userId = userId;
+        }
+        else
+        {
+            Throwable t = new Throwable(
+                    "ERROR setUserId: the userId value is not a valid positive integer.");
+            throw new ItemException("There was a problem with the userId value to be set.", t);
+        }
     }
 
     /**
-     * Set the item's id.
+     * Set the item id.
      *
      * @param id The id to set
      */
-    public void setId(int id)
+    public void setId(int id) throws ItemException
     {
-        this.id = id;
+        if (id > 0)
+        {
+            this.id = id;
+        }
+        else
+        {
+            Throwable t = new Throwable(
+                    "ERROR setId: the item's id value is not a valid positive integer.");
+            throw new ItemException("There was a problem with the item's id value to be set.", t);
+        }
     }
 
     /**
@@ -199,7 +277,6 @@ public class Item implements Serializable
             return false;
         }
         return getBody().equals(item.getBody());
-
     }
 
     /**

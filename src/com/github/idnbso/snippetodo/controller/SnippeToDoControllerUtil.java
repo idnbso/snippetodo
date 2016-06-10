@@ -31,7 +31,7 @@ public class SnippeToDoControllerUtil
         }
         catch (IOException e)
         {
-            LOGGER.info(e.getCause().toString());
+            LOGGER.info(e.toString());
         }
     }
 
@@ -52,7 +52,7 @@ public class SnippeToDoControllerUtil
         }
         catch (IOException e)
         {
-            LOGGER.info(e.getCause().toString());
+            LOGGER.info(e.toString());
         }
     }
 
@@ -67,7 +67,7 @@ public class SnippeToDoControllerUtil
     public static void handleSnippeToDoPlatformException(HttpServletResponse response,
                                                            SnippeToDoPlatformException e)
     {
-        LOGGER.info(e.getCause().toString());
+        LOGGER.info(e.toString());
 
         // create the error message object to contain the string error message
         JsonObject jsonErrorMessageObj = new JsonObject();

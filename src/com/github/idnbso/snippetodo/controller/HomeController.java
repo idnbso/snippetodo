@@ -82,7 +82,7 @@ public class HomeController extends HttpServlet
         catch (ServletException | IOException e)
         {
             handleSnippeToDoPlatformException(response, new SnippeToDoPlatformException(
-                    "Cannot connect to the home page.", e.getCause()));
+                    "Cannot connect to the home page.", e));
         }
     }
 }

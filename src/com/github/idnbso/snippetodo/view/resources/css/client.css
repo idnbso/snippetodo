@@ -9,13 +9,8 @@ body {
     font-family: 'Consolas', sans-serif;
 }
 
-.container {
-    padding: 0;
-}
-
-.nopadding {
-    padding: 0 !important;
-    margin: 0 !important;
+button {
+    outline: none;
 }
 
 /* Selection */
@@ -28,6 +23,15 @@ body {
 ::selection {
     color: #73de73;
     background: rgba(11, 0, 1, 1);
+}
+
+.container {
+    padding: 0;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 /* Navigation */
@@ -96,16 +100,6 @@ body {
     color: #73de73;
 }
 
-@media only screen and (max-width: 768px) {
-    .dropdown-about-menu > li > a {
-        color: #cccccc;
-    }
-
-    .navbar {
-        padding: 0px 10px 0px 20px;
-    }
-}
-
 /* Board */
 .snpptd-client-board-list {
     color: rgb(30, 30, 30);
@@ -126,7 +120,7 @@ body {
 }
 
 .panel-heading {
-    padding: 10px 0px 0px 0px;
+    padding: 10px 0 0 0;
     border: #73de73;
     color: #73de73;
     text-align: center;
@@ -137,8 +131,17 @@ body {
     font-size: 120%;
 }
 
+.panel-heading {
+    position: relative;
+}
+
+.panel-heading span {
+    position: absolute;
+    top: -50px;
+}
+
 .snpptd-client-listtodo-panelbtn {
-    padding: 0px 5px 0px 0px;
+    padding: 0 5px 0 0;
     margin: 0;
     color: #73de73;
     background: rgb(30, 30, 30);
@@ -154,7 +157,7 @@ body {
     padding: 5px 5px;
     font-size: small;
     border-radius: 7px;
-    margin: 10px 0px 10px 0px;
+    margin: 10px 0 10px 0;
     color: #dddddd;
     border-color: #333;
     background: #333;
@@ -176,10 +179,6 @@ body {
 .list-group-item:nth-child(2n) {
     color: #111;
     background: #dddddd;
-}
-
-button {
-    outline: none;
 }
 
 .snpptd-client-listtodo-panelbtn,
@@ -236,10 +235,6 @@ button {
     margin: 0;
     font-size: large;
     vertical-align: middle;
-}
-
-.glyphicon-move {
-    cursor: move;
 }
 
 .sortable-ghost,
@@ -312,13 +307,8 @@ button {
     border-radius: 6px 0 6px 6px;
 }
 
-.panel-heading {
-    position: relative;
-}
-
-.panel-heading span {
-    position: absolute;
-    top: -50px;
+.glyphicon-move {
+    cursor: move;
 }
 
 .glyphicon-refresh-animate {
@@ -328,6 +318,16 @@ button {
 
 .error {
     padding-left: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+    .dropdown-about-menu > li > a {
+        color: #cccccc;
+    }
+
+    .navbar {
+        padding: 0 10px 0 20px;
+    }
 }
 
 @-webkit-keyframes spin2 {
