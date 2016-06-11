@@ -174,7 +174,10 @@
                 var $form = $(this).closest(".modal-footer").prev('.modal-body').children('form');
                 $form.trigger("reset"); // reset all of the form's values
                 $form.find(".alert").addClass('hidden'); // hide the alert box for next use
-                $form.validate().resetForm(); // reset all current jquery form validations
+                var $validatedForm = $form.validate();
+                if ($validatedForm !== undefined) {
+                    $validatedForm.resetForm(); // reset all current jquery form validations
+                }
             }
             catch (e) {
                 snippeToDoUtil.displayError(
@@ -189,7 +192,8 @@
          */
         $(document).on("click", "#snpptd-home-login-btn", function() {
             try {
-                // first check if there are cookies saved with the email of the last successful login
+                // first check if there are cookies saved with the email of the last successful
+                // login
                 $.get("/user/initlogin", function(userEmail) {
                     if (userEmail !== null) {
                         $('#snpptd-home-logininput-email').val(userEmail);

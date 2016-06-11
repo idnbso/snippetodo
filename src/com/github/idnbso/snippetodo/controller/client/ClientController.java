@@ -14,6 +14,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
 
+import static com.github.idnbso.snippetodo.SnippeToDoLogger.LOGGER;
 import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.*;
 
 /**
@@ -51,7 +52,7 @@ public class ClientController extends HttpServlet
         }
         catch (SnippeToDoPlatformException e)
         {
-            System.out.println(e.getMessage());
+            LOGGER.info("ERROR UserController.init: " + e.getMessage());
         }
     }
 
@@ -231,8 +232,7 @@ public class ClientController extends HttpServlet
         catch (IndexOutOfBoundsException | IllegalStateException e)
         {
             throw new SnippeToDoPlatformException(
-                    "There was a problem initialising the lists with data from the database.",
-                    e);
+                    "There was a problem initialising the lists with data from the database.", e);
         }
     }
 }

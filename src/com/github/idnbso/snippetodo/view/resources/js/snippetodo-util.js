@@ -27,10 +27,18 @@ snippeToDoUtil.displayError = function(message) {
 };
 
 /**
- * Open the client page with the correct hostname in the current window.
+ * Open the SnippeToDo client page with the correct hostname in the current window.
  */
 snippeToDoUtil.openClient =  function(){
     window.open(snippeToDoUtil.hostname + "client/", "_self");
+};
+
+
+/**
+ * Open the SnippeToDo homepage with the correct hostname in the current window.
+ */
+snippeToDoUtil.openHomepage =  function(){
+    window.open(snippeToDoUtil.hostname, "_self");
 };
 
 /**

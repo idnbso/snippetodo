@@ -53,7 +53,6 @@ public class FBGraph
             }
             bufferedReader.close();
             graph = builder.toString();
-            System.out.println(graph);
         }
         catch (IOException e)
         {

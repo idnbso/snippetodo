@@ -14,6 +14,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
 
+import static com.github.idnbso.snippetodo.SnippeToDoLogger.LOGGER;
 import static com.github.idnbso.snippetodo.controller.SnippeToDoControllerUtil.*;
 
 /**
@@ -43,7 +44,7 @@ public class UserController extends HttpServlet
         }
         catch (SnippeToDoPlatformException e)
         {
-            System.out.println(e.getMessage());
+            LOGGER.info("ERROR UserController.init: " + e.getMessage());
         }
     }
 
