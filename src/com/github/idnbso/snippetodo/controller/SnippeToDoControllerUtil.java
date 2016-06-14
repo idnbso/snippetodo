@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 import static com.github.idnbso.snippetodo.SnippeToDoLogger.LOGGER;
 
@@ -17,7 +18,7 @@ public class SnippeToDoControllerUtil
     /**
      * Write a Json object as a response to the client.
      *
-     * @param response the HttpServletResponse to return the Json object to the client
+     * @param response     the HttpServletResponse to return the Json object to the client
      * @param jsonResponse the Json object response to the client
      * @see IOException
      */
@@ -39,7 +40,7 @@ public class SnippeToDoControllerUtil
      * Write a text as a response to the client.
      *
      * @param response the HttpServletResponse to return the text to the client
-     * @param text the string text value to be returned to the client
+     * @param text     the string text value to be returned to the client
      * @see IOException
      */
     public static void writeTextResponse(HttpServletResponse response, String text)
@@ -57,21 +58,23 @@ public class SnippeToDoControllerUtil
     }
 
     /**
-     * Handles a SnippeToDoPlatformException by logging the cause,
-     * and sending the corresponding error message back to the client.
+     * Handles a SnippeToDoPlatformException by logging the cause, and sending the corresponding
+     * error message back to the client.
      *
      * @param response the HttpServletResponse to return the error message to the client
-     * @param e the SnippeToDoPlatformException object that caused the error
+     * @param e        the SnippeToDoPlatformException object that caused the error
      * @see SnippeToDoPlatformException
      */
     public static void handleSnippeToDoPlatformException(HttpServletResponse response,
-                                                           SnippeToDoPlatformException e)
+                                                         SnippeToDoPlatformException e)
     {
         LOGGER.info(e.toString());
+        LOGGER.error(e.getCause().toString());
 
         // create the error message object to contain the string error message
         JsonObject jsonErrorMessageObj = new JsonObject();
-        jsonErrorMessageObj.addProperty("message", e.getMessage());
+        jsonErrorMessageObj
+                .addProperty("message", e.getMessage());
 
         // create the error object
         JsonObject jsonErrorObj = new JsonObject();

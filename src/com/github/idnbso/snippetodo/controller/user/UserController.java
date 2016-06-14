@@ -330,7 +330,7 @@ public class UserController extends HttpServlet
         }
         catch (UserException | SnippeToDoPlatformException e)
         {
-            String message = "There was a problem creating a new user.";
+            String message = "There was a problem creating a new user: " + e.getMessage();
             throw new SnippeToDoPlatformException(message, e);
         }
     }

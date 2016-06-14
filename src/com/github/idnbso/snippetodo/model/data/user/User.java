@@ -130,8 +130,7 @@ public class User
         {
             Throwable t = new Throwable(
                     "ERROR setEmail: the email value is not a valid string email address.");
-            throw new UserException("There was a problem with the email address value to be set.",
-                                    t);
+            throw new UserException("Invalid email address value to be set.", t);
         }
     }
 
@@ -151,7 +150,7 @@ public class User
             Throwable t = new Throwable(
                     "ERROR setFirstName: the first name value is not a valid string.");
             throw new UserException(
-                    "There was a problem with the first name string value to be set.", t);
+                    "Invalid string value to be set.", t);
         }
     }
 
@@ -171,7 +170,7 @@ public class User
             Throwable t = new Throwable(
                     "ERROR setLastName: the last name value is not a valid string.");
             throw new UserException(
-                    "There was a problem with the last name string value to be set.", t);
+                    "Invalid last name string value to be set.", t);
         }
     }
 
@@ -189,9 +188,11 @@ public class User
         else
         {
             Throwable t = new Throwable(
-                    "ERROR setPassword: the last name value is not a valid string.");
+                    "ERROR setPassword: the password value is not a valid string.");
             throw new UserException(
-                    "There was a problem with the last name string value to be set.", t);
+                    "Invalid password string value to be set, it must be " +
+                            "6 to 20 characters, at least one digit, " +
+                            "and at least one letter (case insensitive).", t);
         }
     }
 
@@ -304,7 +305,7 @@ public class User
     private boolean isPasswordValid(String password)
     {
         final String PASSWORD_PATTERN =
-                "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+                "^((?=.*\\d)(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%&*]{6,20})$";
 
         return isValid(password, PASSWORD_PATTERN);
     }

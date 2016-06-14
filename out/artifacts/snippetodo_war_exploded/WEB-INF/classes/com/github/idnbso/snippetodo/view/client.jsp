@@ -72,25 +72,66 @@
                         Logout <i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>
                     </button>
                 </li>
-                <li>
-                    <button class="btn" data-target="#" data-toggle="dropdown">
-                        About<span
-                            class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-about-menu">
-                        <li><a href='story.html'>Our Story</a></li>
-                        <li><a href='contact.html'>Contact Us</a></li>
+                <!-- Navigation Dropdown Menu -->
+                <li><a href='#' data-target="#" data-toggle="dropdown">About<span
+                        class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href='#' data-toggle="modal"
+                               data-target="#snpptd-story-modal">Our Story</a></li>
                         <li class="divider"></li>
-                        <li><a href='blog.html'>Blog</a></li>
+                        <li><a href='mailto:idanbusso@gmail.com'>Contact Us</a></li>
                         <li class="divider"></li>
-                        <li><a href='http://twitter.com'>Twitter</a></li>
-                        <li><a href='http://facebook.com'>Facebook</a></li>
+                        <li><a href='#' onclick="window.snippeToDoUtil.openHomepage()">Homepage</a>
+                        </li>
                     </ul>
                 </li>
+                <!-- /Navigation Dropdown Menu -->
             </ul>
         </div>
     </div>
 </div>
 <!-- /Navigation Bar -->
+
+<!-- Story Modal -->
+<div class="modal fade" id="snpptd-story-modal" tabindex="0" role="dialog"
+     aria-labelledby="snpptd-story-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="snpptd-story-modallabel">
+                    Our Story
+                </h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p>The SnippeToDo application was made by three students from <a
+                        href="http://www.hit.ac.il/">Holon Institute of
+                    Technology</a>:</p>
+                <ul>
+                    <li><a href='mailto:idanbusso@gmail.com'>Idan Busso</a></li>
+                    <li><a href='mailto:shani20086@gmail.com'>Shani Kahila</a></li>
+                    <li><a href='mailto:eli45540@gmail.com'>Eli Margolin</a></li>
+                </ul>
+                <p>This application was made as a final project for the Mobile & Java EE courses by
+                    <a href="http://www.lifemichael.com/">Haim Michael</a>.</p>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Story Modal -->
 
 <!-- Error Modal -->
 <div class="modal fade" id="snpptd-error-modal" tabindex="-1" role="dialog"
@@ -291,9 +332,9 @@
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/lib/jquery-2.2.4.min.js"></script>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/snippetodo.util.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/snippetodo-util.js"></script>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/snippetodo.client.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/snippetodo-client.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/lib/bootstrap.min.js"></script>
 
